@@ -3,6 +3,9 @@
 *.a
 *.so
 
+dispatcher.sublime-project
+dispatcher.sublime-workspace
+
 # Folders
 _obj
 _test
