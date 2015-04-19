@@ -128,6 +128,15 @@ func getServerStats(serverList serverConfig) []serverStat { // get current serve
 		su[index].memUsageTotal = memoryUsageTotal
 		su[index].memUsageHot = memoryUsageWorking
 
+		posturl2 := cadvisorUrl + "/api/v1.0/machine" //获取机器配置信息
+		body2 := ioutil.NopCloser(strings.NewReader(""))
+		client2 := &http.Client{}
+		req2, _ := http.NewRequest("POST", posturl2, body2)
+		resq2, _ := client2.Do(req2)
+		defer resq2.Body.Close()
+		data2, _ := ioutil.ReadAll(resq2.Body)
+		fmt.Println("data2 is ", data2)
+
 		// fmt.Println("me", memoryUsageWorking)
 		// su[index].memCapacity
 
