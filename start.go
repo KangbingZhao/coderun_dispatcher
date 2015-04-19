@@ -58,25 +58,25 @@ func getInitialServerAddr() serverConfig { // get default server info from ./met
 
 type serverStat struct {
 	cpuUsage     float32 //百分比
-	cpuFrequency int     //Hz
+	cpuFrequency int     //kHz
 	cpuCore      int     //核心数
 
-	memUsageTotal float32 //内存容量，单位为Byte
-	memUsageHot   float32 //当前活跃内存量
-	memCapacity   float32 //内存总量
+	memUsageTotal float64 //内存容量，单位为Byte
+	memUsageHot   float64 //当前活跃内存量
+	memCapacity   float64 //内存总量
 
 }
 
-func getServerStats(serverList serverConfig) []machineUsage { // get current server stat
+func getServerStats(serverList serverConfig) []serverStat { // get current server stat
 
-	su := make([]machineUsage, 3, 10)
+	su := make([]serverStat, 3, 10)
 	for index := 0; index < len(serverList.Server); index++ {
 
 		if serverList.Server[index].Host == "" {
 			continue
 		}
-		su[index].CPUUsage = "CPU" + strconv.Itoa(index)
-		su[index].MemUsage = "Mem" + strconv.Itoa(index)
+		// su[index].CPUUsage = "CPU" + strconv.Itoa(index)
+		// su[index].MemUsage = "Mem" + strconv.Itoa(index)
 
 		cadvisorUrl := "http://" + serverList.Server[index].Host + ":" + strconv.Itoa(serverList.Server[index].CAdvisorPort)
 		posturl := cadvisorUrl + "/api/v1.0/containers"
@@ -108,13 +108,21 @@ func getServerStats(serverList serverConfig) []machineUsage { // get current ser
 			for _, iiv := range md {
 				// fmt.Println(ii, "ii is ", iiv)
 				mm, _ := iiv.(map[string]interface{})
-				fmt.Println(mm["memory"])
+				// fmt.Println(mm["memory"])
+
+				mn, _ := mm["memory"].(map[string]interface{})
+				fmt.Println("用量是", mn["usage"])
+				// su[index].memUsageTotal = mn["usage"]
+				// su[index].memUsageHot = mn["working_set"]
+
+				// mc,_ := mm[""]
+
 			}
 			fmt.Println("ok is ", ok)
 
 			/*			var t interface{}
 
-																																	   			t, ok = md.(map[string]interface{})*/
+																																																																																																																																																																																																   			t, ok = md.(map[string]interface{})*/
 
 			fmt.Println("ok is ", ok)
 			/*			for k, v := range t {
@@ -149,9 +157,13 @@ func getServerStats(serverList serverConfig) []machineUsage { // get current ser
 		}
 		tempStat2, _ := jsonEncode2.(map[string]interface{})
 		//从此处获取没内存总量
-		fmt.Println("Machine信息")
-		fmt.Println(tempStat2["memory_capacity"])
-
+		// fmt.Println("Machine信息")
+		// _, ok = tempStat2["memory_capacity"].(float64)
+		_, ok = (int64(tempStat2["num_cores"])).(int64)
+		fmt.Println(tempStat2["num_cores"], "类型是 ", ok)
+		// su[index].memCapacity = tempStat2["memory_capacity"]
+		// su[index].cpuCore = tempStat2["num_cores"]
+		// su[index].cpuFrequency = tempStat2["cpu_frequency_khz"]
 		// fmt.Println("body is ", reqContent)
 
 	} // end of loop
