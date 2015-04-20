@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"github.com/Sirupsen/logrus"
 	"github.com/antonholmquist/jason"
-	"github.com/go-martini/martini"
+	// "github.com/go-martini/martini"
 	"io/ioutil"
 	"net/http"
 	"os"
