@@ -2,23 +2,31 @@
 *	get the stats of the servers and containers
  */
 
-package coderun_dispatcher
+package coderun_alog
 
 import (
 	"encoding/json"
-	"fmt"
+	// "fmt"
 	"github.com/Sirupsen/logrus"
 	"github.com/antonholmquist/jason"
-	// "github.com/go-martini/martini"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var logger = logrus.New()
-var ContainerMemCapacity = float64(20971520)
+var ContainerMemCapacity = float64(20971520) //default container memory capacity is 20MB
+
+var curClusterStats = make([]curServerStatus, 0, 5) //the global variable is current server stats and container stats
+
+type curServerStatus struct {
+	machineStatus   serverStat      //the server stats
+	containerStatus []containerStat // the container stats of this server
+
+}
 
 type containerAddr struct { // function dispatcherContainer will return this
 	ServerIP   string
@@ -32,8 +40,14 @@ type serverConfig struct { // store data of ./metadata/config.json
 	}
 }
 
+type serverAddress struct {
+	Host         string
+	DockerPort   int
+	CAdvisorPort int
+}
+
 func getInitialServerAddr() serverConfig { // get default server info from ./metadata/config.json
-	r, err := os.Open("./metadata/config.json")
+	r, err := os.Open("../metadata/config.json")
 	if err != nil {
 		logger.Error(err)
 	}
@@ -43,14 +57,15 @@ func getInitialServerAddr() serverConfig { // get default server info from ./met
 	if err != nil {
 		logger.Error(err)
 	}
-	for k, v := range c.Server {
-		fmt.Println(k, v.Host, v.DockerPort, v.CAdvisorPort)
-	}
 	return c
 
 }
 
 type serverStat struct {
+	Host         string
+	DockerPort   int
+	CAdvisorPort int
+
 	cpuUsage        float64 //百分比
 	cpuFrequencyKHz int64   //kHz
 	cpuCore         int64   //核心数,-1表示服务器不在线
@@ -61,6 +76,7 @@ type serverStat struct {
 }
 
 type containerStat struct {
+	serverAddr    string
 	cpuUsage      float64 //percent
 	memUsageTotal float64 //Byte
 	memeUsageHot  float64
@@ -77,6 +93,19 @@ func subSubstring(str string, start, end int) string { //截取字符串
 
 	return string(str[start:end])
 }
+
+/*func serverStatSliceRemove(slice []serverStat, start, end int) []serverStat {
+	return append(slice[:start], slice[end:]...)
+}
+func serverStatSliceRemoveAtIndex(slice []serverStat, index int) []serverStat {
+	if index+1 >= len(slice) { // 末尾
+		return slice[:index-1]
+	} else if index-1 < 0 { //开头
+		return slice[1:]
+	} else {
+		return serverStatSliceRemove(slice, index-1, index+1)
+	}
+}*/
 
 func getServerStats(serverList serverConfig) []serverStat { // get current server stat
 
@@ -140,14 +169,20 @@ func getServerStats(serverList serverConfig) []serverStat { // get current serve
 		su[index].cpuCore = num_cores
 		su[index].cpuFrequencyKHz = cpu_frequency_khz
 		su[index].memCapacity = mem_capacity
+		su[index].Host = serverList.Server[index].Host
+		su[index].CAdvisorPort = serverList.Server[index].CAdvisorPort
+		su[index].DockerPort = serverList.Server[index].DockerPort
 
 	} // end of loop
-	/*	for i := len(su) - 1; i >= 0; i-- { //删去corenum=-1的服务器
-		if su[i].cpuCore == -1 {
-			su = delete(su, su[i])
+
+	var temp []serverStat
+	for _, v := range su {
+		if v.cpuCore == -1 {
+			continue
 		}
-	}*/
-	return su
+		temp = append(temp, v)
+	}
+	return temp
 
 }
 
@@ -178,7 +213,6 @@ func getContainerStat(serverUrl string, ContainerNameList []string) []containerS
 	for index := 0; index < len(ContainerNameList); index++ {
 		var temp containerStat
 		cs = append(cs, temp)
-
 		posturl := serverUrl + "/api/v1.0/containers" + ContainerNameList[index]
 		// fmt.Println("posturl is ", posturl)
 		// continue
@@ -217,11 +251,73 @@ func getContainerStat(serverUrl string, ContainerNameList []string) []containerS
 		cs[index].memUsageTotal = memoryUsageTotal
 		cs[index].memeUsageHot = memoryUsageWorking
 		cs[index].memCapacity = ContainerMemCapacity
+		// cs[index].serverAddr = serverUrl
 		// fmt.Println("container cpu is ", cs[index].cpuUsage)
 
 	} // end of loop
 	// fmt.Println("containerstat is gotten")
 	// fmt.Println("len is ", len(ContainerNameList))
 	return cs
+
+}
+
+func GetCurrentClusterStatus() []curServerStatus { // return current curClusterStatus
+	return curClusterStats
+}
+
+func StartDeamon() { // load the initial server info from ./metadata/config.json
+	// and update server and container status periodicly
+	servers := getInitialServerAddr()
+	serverSStats := getServerStats(servers)
+	// fmt.Println("serverstats is ", serverSStats)
+
+	timeSlot := time.NewTimer(time.Second * 1) // update status every second
+	for {
+		select {
+		case <-timeSlot.C:
+			//TODO the codes to update
+			// fmt.Println(serverSStats)
+			tempClusterStats := curClusterStats[0:0]
+
+			for index := 0; index < len(serverSStats); index++ {
+				var temp curServerStatus
+				tempClusterStats = append(tempClusterStats, temp)
+				if serverSStats[index].cpuCore == -1 {
+					tempClusterStats[index].machineStatus.cpuCore = -1
+					continue
+				}
+				//获取服务器状态
+				// cs := getServerStats(serverSStats[index].Host + strconv.Itoa(serverSStats[index].CAdvisorPort))
+				var tempServerConfig serverConfig
+				var tempServerAddress serverAddress
+				// tempServerConfig.Server = append(tempServerConfig.Server, tempServerAddress)
+				tempServerConfig.Server = append(tempServerConfig.Server, tempServerAddress)
+				// fmt.Println("长度是 ", len(tempServerConfig.Server))
+
+				tempServerConfig.Server[0].Host = string(serverSStats[index].Host)
+				tempServerConfig.Server[0].CAdvisorPort = int(serverSStats[index].CAdvisorPort)
+				tempServerConfig.Server[0].DockerPort = int(serverSStats[index].DockerPort)
+
+				var ss []serverStat
+				ss = getServerStats(tempServerConfig)
+				tempClusterStats[index].machineStatus = ss[0]
+
+				//获取容器名字
+				serverUrl := "http://" + serverSStats[index].Host + ":" + strconv.Itoa(serverSStats[index].CAdvisorPort) + "/api/v1.0/containers/docker"
+				// fmt.Println("url is ", serverUrl)
+				containerNames := getValidContainerName(serverUrl)
+
+				cs := getContainerStat("http://"+serverSStats[index].Host+":"+strconv.Itoa(serverSStats[index].CAdvisorPort), containerNames)
+				// fmt.Println("containers is ", cs)
+				tempClusterStats[index].containerStatus = append(tempClusterStats[index].containerStatus, cs...)
+
+			}
+			// return
+			curClusterStats = curClusterStats[0:0]
+			curClusterStats = append(curClusterStats, tempClusterStats...)
+			// fmt.Println("当前状态是 ", curClusterStats)
+			timeSlot.Reset(time.Second * 1)
+		}
+	}
 
 }
