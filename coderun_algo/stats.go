@@ -6,9 +6,10 @@ package coderun_alog
 
 import (
 	"encoding/json"
-	// "fmt"
+	"fmt"
 	"github.com/Sirupsen/logrus"
 	"github.com/antonholmquist/jason"
+	"github.com/fsouza/go-dockerclient"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -76,7 +77,9 @@ type serverStat struct {
 }
 
 type containerStat struct {
-	serverAddr    string
+	serverIP      string
+	name          string  //image name
+	port          int     //暴露在外的端口
 	cpuUsage      float64 //percent
 	memUsageTotal float64 //Byte
 	memeUsageHot  float64
@@ -208,8 +211,39 @@ func getValidContainerName(url string) []string { //返回字符串为docker名�
 	// return containerNameList
 	return containerNameList
 }
-func getContainerStat(serverUrl string, ContainerNameList []string) []containerStat { //serverUrl format is: http://server_ip:port
+func getImageNameByContainerName(serverUrl string, containerName string) map[string]string { //返回内容为:镜像名称，容器对外端口
+	// http://ip:port， docker/id
+	id := subSubstring(containerName, 8, 100) //猜测不会超过100个字符，实际等同于从第8个字符开始截取
+	// fmt.Println("name is ", containerName)
+	// fmt.Println("id is ", id)
+	client, _ := docker.NewClient(serverUrl)
+	// imageName,_ := client.InspectContainer
+	containerInfo, err := client.InspectContainer(id)
+	if err != nil {
+		return make(map[string]string)
+	}
+	fmt.Println("imgs is", containerInfo.Config.Image)
+	temp := containerInfo.NetworkSettings.Ports["8080/tcp"]
+	if len(temp) == 0 {
+		re := map[string]string{
+			"ImageName":   containerInfo.Config.Image,
+			"ExpostdPort": "",
+		}
+		return re
+	}
+	re := map[string]string{
+		"ImageName":   containerInfo.Config.Image,
+		"ExpostdPort": temp[0].HostPort,
+		// containerInfo.NetworkSettings.Ports["8080/tcp"]["HostPort"]
+	}
+
+	// fmt.Println("怎么", temp[0].HostPort)
+	return re
+}
+func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, ContainerNameList []string) []containerStat {
+	//serverUrl format is: http://server_ip:port
 	cs := make([]containerStat, 0, 50)
+	serverUrl := "http://" + serverIP + ":" + strconv.Itoa(cadvisorPort)
 	for index := 0; index < len(ContainerNameList); index++ {
 		var temp containerStat
 		cs = append(cs, temp)
@@ -251,6 +285,13 @@ func getContainerStat(serverUrl string, ContainerNameList []string) []containerS
 		cs[index].memUsageTotal = memoryUsageTotal
 		cs[index].memeUsageHot = memoryUsageWorking
 		cs[index].memCapacity = ContainerMemCapacity
+		cs[index].serverIP = serverIP
+		// cs[index].name = getImageNameByContainerName(cs[index].serverAddr, ContainerNameList[index])
+		iif := getImageNameByContainerName("http://"+cs[index].serverIP+":"+"4243", ContainerNameList[index])
+		cs[index].name = iif["ImageName"]
+		cs[index].serverIP = iif["ExpostdPort"]
+		fmt.Println("serverip is ", cs[index].serverIP)
+		fmt.Println("contain name is ", ContainerNameList[index])
 		// cs[index].serverAddr = serverUrl
 		// fmt.Println("container cpu is ", cs[index].cpuUsage)
 
@@ -268,15 +309,16 @@ func GetCurrentClusterStatus() []curServerStatus { // return current curClusterS
 func StartDeamon() { // load the initial server info from ./metadata/config.json
 	// and update server and container status periodicly
 	servers := getInitialServerAddr()
-	serverSStats := getServerStats(servers)
-	// fmt.Println("serverstats is ", serverSStats)
 
+	// fmt.Println("serverstats is ", serverSStats)
+	// getImageNameByContainerName("http://192.168.0.33:4243", "/docker/0a69438e4d780629c9c8ef2b672d9aea03ccaf1b7b56dd97458174e59e47618c")
 	timeSlot := time.NewTimer(time.Second * 1) // update status every second
 	for {
 		select {
 		case <-timeSlot.C:
 			//TODO the codes to update
 			// fmt.Println(serverSStats)
+			serverSStats := getServerStats(servers) //因为服务器可能 发生 在线\不在线的变化
 			tempClusterStats := curClusterStats[0:0]
 
 			for index := 0; index < len(serverSStats); index++ {
@@ -306,8 +348,9 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 				serverUrl := "http://" + serverSStats[index].Host + ":" + strconv.Itoa(serverSStats[index].CAdvisorPort) + "/api/v1.0/containers/docker"
 				// fmt.Println("url is ", serverUrl)
 				containerNames := getValidContainerName(serverUrl)
-
-				cs := getContainerStat("http://"+serverSStats[index].Host+":"+strconv.Itoa(serverSStats[index].CAdvisorPort), containerNames)
+				// fmt.Println("container names is", containerNames)
+				// cs := getContainerStat("http://"+serverSStats[index].Host+":"+strconv.Itoa(serverSStats[index].CAdvisorPort), containerNames)
+				cs := getContainerStat(serverSStats[index].Host, serverSStats[index].CAdvisorPort, serverSStats[index].DockerPort, containerNames)
 				// fmt.Println("containers is ", cs)
 				tempClusterStats[index].containerStatus = append(tempClusterStats[index].containerStatus, cs...)
 
@@ -315,8 +358,9 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 			// return
 			curClusterStats = curClusterStats[0:0]
 			curClusterStats = append(curClusterStats, tempClusterStats...)
-			// fmt.Println("当前状态是 ", curClusterStats)
-			timeSlot.Reset(time.Second * 1)
+
+			fmt.Println("当前状态是 ", len(curClusterStats[0].containerStatus))
+			timeSlot.Reset(time.Second * 100)
 		}
 	}
 

@@ -6,14 +6,14 @@
 		"cadvisorport":8080
 		},
 	{
-		"host":"",
-		"dockerport":0,
-		"cadvisorport":1
+		"host":"192.168.0.30",
+		"dockerport":4243,
+		"cadvisorport":8080
 		},
 	{
 		"host":"",
-		"dockerport":0,
-		"cadvisorport":2
+		"dockerport":4243,
+		"cadvisorport":8080
 		}	
 	]
 }

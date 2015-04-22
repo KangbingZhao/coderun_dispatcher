@@ -1,16 +1,17 @@
 package main
 
 import (
+	// "algorithm"
 	"coderun_algo"
 	"encoding/json"
-	"fmt"
+	// "fmt"
 	"github.com/Sirupsen/logrus"
 	"github.com/go-martini/martini"
 	"net/http"
 )
 
 type imageName struct { // function dispatchContainer receive this parameter
-	iName string
+	ImageName string
 }
 
 type machineUsage struct {
@@ -36,20 +37,6 @@ func dispatchContainer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	/*	testContainerList := getValidContainerName("http://192.168.0.33:8080/api/v1.0/containers/docker")
-		// fmt.Println("conter list is ", testContainerList)
-		cs := getContainerStat("http://192.168.0.33:8080", testContainerList)
-		fmt.Println("容器状态", cs)
-		// fmt.Println("test is ", test)
-		server := getInitialServerAddr()
-		str := getServerStats(server) //服务器状态列表
-		for _, v := range str {
-			fmt.Println("str is ", v)
-		}
-		out := containerAddr{
-			ServerIP:   "str",
-			ServerPost: 32,
-		}*/
 	out := containerAddr{
 		ServerIP:   "456789",
 		ServerPost: 32,
@@ -60,13 +47,18 @@ func dispatchContainer(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(out); err != nil {
 		logger.Error(err)
 	}
-	fmt.Println("镜像名称是", r.Body)
-	fmt.Println("当前状态", coderun_alog.GetCurrentClusterStatus())
-
+	// fmt.Println("镜像名称是", in.ImageName)
+	// fmt.Println("当前状态", coderun_alog.GetCurrentClusterStatus())
+	/*	curClusterStat := coderun_alog.GetCurrentClusterStatus()
+		ip := algorithm.RR(curClusterStat)*/
+	// fmt.Println("分配的IP是", ip)
+	// algorithm.RR()
+	// fmt.Println("执行了")
 }
 
 func main() {
 	// getInitialServerInfo()
+	Test()
 	go coderun_alog.StartDeamon()
 	// fmt.Println("在此测试一下")
 	m := martini.Classic()
