@@ -2,12 +2,12 @@
 *	get the stats of the servers and containers
  */
 
-package coderun_alog
+package main
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Sirupsen/logrus"
+	// "github.com/Sirupsen/logrus"
 	"github.com/antonholmquist/jason"
 	"github.com/fsouza/go-dockerclient"
 	"io/ioutil"
@@ -18,7 +18,7 @@ import (
 	"time"
 )
 
-var logger = logrus.New()
+// var logger = logrus.New()
 var ContainerMemCapacity = float64(20971520) //default container memory capacity is 20MB
 
 var curClusterStats = make([]curServerStatus, 0, 5) //the global variable is current server stats and container stats
@@ -29,10 +29,10 @@ type curServerStatus struct {
 
 }
 
-type containerAddr struct { // function dispatcherContainer will return this
+/*type containerAddr struct { // function dispatcherContainer will return this
 	ServerIP   string
 	ServerPost int
-}
+}*/
 type serverConfig struct { // store data of ./metadata/config.json
 	Server []struct {
 		Host         string

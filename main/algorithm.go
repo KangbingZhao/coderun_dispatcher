@@ -1,4 +1,7 @@
-package algorithm
+/*
+*	the algorithms for load balancing
+ */
+package main
 
 import (
 // "fmt"
@@ -6,7 +9,7 @@ import (
 
 // var curClusterStatus []curServerStatus
 
-type curServerStatus struct {
+/*type curServerStatus struct {
 	machineStatus   serverStat      //the server stats
 	containerStatus []containerStat // the container stats of this server
 
@@ -34,7 +37,7 @@ type containerStat struct {
 	memUsageTotal float64 //Byte
 	memeUsageHot  float64
 	memCapacity   float64
-}
+}*/
 
 var callCount int = 0
 

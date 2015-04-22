@@ -2,7 +2,7 @@ package main
 
 import (
 	// "algorithm"
-	"coderun_algo"
+	// "coderun_algo"
 	"encoding/json"
 	// "fmt"
 	"github.com/Sirupsen/logrus"
@@ -58,8 +58,8 @@ func dispatchContainer(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	// getInitialServerInfo()
-	Test()
-	go coderun_alog.StartDeamon()
+	// Test()
+	go StartDeamon()
 	// fmt.Println("在此测试一下")
 	m := martini.Classic()
 	m.Post("/api/dispatcher/v1.0/container/create", dispatchContainer)
