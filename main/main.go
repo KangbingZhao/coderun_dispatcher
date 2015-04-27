@@ -1,10 +1,8 @@
 package main
 
 import (
-	// "algorithm"
-	// "coderun_algo"
 	"encoding/json"
-	// "fmt"
+	"fmt"
 	"github.com/Sirupsen/logrus"
 	"github.com/go-martini/martini"
 	"net/http"
@@ -12,6 +10,11 @@ import (
 
 type imageName struct { // function dispatchContainer receive this parameter
 	ImageName string
+}
+
+type targetContainer struct { // the module return this
+	Host string
+	Port int
 }
 
 type machineUsage struct {
@@ -49,10 +52,12 @@ func dispatchContainer(w http.ResponseWriter, r *http.Request) {
 	}
 	// fmt.Println("镜像名称是", in.ImageName)
 	// fmt.Println("当前状态", coderun_alog.GetCurrentClusterStatus())
-	/*	curClusterStat := coderun_alog.GetCurrentClusterStatus()
-		ip := algorithm.RR(curClusterStat)*/
-	// fmt.Println("分配的IP是", ip)
-	// algorithm.RR()
+	curClusterStat := GetCurrentClusterStatus()
+	// ip := RR(curClusterStat)
+	// ip := LCS(curClusterStat)
+	ip := ServerPriority(curClusterStat)
+	fmt.Println("分配的IP是", ip)
+	fmt.Println("当前状态是", len(curClusterStat))
 	// fmt.Println("执行了")
 }
 
