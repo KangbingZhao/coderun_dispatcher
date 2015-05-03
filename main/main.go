@@ -12,11 +12,6 @@ type imageName struct { // function dispatchContainer receive this parameter
 	ImageName string
 }
 
-type targetContainer struct { // the module return this
-	Host string
-	Port int
-}
-
 type machineUsage struct {
 	CPUUsage string
 	MemUsage string
@@ -26,7 +21,7 @@ var logger = logrus.New()
 
 type containerAddr struct { // function dispatcherContainer will return this
 	ServerIP   string
-	ServerPost int
+	ServerPort int
 }
 
 func dispatchContainer(w http.ResponseWriter, r *http.Request) {
@@ -40,25 +35,25 @@ func dispatchContainer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	out := containerAddr{
+	/*	out := containerAddr{
 		ServerIP:   "456789",
 		ServerPost: 32,
-	}
+	}*/
 
-	w.Header().Set("content-type", "text/html")
-	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(out); err != nil {
-		logger.Error(err)
-	}
 	// fmt.Println("镜像名称是", in.ImageName)
 	// fmt.Println("当前状态", coderun_alog.GetCurrentClusterStatus())
 	curClusterStat := GetCurrentClusterStatus()
-	// ip := RR(curClusterStat)
+	ip := RR(curClusterStat)
 	// ip := LCS(curClusterStat)
-	ip := ServerPriority(curClusterStat)
+	// ip := ServerPriority(curClusterStat)
 	fmt.Println("分配的IP是", ip)
 	fmt.Println("当前状态是", len(curClusterStat))
 	// fmt.Println("执行了")
+	w.Header().Set("content-type", "text/html")
+	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(ip); err != nil {
+		logger.Error(err)
+	}
 }
 
 func main() {
