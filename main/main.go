@@ -8,6 +8,10 @@ import (
 	"net/http"
 )
 
+var logger = logrus.New()
+
+var CacheContainer, _ = New(50)
+
 type imageName struct { // function dispatchContainer receive this parameter
 	ImageName string
 }
@@ -17,11 +21,10 @@ type machineUsage struct {
 	MemUsage string
 }
 
-var logger = logrus.New()
-
 type containerAddr struct { // function dispatcherContainer will return this
-	ServerIP   string
-	ServerPort int
+	ServerIP    string
+	ServerPort  int
+	containerID string
 }
 
 func dispatchContainer(w http.ResponseWriter, r *http.Request) {
@@ -35,19 +38,16 @@ func dispatchContainer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	/*	out := containerAddr{
-		ServerIP:   "456789",
-		ServerPost: 32,
-	}*/
-
-	// fmt.Println("镜像名称是", in.ImageName)
-	// fmt.Println("当前状态", coderun_alog.GetCurrentClusterStatus())
 	curClusterStat := GetCurrentClusterStatus()
-	ip := RR(curClusterStat)
+	// ip := RR(curClusterStat)
 	// ip := LCS(curClusterStat)
 	// ip := ServerPriority(curClusterStat)
+	ip := ServerAndContainer(curClusterStats, in.ImageName)
 	fmt.Println("分配的IP是", ip)
 	fmt.Println("当前状态是", len(curClusterStat))
+
+	// CacheContainer.Add(, ip)
+
 	// fmt.Println("执行了")
 	w.Header().Set("content-type", "text/html")
 	w.WriteHeader(http.StatusOK)
@@ -59,7 +59,11 @@ func dispatchContainer(w http.ResponseWriter, r *http.Request) {
 func main() {
 	// getInitialServerInfo()
 	// Test()
+	createNewContainer("192.168.0.33", "test")
+	//启动进程，检测并更新服务器状态
 	go StartDeamon()
+
+	CacheContainer.Add(1, "test")
 	// fmt.Println("在此测试一下")
 	m := martini.Classic()
 	m.Post("/api/dispatcher/v1.0/container/create", dispatchContainer)

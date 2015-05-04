@@ -79,6 +79,7 @@ type serverStat struct {
 type containerStat struct {
 	serverIP      string
 	name          string  //image name
+	id            string  //container id
 	port          int     //暴露在外的端口
 	cpuUsage      float64 //percent
 	memUsageTotal float64 //Byte
@@ -286,12 +287,16 @@ func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, Contain
 		cs[index].memeUsageHot = memoryUsageWorking
 		cs[index].memCapacity = ContainerMemCapacity
 		cs[index].serverIP = serverIP
+		cs[index].id = ContainerNameList[index]
 		// cs[index].name = getImageNameByContainerName(cs[index].serverAddr, ContainerNameList[index])
 		iif := getImageNameByContainerName("http://"+cs[index].serverIP+":"+"4243", ContainerNameList[index])
 		cs[index].name = iif["ImageName"]
-		cs[index].serverIP = iif["ExpostdPort"]
+		tempPort, _ := (strconv.Atoi(iif["ExpostdPort"]))
+		cs[index].port = int(tempPort)
 		fmt.Println("serverip is ", cs[index].serverIP)
-		fmt.Println("contain name is ", ContainerNameList[index])
+		fmt.Println("contain name is ", iif["ImageName"])
+		fmt.Println("container id is ", ContainerNameList[index])
+		fmt.Println("container port is ", cs[index].port)
 		// cs[index].serverAddr = serverUrl
 		// fmt.Println("container cpu is ", cs[index].cpuUsage)
 
