@@ -23,6 +23,8 @@ var ContainerMemCapacity = float64(20971520) //default container memory capacity
 
 var curClusterStats = make([]curServerStatus, 0, 5) //the global variable is current server stats and container stats
 
+var curClusterLoad float64
+
 type curServerStatus struct {
 	machineStatus   serverStat      //the server stats
 	containerStatus []containerStat // the container stats of this server
@@ -287,15 +289,15 @@ func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, Contain
 		cs[index].memeUsageHot = memoryUsageWorking
 		cs[index].memCapacity = ContainerMemCapacity
 		cs[index].serverIP = serverIP
-		cs[index].id = ContainerNameList[index]
+		cs[index].id = subSubstring(ContainerNameList[index], 8, 20)
 		// cs[index].name = getImageNameByContainerName(cs[index].serverAddr, ContainerNameList[index])
 		iif := getImageNameByContainerName("http://"+cs[index].serverIP+":"+"4243", ContainerNameList[index])
 		cs[index].name = iif["ImageName"]
 		tempPort, _ := (strconv.Atoi(iif["ExpostdPort"]))
 		cs[index].port = int(tempPort)
 		fmt.Println("serverip is ", cs[index].serverIP)
-		fmt.Println("contain name is ", iif["ImageName"])
-		fmt.Println("container id is ", ContainerNameList[index])
+		fmt.Println("image name is ", iif["ImageName"])
+		fmt.Println("container id is ", cs[index].id)
 		fmt.Println("container port is ", cs[index].port)
 		// cs[index].serverAddr = serverUrl
 		// fmt.Println("container cpu is ", cs[index].cpuUsage)
@@ -315,7 +317,7 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 	// and update server and container status periodicly
 	servers := getInitialServerAddr()
 
-	// fmt.Println("serverstats is ", serverSStats)
+	// fmt.Println("servers is ", servers)
 	// getImageNameByContainerName("http://192.168.0.33:4243", "/docker/0a69438e4d780629c9c8ef2b672d9aea03ccaf1b7b56dd97458174e59e47618c")
 	timeSlot := time.NewTimer(time.Second * 1) // update status every second
 	for {
@@ -364,9 +366,33 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 			curClusterStats = curClusterStats[0:0]
 			curClusterStats = append(curClusterStats, tempClusterStats...)
 
-			fmt.Println("当前状态是 ", len(curClusterStats[0].containerStatus))
+			// fmt.Println("当前状态是 ", curClusterStats)
 			timeSlot.Reset(time.Second * 100)
 		}
 	}
 
+}
+
+func loadCurrentContainer() { //初始化时，将现有容器放入缓存区中
+	delaySecond(5)
+	for _, v := range curClusterStats {
+		if v.machineStatus.cpuCore == -1 {
+			continue
+		}
+		for _, vv := range v.containerStatus {
+			var temp containerCreated
+			temp.Status = 100 //开始时就装入的
+			temp.Instance.ServerIP = vv.serverIP
+			temp.Instance.ServerPort = vv.port
+			temp.Instance.containerID = vv.id
+			CacheContainer.Add(vv.id, temp)
+		}
+	}
+	// fmt.Println("状态是", GetCurrentClusterStatus())
+	t := CacheContainer.Keys()
+	for _, v := range t {
+		tt, _ := CacheContainer.Get(v)
+		fmt.Println("值是", tt)
+	}
+	// return nil
 }

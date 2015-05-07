@@ -3,7 +3,7 @@
 	{
 		"host":"192.168.0.33",
 		"dockerport":4243,
-		"cadvisorport":8080
+		"cadvisorport":8081
 		},
 	{
 		"host":"",

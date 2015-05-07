@@ -10,12 +10,18 @@ import (
 	"io/ioutil"
 	"net/http"
 	// "strconv"
+	"errors"
 	"time"
 )
 
 var callCount int
 var CpuThreshold float64 = 0.9 // the threshold of overload
 var MemThreshold float64 = 0.9
+
+type reError struct { //函数返回的结果
+	msg string
+	err error
+}
 
 func isOverload(CpuUsage, MemUsage float64) bool {
 	// cpu 大于 90% ，内存大于 90% 视为过载
@@ -30,7 +36,73 @@ func delaySecond(n time.Duration) {
 	time.Sleep(n * time.Second)
 }
 
-func createNewContainer(serverIP string, imageName string) containerAddr { //创建新的人容器
+func createNewContainer(serverIP string, imageName string) (containerAddr, reError) { //创建新的容器
+	createURL := "http://" + serverIP + ":9090/createrunner/" + imageName
+	client := &http.Client{}
+	req, reqError := http.NewRequest("POST", createURL, nil)
+
+	if reqError != nil {
+		return containerAddr{"", 0, ""}, reError{"req初始化失败", reqError}
+	}
+
+	for i := 0; i < 10; i++ { //发送创建容器的请求，最多10秒钟
+		resq, req1Err := client.Do(req)
+		if req1Err != nil {
+			//发送失败,直接退出
+			return containerAddr{"", 0, ""}, reError{"发送创建请求失败", req1Err}
+		}
+		data, err := ioutil.ReadAll(resq.Body)
+		if err != nil {
+			//数据读取失败，直接退出
+			return containerAddr{"", 0, ""}, reError{"创建请求结果无法读取", err}
+		}
+		defer resq.Body.Close()
+		createResult, errR := jason.NewObjectFromBytes(data)
+		if errR != nil {
+			return containerAddr{"", 0, ""}, reError{"创建请求结果解析出错", errR}
+		}
+		createStatus, errS := createResult.GetInt64("status")
+		if errS != nil {
+			return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析", errS}
+		}
+		if createStatus == 3 { //创建成功
+			containerHost, errCH := createResult.GetString("hosts")
+			if errCH != nil {
+				return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析出主机地址", errCH}
+			}
+			containerInfo, errCI := createResult.GetObject("instances")
+			if errCI != nil {
+				return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析出容器信息", errCI}
+			}
+			containerPort, errCP := containerInfo.GetInt64("port")
+			if errCP != nil {
+				return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析出容器端口", errCP}
+			}
+			containerId, errCID := containerInfo.GetString("container_id")
+			if errCID != nil {
+				return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析出容器ID", errCID}
+			}
+
+			return containerAddr{containerHost, int(containerPort), containerId}, reError{"", nil}
+
+		} else if createStatus == 1 { //延迟后重新请求
+			delaySecond(1)
+			continue
+
+		} else if createStatus == 2 { //重新调用创建api
+			continue
+		} else if createStatus == 6 { //pull失败
+			return containerAddr{"", 0, ""}, reError{"无法获取镜像", errors.New("无法获取镜像")}
+		}
+
+	}
+
+	//timeout
+	return containerAddr{"", 0, ""}, reError{"创建镜像超时", errors.New("创建镜像超时")}
+
+}
+
+func AbandonedCreateNewContainer(serverIP string, imageName string) containerAddr { //创建新的人容器
 	// fmt.Println("我是新建的函数")
 	createURL := "http://" + serverIP + ":9090/createrunner/" + imageName
 	// reqContent := ""
@@ -66,6 +138,8 @@ func createNewContainer(serverIP string, imageName string) containerAddr { //创
 
 		containerHost, err1 := findResult.GetString("hosts")
 		containerArray, err2 := findResult.GetObjectArray("instances")
+		fmt.Println("地址是", findURL)
+		fmt.Println("返回内容是", findResult)
 		containerId, err3 := containerArray[len(containerArray)-1].GetString("container_id")
 		containerPort, err4 := containerArray[len(containerArray)-1].GetInt64("port")
 		// containerPort, err5 := strconv.Atoi(containerPort)
@@ -133,6 +207,25 @@ func GetContainerLoad(cs containerStat) float64 { //CPU和RAM使用率百分比�
 	return (cs.cpuUsage + memUsage) / 2
 }
 
+func GetClusterLoad(currentServerStatus []curServerStatus) (float64, error) { // ServerLoad的算术平均，因为每台服务器都是等价的
+	totalLoad := float64(0)
+	if len(currentServerStatus) < 1 {
+		return 0, errors.New("没有可用的服务器,无法获取集群负载")
+	}
+	for _, v := range currentServerStatus {
+		totalLoad = total + GetServerLoad(v.machineStatus)
+	}
+	return totalLoad / len(currentServerStatus), nil
+}
+
+func PurgeContainer() { //若集群负载高于90%，清除最久未被使用的容器，直到集群负载低于85%
+
+}
+
+func isDeamonContainer() bool { //判断是否是运行持久服务的容器
+
+}
+
 func ServerPriority(currentServerStatus []curServerStatus) containerAddr { //选择负载最低的服务器，新建容器,直接返回服务器IP
 	serverNum := len(currentServerStatus)
 	if serverNum == 0 {
@@ -191,11 +284,13 @@ func sortServerByLoad(currentServerStatus []curServerStatus) []curServerStatus {
 	return re
 }
 
-func ServerAndContainer(currentServerStatus []curServerStatus, imageName string) containerAddr { //优先选择已有的容器，容器及服务器都不过载则分配此容器，容器过载则重新分配容器；服务器过载则查找下一个服务器
+func ServerAndContainer(currentServerStatus []curServerStatus, imageName string) containerCreated { //优先选择已有的容器，容器及服务器都不过载则分配此容器，容器过载则重新分配容器；服务器过载则查找下一个服务器
+	//status2表示容器创建成功，3表示分配现有的容器，6表示失败
 	/*上述方案并不好，容器导致任务重的服务器负载越来越重，修改如下:
 	*	先选择负载轻的服务器，在上面查找容器，选择负载最轻的容器分配(需要能够查出多个容器的函数)
 	 */
 	sortedServerStatus := sortServerByLoad(currentServerStatus)
+	var re containerCreated
 	for _, v := range sortedServerStatus {
 		//查找容器，找到且不过载则分配，找不到继续查找
 		//循环结束后仍没有找到，则选择第一个（负载最轻的服务器分配）
@@ -207,13 +302,35 @@ func ServerAndContainer(currentServerStatus []curServerStatus, imageName string)
 			continue
 		} else {
 			//todo 选择第一个镜像进行分配,同时return
-			return containerAddr{v.containerStatus[imageList[0]].serverIP, v.containerStatus[imageList[0]].port, v.containerStatus[imageList[0]].id}
-
+			// return containerAddr{v.containerStatus[imageList[0]].serverIP, v.containerStatus[imageList[0]].port, v.containerStatus[imageList[0]].id}
+			// var temp
+			re.Status = 3
+			re.Instance.ServerIP = v.containerStatus[imageList[0]].serverIP
+			re.Instance.ServerPort = v.containerStatus[imageList[0]].port
+			re.Instance.containerID = v.containerStatus[imageList[0]].id
+			return re
 		}
 	}
 	//执行到这里说明没有找到镜像，返回第一台服务器的ip即可,也就是当前负载最低的服务器
 	// return containerAddr{currentServerStatus[0].machineStatus.Host, 0}
-	return createNewContainer(sortedServerStatus[0].machineStatus.Host, imageName)
+	// fmt.Println("排序后是", len(currentServerStatus))
+	// fmt.Println("集群状态是", currentServerStatus)
+	// return containerAddr
+	temp, err := createNewContainer(sortedServerStatus[0].machineStatus.Host, imageName)
+	if err.err != nil { //出错
+		// re := containerCreated{6, {"", temp, 0}}
+		re.Status = 6
+		re.Instance = temp
+		return re
+	} else { //正确
+		// re := containerCreated{3, {temp.ServerIP, temp.ServerPort}}
+		re.Status = 2
+		re.Instance = temp
+		return re
+	}
+
+	// return temp
+	// return createNewContainer(sortedServerStatus[0].machineStatus.Host, imageName)
 
 	// return containerAddr{sortedServerStatus[0].machineStatus.Host, 0, ""}
 
