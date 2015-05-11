@@ -6,11 +6,13 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	"sync"
+	// "fmt"
 	// "github.com/Sirupsen/logrus"
 	"github.com/antonholmquist/jason"
 	"github.com/fsouza/go-dockerclient"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -20,7 +22,7 @@ import (
 
 // var logger = logrus.New()
 var ContainerMemCapacity = float64(20971520) //default container memory capacity is 20MB
-
+var l sync.RWMutex
 var curClusterStats = make([]curServerStatus, 0, 5) //the global variable is current server stats and container stats
 
 var curClusterLoad float64
@@ -60,6 +62,7 @@ func getInitialServerAddr() serverConfig { // get default server info from ./met
 	if err != nil {
 		logger.Error(err)
 	}
+	// fmt.Println("初始服务器地址是", c)
 	return c
 
 }
@@ -133,10 +136,25 @@ func getServerStats(serverList serverConfig) []serverStat { // get current serve
 		reqContent := "{\"num_stats\":2,\"num_samples\":0}"
 		body := ioutil.NopCloser(strings.NewReader(reqContent))
 		client := &http.Client{}
-		req, _ := http.NewRequest("POST", posturl, body)
-		resq, _ := client.Do(req)
+		req, errReq := http.NewRequest("POST", posturl, body)
+		if errReq != nil {
+			logger.Errorln("初始化错误", errReq)
+			su[index].cpuCore = -1
+			continue
+		}
+		resq, errResq := client.Do(req)
 		defer resq.Body.Close()
-		data, _ := ioutil.ReadAll(resq.Body)
+		if errResq != nil {
+			logger.Errorln("初始化错误", errResq)
+			su[index].cpuCore = -1
+			continue
+		}
+		data, errData := ioutil.ReadAll(resq.Body)
+		if errData != nil {
+			logger.Errorln("初始化错误", errData)
+			su[index].cpuCore = -1
+			continue
+		}
 		// fmt.Println(string(data), err)
 
 		t, _ := jason.NewObjectFromBytes(data)
@@ -214,6 +232,12 @@ func getValidContainerName(url string) []string { //返回字符串为docker名�
 	// return containerNameList
 	return containerNameList
 }
+
+type HostAndIp struct {
+	HostIp   string
+	HostPort string
+}
+
 func getImageNameByContainerName(serverUrl string, containerName string) map[string]string { //返回内容为:镜像名称，容器对外端口
 	// http://ip:port， docker/id
 	id := subSubstring(containerName, 8, 100) //猜测不会超过100个字符，实际等同于从第8个字符开始截取
@@ -225,8 +249,20 @@ func getImageNameByContainerName(serverUrl string, containerName string) map[str
 	if err != nil {
 		return make(map[string]string)
 	}
-	fmt.Println("imgs is", containerInfo.Config.Image)
-	temp := containerInfo.NetworkSettings.Ports["8080/tcp"]
+	// fmt.Println("imgs is", containerInfo.Config.Image)
+	//记录当前容器
+	// log.Println("imgs is ", containerInfo.Config.Image)
+	// temp := containerInfo.NetworkSettings.Ports["8080/tcp"]
+	// temp := HostAndIp{"", ""}
+	var temp []docker.PortBinding
+
+	for _, v := range containerInfo.NetworkSettings.Ports {
+		if v != nil {
+			temp = v
+
+			break
+		}
+	}
 	if len(temp) == 0 {
 		re := map[string]string{
 			"ImageName":   containerInfo.Config.Image,
@@ -256,9 +292,19 @@ func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, Contain
 		reqContent := "{\"num_stats\":2,\"num_samples\":0}"
 		body := ioutil.NopCloser(strings.NewReader(reqContent))
 		client := &http.Client{}
-		req, _ := http.NewRequest("POST", posturl, body)
-		resq, _ := client.Do(req)
+		req, errReq := http.NewRequest("POST", posturl, body)
+		if errReq != nil {
+			logger.Errorln("初始化错误", errReq)
+			cs[index].cpuUsage = -1
+			continue
+		}
+		resq, errResq := client.Do(req)
 		defer resq.Body.Close()
+		if errResq != nil {
+			logger.Errorln("请求错误错误", errResq)
+			cs[index].cpuUsage = -1
+			continue
+		}
 		data, _ := ioutil.ReadAll(resq.Body)
 
 		// fmt.Println("test")
@@ -292,13 +338,20 @@ func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, Contain
 		cs[index].id = subSubstring(ContainerNameList[index], 8, 20)
 		// cs[index].name = getImageNameByContainerName(cs[index].serverAddr, ContainerNameList[index])
 		iif := getImageNameByContainerName("http://"+cs[index].serverIP+":"+"4243", ContainerNameList[index])
-		cs[index].name = iif["ImageName"]
+		// cs[index].name = iif["ImageName"]
+		tttt := strings.Split(iif["ImageName"], "/")
+		if len(tttt) > 1 {
+			cs[index].name = tttt[1]
+		} else {
+			cs[index].name = iif["ImageName"]
+		}
+		// cs[index].name = strings.Split(iif["ImageName"], "/")
 		tempPort, _ := (strconv.Atoi(iif["ExpostdPort"]))
 		cs[index].port = int(tempPort)
-		fmt.Println("serverip is ", cs[index].serverIP)
-		fmt.Println("image name is ", iif["ImageName"])
-		fmt.Println("container id is ", cs[index].id)
-		fmt.Println("container port is ", cs[index].port)
+		/*		fmt.Println("serverip is ", cs[index].serverIP)
+				fmt.Println("image name is ", iif["ImageName"])
+				fmt.Println("container id is ", cs[index].id)
+				fmt.Println("container port is ", cs[index].port)*/
 		// cs[index].serverAddr = serverUrl
 		// fmt.Println("container cpu is ", cs[index].cpuUsage)
 
@@ -310,7 +363,18 @@ func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, Contain
 }
 
 func GetCurrentClusterStatus() []curServerStatus { // return current curClusterStatus
+	l.Lock()
+	defer l.Unlock()
+	log.Println("读锁")
 	return curClusterStats
+}
+func SetCurrentClusterStatus(newStat []curServerStatus) {
+	l.Lock()
+	defer l.Unlock()
+	log.Println("写锁")
+	curClusterStats = curClusterStats[0:0]
+	curClusterStats = append(curClusterStats, newStat...)
+	return
 }
 
 func StartDeamon() { // load the initial server info from ./metadata/config.json
@@ -326,12 +390,13 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 			//TODO the codes to update
 			// fmt.Println(serverSStats)
 			serverSStats := getServerStats(servers) //因为服务器可能 发生 在线\不在线的变化
-			tempClusterStats := curClusterStats[0:0]
-
+			// tempClusterStats := curClusterStats[0:0]
+			// tempClusterStats := GetCurrentClusterStatus()[0:0]
+			tempClusterStats := make([]curServerStatus, 0, 1)
 			for index := 0; index < len(serverSStats); index++ {
 				var temp curServerStatus
 				tempClusterStats = append(tempClusterStats, temp)
-				if serverSStats[index].cpuCore == -1 {
+				if serverSStats[index].cpuCore == -1 { //由于getServerStats中已经有判断，这里没有必要
 					tempClusterStats[index].machineStatus.cpuCore = -1
 					continue
 				}
@@ -359,40 +424,21 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 				// cs := getContainerStat("http://"+serverSStats[index].Host+":"+strconv.Itoa(serverSStats[index].CAdvisorPort), containerNames)
 				cs := getContainerStat(serverSStats[index].Host, serverSStats[index].CAdvisorPort, serverSStats[index].DockerPort, containerNames)
 				// fmt.Println("containers is ", cs)
+				// log.Println("更新容器状态是", cs)
 				tempClusterStats[index].containerStatus = append(tempClusterStats[index].containerStatus, cs...)
 
 			}
 			// return
-			curClusterStats = curClusterStats[0:0]
-			curClusterStats = append(curClusterStats, tempClusterStats...)
-
+			/*			curClusterStats = curClusterStats[0:0]
+						curClusterStats = append(curClusterStats, tempClusterStats...)*/
+			// log.Println("更新状态")
+			SetCurrentClusterStatus(tempClusterStats) //加上了读写锁
+			//记录集群状态
+			// log.Println("更新集群状态是", tempClusterStats)
+			// log.Println("集群状态是", GetCurrentClusterStatus())
 			// fmt.Println("当前状态是 ", curClusterStats)
-			timeSlot.Reset(time.Second * 100)
+			timeSlot.Reset(time.Second * 2)
 		}
 	}
 
-}
-
-func loadCurrentContainer() { //初始化时，将现有容器放入缓存区中
-	delaySecond(5)
-	for _, v := range curClusterStats {
-		if v.machineStatus.cpuCore == -1 {
-			continue
-		}
-		for _, vv := range v.containerStatus {
-			var temp containerCreated
-			temp.Status = 100 //开始时就装入的
-			temp.Instance.ServerIP = vv.serverIP
-			temp.Instance.ServerPort = vv.port
-			temp.Instance.containerID = vv.id
-			CacheContainer.Add(vv.id, temp)
-		}
-	}
-	// fmt.Println("状态是", GetCurrentClusterStatus())
-	t := CacheContainer.Keys()
-	for _, v := range t {
-		tt, _ := CacheContainer.Get(v)
-		fmt.Println("值是", tt)
-	}
-	// return nil
 }

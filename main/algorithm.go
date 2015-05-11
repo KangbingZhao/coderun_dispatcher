@@ -11,6 +11,8 @@ import (
 	"net/http"
 	// "strconv"
 	"errors"
+	"log"
+	// "strings"
 	"time"
 )
 
@@ -207,25 +209,6 @@ func GetContainerLoad(cs containerStat) float64 { //CPU和RAM使用率百分比�
 	return (cs.cpuUsage + memUsage) / 2
 }
 
-func GetClusterLoad(currentServerStatus []curServerStatus) (float64, error) { // ServerLoad的算术平均，因为每台服务器都是等价的
-	totalLoad := float64(0)
-	if len(currentServerStatus) < 1 {
-		return 0, errors.New("没有可用的服务器,无法获取集群负载")
-	}
-	for _, v := range currentServerStatus {
-		totalLoad = total + GetServerLoad(v.machineStatus)
-	}
-	return totalLoad / len(currentServerStatus), nil
-}
-
-func PurgeContainer() { //若集群负载高于90%，清除最久未被使用的容器，直到集群负载低于85%
-
-}
-
-func isDeamonContainer() bool { //判断是否是运行持久服务的容器
-
-}
-
 func ServerPriority(currentServerStatus []curServerStatus) containerAddr { //选择负载最低的服务器，新建容器,直接返回服务器IP
 	serverNum := len(currentServerStatus)
 	if serverNum == 0 {
@@ -244,6 +227,7 @@ func ServerPriority(currentServerStatus []curServerStatus) containerAddr { //选
 }
 
 func findImagesInServer(currentServerStatus curServerStatus, imageName string) []int {
+	// fmt.Println("当前容器", currentServerStatus.containerStatus)
 	// 从一台服务器选出所有符合条件的容器，，按使用率从小到大排序后返回Slice
 	re := make([]int, 0, 5)
 	for i, v := range currentServerStatus.containerStatus {
@@ -251,18 +235,26 @@ func findImagesInServer(currentServerStatus curServerStatus, imageName string) [
 			re = append(re, i)
 		}
 	}
+	// fmt.Println("执行zz")
 	if len(re) < 2 {
 		return re
 	}
+	// fmt.Println("执行xx")
+	// fmt.Println("RE是", len(re))
 	for i1 := 0; i1 < len(re)-1; i1++ { //对选出的容器，按使用率从小到大排序
 		for i2 := 0; i2 < len(re)-i1-1; i2++ {
 			if GetContainerLoad(currentServerStatus.containerStatus[re[i1]]) > GetContainerLoad(currentServerStatus.containerStatus[re[i2]]) {
-				temp := i2
+				/*temp := i2
 				i2 = i1
-				i1 = temp
+				i1 = temp*/
+				temp := re[i2]
+				re[i2] = re[i1]
+				re[i1] = temp
+				// fmt.Println("i1:i2", i1, " ", i2)
 			}
 		}
 	}
+	// fmt.Println("执行za")
 	return re
 }
 
@@ -292,18 +284,34 @@ func ServerAndContainer(currentServerStatus []curServerStatus, imageName string)
 	sortedServerStatus := sortServerByLoad(currentServerStatus)
 	var re containerCreated
 	for _, v := range sortedServerStatus {
+		// fmt.Println("执行")
 		//查找容器，找到且不过载则分配，找不到继续查找
 		//循环结束后仍没有找到，则选择第一个（负载最轻的服务器分配）
 		if GetServerLoad(v.machineStatus) > 0.9 { //负载过高，不再分配
+			// fmt.Println("执行12")
 			continue
 		}
 		imageList := findImagesInServer(v, imageName)
+		fmt.Println("镜像名", imageName)
+		// fmt.Println("列表", imageList)
 		if len(imageList) == 0 { //不存在对应的容器
+			// fmt.Println("执行22")
+			log.Println("分配时没有找到容器", imageName)
+			// log.Println("初始集群状态", currentServerStatus)
+			// log.Println("排序集群状态", sortedServerStatus)
+			// log.Println("当前集群状态", GetCurrentClusterStatus())
 			continue
 		} else {
 			//todo 选择第一个镜像进行分配,同时return
 			// return containerAddr{v.containerStatus[imageList[0]].serverIP, v.containerStatus[imageList[0]].port, v.containerStatus[imageList[0]].id}
 			// var temp
+			// fmt.Println("执行33")
+			// log.Println("找到容器，集群状态", sortedServerStatus)
+			if GetContainerLoad(v.containerStatus[imageList[0]]) > 0.9 {
+				log.Println("容器过载，不再分配此容器", v.containerStatus[imageList[0]].id)
+				continue
+			}
+
 			re.Status = 3
 			re.Instance.ServerIP = v.containerStatus[imageList[0]].serverIP
 			re.Instance.ServerPort = v.containerStatus[imageList[0]].port
@@ -316,6 +324,7 @@ func ServerAndContainer(currentServerStatus []curServerStatus, imageName string)
 	// fmt.Println("排序后是", len(currentServerStatus))
 	// fmt.Println("集群状态是", currentServerStatus)
 	// return containerAddr
+	log.Println("没有合适的容器需要创建")
 	temp, err := createNewContainer(sortedServerStatus[0].machineStatus.Host, imageName)
 	if err.err != nil { //出错
 		// re := containerCreated{6, {"", temp, 0}}
@@ -326,6 +335,7 @@ func ServerAndContainer(currentServerStatus []curServerStatus, imageName string)
 		// re := containerCreated{3, {temp.ServerIP, temp.ServerPort}}
 		re.Status = 2
 		re.Instance = temp
+		log.Println("创建容器成功", re.Instance)
 		return re
 	}
 

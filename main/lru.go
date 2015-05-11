@@ -144,6 +144,15 @@ func (c *Cache) removeOldest() {
 	}
 }
 
+func (c *Cache) GetOldestKey() (interface{}, error) { //added by zhaokangbing,return the oldest item's key
+	ent := c.evictList.Back()
+	if ent != nil {
+		return ent.Value.(*entry).key, nil
+	} else {
+		return nil, errors.New("无法获取最后一个元素")
+	}
+}
+
 // removeElement is used to remove a given list element from the cache
 func (c *Cache) removeElement(e *list.Element) {
 	c.evictList.Remove(e)
