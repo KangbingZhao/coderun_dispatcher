@@ -12,6 +12,7 @@ import (
 	// "strconv"
 	"errors"
 	"log"
+	// "math"
 	// "strings"
 	"time"
 )
@@ -35,19 +36,20 @@ func isOverload(CpuUsage, MemUsage float64) bool {
 }
 
 func delaySecond(n time.Duration) {
+	// func delaySecond(n int) {
 	time.Sleep(n * time.Second)
 }
 
 func createNewContainer(serverIP string, imageName string) (containerAddr, reError) { //创建新的容器
 	createURL := "http://" + serverIP + ":9090/createrunner/" + imageName
-	client := &http.Client{}
-	req, reqError := http.NewRequest("POST", createURL, nil)
 
-	if reqError != nil {
-		return containerAddr{"", 0, ""}, reError{"req初始化失败", reqError}
-	}
-
-	for i := 0; i < 10; i++ { //发送创建容器的请求，最多10秒钟
+	for i := 0; i < 20; i++ { //发送创建容器的请求，最多10秒钟
+		client := &http.Client{}
+		req, reqError := http.NewRequest("POST", createURL, nil)
+		log.Println("创建URL是", createURL)
+		if reqError != nil {
+			return containerAddr{"", 0, ""}, reError{"req初始化失败", reqError}
+		}
 		resq, req1Err := client.Do(req)
 		if req1Err != nil {
 			//发送失败,直接退出
@@ -63,11 +65,13 @@ func createNewContainer(serverIP string, imageName string) (containerAddr, reErr
 		if errR != nil {
 			return containerAddr{"", 0, ""}, reError{"创建请求结果解析出错", errR}
 		}
+		log.Println("返回结果是", createResult)
 		createStatus, errS := createResult.GetInt64("status")
 		if errS != nil {
 			return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析", errS}
 		}
 		if createStatus == 3 { //创建成功
+			log.Println("创建成功!")
 			containerHost, errCH := createResult.GetString("hosts")
 			if errCH != nil {
 				return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析出主机地址", errCH}
@@ -88,12 +92,16 @@ func createNewContainer(serverIP string, imageName string) (containerAddr, reErr
 			return containerAddr{containerHost, int(containerPort), containerId}, reError{"", nil}
 
 		} else if createStatus == 1 { //延迟后重新请求
+			log.Println("延迟后重新请求")
 			delaySecond(1)
 			continue
 
 		} else if createStatus == 2 { //重新调用创建api
+			log.Println("重新调用,id是", imageName, "Status is ", createStatus)
+			delaySecond(1)
 			continue
 		} else if createStatus == 6 { //pull失败
+			log.Println("Pull失败，id是", imageName)
 			return containerAddr{"", 0, ""}, reError{"无法获取镜像", errors.New("无法获取镜像")}
 		}
 
@@ -201,6 +209,9 @@ func LCS(currentServerStatus []curServerStatus) containerAddr { // Lease-Connect
 
 func GetServerLoad(ss serverStat) float64 { //CPU和RAM使用率百分比的加权平均，暂定为0.5、0.5
 	memUsage := ss.memUsageTotal / ss.memCapacity
+	// log.Println("内存容器是", ss.memCapacity)
+	// log.Println("内存用量是", ss.memUsageTotal)
+	// log.Println("CPU用量是", ss.cpuUsage)
 	return (ss.cpuUsage + memUsage) / 2
 }
 
@@ -325,11 +336,13 @@ func ServerAndContainer(currentServerStatus []curServerStatus, imageName string)
 	// fmt.Println("集群状态是", currentServerStatus)
 	// return containerAddr
 	log.Println("没有合适的容器需要创建")
+	log.Println("sort长度是", len(sortedServerStatus))
 	temp, err := createNewContainer(sortedServerStatus[0].machineStatus.Host, imageName)
 	if err.err != nil { //出错
 		// re := containerCreated{6, {"", temp, 0}}
 		re.Status = 6
 		re.Instance = temp
+		log.Println("错误是", err.err)
 		return re
 	} else { //正确
 		// re := containerCreated{3, {temp.ServerIP, temp.ServerPort}}

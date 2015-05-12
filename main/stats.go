@@ -12,7 +12,7 @@ import (
 	"github.com/antonholmquist/jason"
 	"github.com/fsouza/go-dockerclient"
 	"io/ioutil"
-	"log"
+	// "log"
 	"net/http"
 	"os"
 	"strconv"
@@ -174,6 +174,19 @@ func getServerStats(serverList serverConfig) []serverStat { // get current serve
 		// fmt.Println("tiCPU is ", t1CPUUsage, t2CPUUsage)
 		su[index].cpuUsage = (t1CPUUsage - t2CPUUsage) / intervalInNs
 
+		if su[index].cpuUsage < 0 {
+			su[index].cpuUsage = -su[index].cpuUsage
+			// log.Println("CPU真复试", su[index].cpuUsage)
+
+		}
+
+		// ppp := GetCurrentClusterStatus()
+		if intervalInNs < 1 && intervalInNs > -1 {
+			su[index].cpuUsage = 0.01
+
+			// cs[index].cpuUsage = ppp[0].machineStatus.cpuUsage
+		}
+
 		memoryUsageTotal, _ := stats[1].GetFloat64("memory", "usage")
 		memoryUsageWorking, _ := stats[1].GetFloat64("memory", "working_set")
 		su[index].memUsageTotal = memoryUsageTotal
@@ -289,7 +302,7 @@ func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, Contain
 		posturl := serverUrl + "/api/v1.0/containers" + ContainerNameList[index]
 		// fmt.Println("posturl is ", posturl)
 		// continue
-		reqContent := "{\"num_stats\":2,\"num_samples\":0}"
+		reqContent := "{\"num_stats\":11,\"num_samples\":0}"
 		body := ioutil.NopCloser(strings.NewReader(reqContent))
 		client := &http.Client{}
 		req, errReq := http.NewRequest("POST", posturl, body)
@@ -312,7 +325,7 @@ func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, Contain
 		// fmt.Println("t是神马", data)
 		stats, _ := t.GetObjectArray("stats") //从cAdvisor获取的最近两个stat,1是最新的
 		// fmt.Println("len is ", len(stats))
-		t1, _ := stats[1].GetString("timestamp")
+		t1, _ := stats[10].GetString("timestamp")
 		t2, _ := stats[0].GetString("timestamp")
 		// fmt.Println("test")
 		// fmt.Println("timestamp1 is ", t1, "the timestamp 2 is", t2)
@@ -323,13 +336,26 @@ func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, Contain
 		intervalInNs := (t1Time - t2Time) * 1000000000 //单位是纳秒
 		// fmt.Println("test")
 		// fmt.Println("interval is ", intervalInNs)
-		t1CPUUsage, _ := stats[1].GetFloat64("cpu", "usage", "total")
+		t1CPUUsage, _ := stats[10].GetFloat64("cpu", "usage", "total")
 		t2CPUUsage, _ := stats[0].GetFloat64("cpu", "usage", "total")
 		// fmt.Println("tiCPU is ", t1CPUUsage, t2CPUUsage)
 		cs[index].cpuUsage = (t1CPUUsage - t2CPUUsage) / intervalInNs
+		if cs[index].cpuUsage < 0 {
+			cs[index].cpuUsage = -cs[index].cpuUsage
+			// log.Println("CPU真复试", cs[index].cpuUsage)
 
-		memoryUsageTotal, _ := stats[1].GetFloat64("memory", "usage")
-		memoryUsageWorking, _ := stats[1].GetFloat64("memory", "working_set")
+		}
+
+		// ppp := GetCurrentClusterStatus()
+		if intervalInNs < 1 && intervalInNs > -1 {
+			cs[index].cpuUsage = 0.01
+
+			// cs[index].cpuUsage = ppp[0].machineStatus.cpuUsage
+		}
+		// log.Println("时间间隔是", intervalInNs)
+		// log.Println("第一个时间", t1Time, "第二个是", t2Time)
+		memoryUsageTotal, _ := stats[10].GetFloat64("memory", "usage")
+		memoryUsageWorking, _ := stats[10].GetFloat64("memory", "working_set")
 
 		cs[index].memUsageTotal = memoryUsageTotal
 		cs[index].memeUsageHot = memoryUsageWorking
@@ -365,13 +391,13 @@ func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, Contain
 func GetCurrentClusterStatus() []curServerStatus { // return current curClusterStatus
 	l.Lock()
 	defer l.Unlock()
-	log.Println("读锁")
+	// log.Println("读锁")
 	return curClusterStats
 }
 func SetCurrentClusterStatus(newStat []curServerStatus) {
 	l.Lock()
 	defer l.Unlock()
-	log.Println("写锁")
+	// log.Println("写锁")
 	curClusterStats = curClusterStats[0:0]
 	curClusterStats = append(curClusterStats, newStat...)
 	return

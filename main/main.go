@@ -56,6 +56,7 @@ func dispatchContainer(w http.ResponseWriter, enc Encoder, r *http.Request) (int
 	curClusterStat := GetCurrentClusterStatus()
 
 	ip := ServerAndContainer(curClusterStat, in.ImageName)
+	// ip := RR(curClusterStat)
 	if ip.Status == 6 { //分配容器出错了
 
 	} else if ip.Status == 3 { //使用了现有的容器
@@ -84,7 +85,7 @@ func dispatchContainer(w http.ResponseWriter, enc Encoder, r *http.Request) (int
 	// fmt.Println("分配的IP是", ip.Instance.ServerIP)
 	// fmt.Println("当前id是", ip.Instance.containerID)
 	fmt.Println("分配信息是", ip)
-
+	// fmt.Println("集群状态", GetCurrentClusterStatus())
 	log.Println("分配成功！请求容器是", in.ImageName, "分配结果是", ip)
 	// RestrictContainer(curClusterStat)
 	/*	t := evictElement(ip)

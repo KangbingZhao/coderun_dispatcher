@@ -45,7 +45,7 @@ func getInitialServiceContainers() (serviceContainers, error) { //从serviceCont
 }
 
 func loadCurrentContainer() { //初始化时，将现有容器放入缓存区中,排除ServiceContainer
-	delaySecond(5)
+	// delaySecond(5)
 	TcurClusterStats := GetCurrentClusterStatus()
 	for _, v := range TcurClusterStats {
 		if v.machineStatus.cpuCore == -1 {
@@ -91,7 +91,9 @@ func GetClusterLoad(currentServerStatus []curServerStatus) (float64, error) { //
 	}
 	for _, v := range currentServerStatus {
 		totalLoad = totalLoad + GetServerLoad(v.machineStatus)
+		// log.Println("机器", i, "的负载时", GetServerLoad(v.machineStatus))
 	}
+	// log.Println("长度", len(currentServerStatus), "总负载", totalLoad)
 	return totalLoad / float64(len(currentServerStatus)), nil
 }
 
@@ -181,6 +183,7 @@ func RestrictContainer(currentServerStatus []curServerStatus) { //若集群负�
 }
 
 func StartCacheDeamon() {
+	delaySecond(5)
 	timeSlot := time.NewTimer(time.Second * 1) // update status every second
 	//读取持久化服务列表，供载入现有容器时过滤
 	InitialServiceContainers, err := getInitialServiceContainers()
@@ -204,9 +207,12 @@ func StartCacheDeamon() {
 			// CurCLoad, errCCL := GetClusterLoad(curClusterStats)
 			CurCLoad, errCCL := GetClusterLoad(GetCurrentClusterStatus())
 			if errCCL != nil {
-				logger.Errorln("CacheDeamon中无法获取集群负载")
+				log.Println("CacheDeamon中无法获取集群负载")
+				log.Println("错误是", errCCL)
+				log.Println("集群状态是", GetCurrentClusterStatus())
 			} else if CurCLoad > 0.9 {
 				RestrictContainer(GetCurrentClusterStatus()) //定期清理容器
+				log.Println("开启了RestrictContainer,Load是", CurCLoad)
 			}
 			// fmt.Println("执行到deamon了")
 			timeSlot.Reset(time.Second * 2)
