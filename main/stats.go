@@ -6,13 +6,13 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"sync"
-	// "fmt"
 	// "github.com/Sirupsen/logrus"
 	"github.com/antonholmquist/jason"
 	"github.com/fsouza/go-dockerclient"
 	"io/ioutil"
-	// "log"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -389,8 +389,8 @@ func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, Contain
 }
 
 func GetCurrentClusterStatus() []curServerStatus { // return current curClusterStatus
-	l.Lock()
-	defer l.Unlock()
+	l.RLock()
+	defer l.RUnlock()
 	// log.Println("读锁")
 	return curClusterStats
 }
@@ -415,6 +415,7 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 		case <-timeSlot.C:
 			//TODO the codes to update
 			// fmt.Println(serverSStats)
+			a := time.Now()
 			serverSStats := getServerStats(servers) //因为服务器可能 发生 在线\不在线的变化
 			// tempClusterStats := curClusterStats[0:0]
 			// tempClusterStats := GetCurrentClusterStatus()[0:0]
@@ -461,9 +462,11 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 			SetCurrentClusterStatus(tempClusterStats) //加上了读写锁
 			//记录集群状态
 			// log.Println("更新集群状态是", tempClusterStats)
-			// log.Println("集群状态是", GetCurrentClusterStatus())
+			log.Println("集群状态是", GetCurrentClusterStatus())
 			// fmt.Println("当前状态是 ", curClusterStats)
-			timeSlot.Reset(time.Second * 2)
+			// timeSlot.Reset(time.Second * 2)
+			fmt.Println("更新状态耗时", time.Now().Sub(a))
+			timeSlot.Reset(time.Millisecond * 50)
 		}
 	}
 

@@ -67,7 +67,7 @@ func loadCurrentContainer() { //初始化时，将现有容器放入缓存区中
 	t := CacheContainer.Keys()
 	for _, v := range t {
 		tt, _ := CacheContainer.Get(v)
-		fmt.Println("值是", tt)
+		fmt.Println("装入缓存内容是", tt)
 	}
 	// return nil
 }
@@ -153,7 +153,7 @@ func RestrictContainer(currentServerStatus []curServerStatus) { //若集群负�
 					// fmt.Println("转换成功")
 					removeResult := evictElement(tar)
 					if removeResult != nil {
-						log.Fatalln("清理容器时出错")
+						log.Fatalln("清理容器时出错", removeResult)
 						fmt.Println(removeResult)
 					} else {
 						log.Println("清理容器成功", tar.Instance.containerID)

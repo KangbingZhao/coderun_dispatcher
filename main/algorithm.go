@@ -212,11 +212,19 @@ func GetServerLoad(ss serverStat) float64 { //CPU和RAM使用率百分比的加�
 	// log.Println("内存容器是", ss.memCapacity)
 	// log.Println("内存用量是", ss.memUsageTotal)
 	// log.Println("CPU用量是", ss.cpuUsage)
+	if ss.cpuUsage > 0.9 || memUsage > 0.9 {
+		return 1.0
+	}
 	return (ss.cpuUsage + memUsage) / 2
 }
 
 func GetContainerLoad(cs containerStat) float64 { //CPU和RAM使用率百分比的加权平均，暂定为0.5、0.5
 	memUsage := cs.memUsageTotal / cs.memCapacity
+	fmt.Println("内存占用率过高", cs.memUsageTotal)
+	if cs.cpuUsage > 0.9 || memUsage > 0.9 {
+
+		return 1.0
+	}
 	return (cs.cpuUsage + memUsage) / 2
 }
 
@@ -303,7 +311,7 @@ func ServerAndContainer(currentServerStatus []curServerStatus, imageName string)
 			continue
 		}
 		imageList := findImagesInServer(v, imageName)
-		fmt.Println("镜像名", imageName)
+		// fmt.Println("镜像名", imageName)
 		// fmt.Println("列表", imageList)
 		if len(imageList) == 0 { //不存在对应的容器
 			// fmt.Println("执行22")

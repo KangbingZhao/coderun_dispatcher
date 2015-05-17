@@ -11,6 +11,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
+	"time"
 )
 
 var logger = logrus.New()
@@ -45,6 +46,7 @@ func dispatchContainer(w http.ResponseWriter, enc Encoder, r *http.Request) (int
 	// 接受image-name，返回json（server-ip，server-port）
 	// return "hello world " + param["word"]
 	// var ca containerAddr
+	// delaySecond(75)
 	var in imageName //the image name received
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
 		logger.Warnf("error decoding image: %s", err)
@@ -52,7 +54,7 @@ func dispatchContainer(w http.ResponseWriter, enc Encoder, r *http.Request) (int
 		fmt.Println("接收数据错误", err)
 		return http.StatusBadRequest, ""
 	}
-
+	fmt.Println("请求的容器是:", in.ImageName)
 	curClusterStat := GetCurrentClusterStatus()
 
 	ip := ServerAndContainer(curClusterStat, in.ImageName)
@@ -63,11 +65,13 @@ func dispatchContainer(w http.ResponseWriter, enc Encoder, r *http.Request) (int
 		fmt.Println("现有容器")
 		name := getImageNameByContainerName("http://"+ip.Instance.ServerIP+":4243", ip.Instance.containerID)
 		if !isServiceContainer(name["ImageName"]) {
-			_, ok := CacheContainer.Get(ip.Instance)
+			_, ok := CacheContainer.Get(ip.Instance.containerID)
 			if ok == true { //成功放到最前面
-				logger.Debug("成功")
+				// logger.Debug("成功")
+				log.Println("更新缓存成功")
 			} else { //出错了
-				logger.Errorln("未成功更新容器调用记录！")
+				// logger.Errorln("未成功更新容器调用记录！")
+				log.Println("未成功更新容器调用记录")
 			}
 		}
 
@@ -136,7 +140,7 @@ func MapEncoder(c martini.Context, w http.ResponseWriter, r *http.Request) {
 	}
 }
 func main() {
-
+	fmt.Println("开始时间：", time.Now())
 	//set logfile Stdout
 	logFile, logErr := os.OpenFile(*logFileName, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
 	if logErr != nil {
