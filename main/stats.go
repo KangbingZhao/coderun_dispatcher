@@ -6,6 +6,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"sync"
 	// "github.com/Sirupsen/logrus"
@@ -90,6 +91,18 @@ type containerStat struct {
 	memUsageTotal float64 //Byte
 	memeUsageHot  float64
 	memCapacity   float64
+}
+
+type updateInfo struct { //服务器主动发送的机器信息
+	Host       string
+	Cpu        float64
+	Mem        float64
+	Containers []struct {
+		Image string
+		Id    string
+		Cpu   float64
+		Mem   float64
+	}
 }
 
 func subSubstring(str string, start, end int) string { //截取字符串
@@ -403,6 +416,51 @@ func SetCurrentClusterStatus(newStat []curServerStatus) {
 	return
 }
 
+func findServerByHost(info updateInfo, curCluster []curServerStatus) (int, error) {
+	// curCluster := GetCurrentClusterStatus()
+	for i, v := range curCluster {
+		if v.machineStatus.Host == info.Host {
+			return i, nil
+		}
+	}
+	return -1, errors.New("没有对应的主机")
+}
+
+// func findContainerById(info updateInfo) (int,error){
+// 	curCluster:=GetCurrentClusterStatus()
+// 	for i,v:=
+// }
+
+func UpdateCurrentClusterStatus(newStat updateInfo) error {
+	// tempStat:=
+
+	log.Println("修改前集群状态是", curClusterStats)
+
+	tempStat := curClusterStats
+	hostIndex, err := findServerByHost(newStat, tempStat)
+	if err != nil { //找不到对应的主机
+		return errors.New("未找到对应的主机")
+	}
+	fmt.Println("...")
+	tempStat[hostIndex].machineStatus.cpuUsage = newStat.Cpu
+	tempStat[hostIndex].machineStatus.memUsageTotal = newStat.Mem
+	for i, v := range tempStat[hostIndex].containerStatus {
+		for _, vv := range newStat.Containers {
+			if vv.Id == v.id {
+				tempStat[hostIndex].containerStatus[i].cpuUsage = vv.Cpu
+				tempStat[hostIndex].containerStatus[i].memUsageTotal = vv.Mem
+			}
+		}
+	}
+	// curClusterStats = tempStat
+	l.Lock()
+	curClusterStats = tempStat
+	l.Unlock()
+	log.Println("修改后集群状态是", curClusterStats)
+
+	return nil
+}
+
 func StartDeamon() { // load the initial server info from ./metadata/config.json
 	// and update server and container status periodicly
 	servers := getInitialServerAddr()
@@ -466,8 +524,40 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 			// fmt.Println("当前状态是 ", curClusterStats)
 			// timeSlot.Reset(time.Second * 2)
 			fmt.Println("更新状态耗时", time.Now().Sub(a))
-			timeSlot.Reset(time.Millisecond * 50)
+			timeSlot.Reset(time.Second * 100)
 		}
 	}
 
+}
+
+func updateStat(w http.ResponseWriter, enc Encoder, r *http.Request) (int, string) {
+	var receiveInfo updateInfo
+	if err := json.NewDecoder(r.Body).Decode(&receiveInfo); err != nil {
+		logger.Warnf("error decoding receiveInfo: %s", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Println("接收数据错误", err)
+		return http.StatusBadRequest, Must(enc.Encode(err))
+	}
+	if receiveInfo.Host == "" {
+		receiveInfo.Host = r.RemoteAddr
+		temp := strings.Split(receiveInfo.Host, ":")
+		if len(temp) > 0 {
+			receiveInfo.Host = temp[0]
+		}
+	}
+	fmt.Println("开始更新")
+	fmt.Println("接收信息是", receiveInfo)
+	err := UpdateCurrentClusterStatus(receiveInfo)
+	if err != nil {
+		fmt.Println("更新失败", err)
+	} else {
+		fmt.Println("更新成功")
+	}
+	fmt.Println("host", receiveInfo.Host)
+	// fmt.Println(strings.Split(receiveInfo.Host, ":"))
+	// fmt.Println("主机是", receiveInfo.Host)
+	// fmt.Println("主机地址", receiveInfo.Host)
+	// fmt.Println("容器id", receiveInfo.Containers[0].Id)
+	// fmt.Println("解码信息是", receiveInfo)
+	return http.StatusOK, Must(enc.Encode(""))
 }

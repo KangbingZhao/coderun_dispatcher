@@ -158,6 +158,7 @@ func main() {
 	m := martini.Classic()
 	m.Use(MapEncoder)
 	m.Post("/api/dispatcher/v1.0/container/create", dispatchContainer)
+	m.Post("/api/machine/stat", updateStat)
 
 	m.Run()
 
