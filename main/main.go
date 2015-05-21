@@ -55,9 +55,9 @@ func dispatchContainer(w http.ResponseWriter, enc Encoder, r *http.Request) (int
 		return http.StatusBadRequest, ""
 	}
 	fmt.Println("请求的容器是:", in.ImageName)
-	curClusterStat := GetCurrentClusterStatus()
+	// curClusterStat := GetCurrentClusterStatus()
 
-	ip := ServerAndContainer(curClusterStat, in.ImageName)
+	ip := ServerAndContainer(in.ImageName)
 	// ip := RR(curClusterStat)
 	if ip.Status == 6 { //分配容器出错了
 
@@ -108,6 +108,21 @@ func dispatchContainer(w http.ResponseWriter, enc Encoder, r *http.Request) (int
 		if err := json.NewEncoder(w).Encode(ip); err != nil {
 			logger.Error(err)
 		}*/
+
+	/*	curClusterCapacity[0].l.RLock()
+		fmt.Print("当前状态是:")
+		fmt.Println("主机", curClusterCapacity[0].host)
+		fmt.Println("容量", curClusterCapacity[0].host)
+		// fmt.Println("容器", curClusterCapacity[0].containers)
+		for _, v := range curClusterCapacity[0].containers {
+			fmt.Println("容器主机", v.host)
+			fmt.Println("容器镜像", v.imageName)
+			fmt.Println("容器ID", v.containerID)
+			fmt.Println("容器容量", v.capacityLeft)
+		}
+		curClusterCapacity[0].l.RUnlock()*/
+	// fmt.Println("分配", ip)
+
 	return http.StatusOK, Must(enc.Encode(ip))
 }
 func MapEncoder(c martini.Context, w http.ResponseWriter, r *http.Request) {
@@ -154,11 +169,13 @@ func main() {
 	go StartDeamon()
 	go StartCacheDeamon()
 
+	// go UpdateClusterCapacity()
+
 	// fmt.Println("执行到我来")
 	m := martini.Classic()
 	m.Use(MapEncoder)
 	m.Post("/api/dispatcher/v1.0/container/create", dispatchContainer)
-	m.Post("/api/machine/stat", updateStat)
+	m.Post("/api/machine/stat", getUpdateInfo)
 
 	m.Run()
 

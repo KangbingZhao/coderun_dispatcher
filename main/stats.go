@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math"
 	"sync"
 	// "github.com/Sirupsen/logrus"
 	"github.com/antonholmquist/jason"
@@ -25,6 +26,8 @@ import (
 var ContainerMemCapacity = float64(20971520) //default container memory capacity is 20MB
 var l sync.RWMutex
 var curClusterStats = make([]curServerStatus, 0, 5) //the global variable is current server stats and container stats
+var DefaultContainerCapacify int = 100              //一个完全空闲容器能承担的用户数
+var DefaultServerCapacity int = 1500                //一个完全空闲容器能承担的用户数
 
 var curClusterLoad float64
 
@@ -51,6 +54,24 @@ type serverAddress struct {
 	DockerPort   int
 	CAdvisorPort int
 }
+
+//对服务器状态和处理能力分离之后添加的数据结构
+var UpdateStatChannel = make(chan updateInfo, 100) //缓冲区大小100，存放更新的服务器状态
+type ContainerCapacity struct {
+	host         string
+	port         int
+	containerID  string
+	imageName    string
+	capacityLeft int
+}
+type ServerCapacity struct {
+	l            sync.RWMutex
+	host         string
+	CapacityLeft int
+	containers   []ContainerCapacity
+}
+
+var curClusterCapacity = make([]ServerCapacity, 0, 5)
 
 func getInitialServerAddr() serverConfig { // get default server info from ./metadata/config.json
 	r, err := os.Open("../metadata/config.json")
@@ -80,6 +101,8 @@ type serverStat struct {
 	memUsageTotal float64 //内存容量，单位为Byte
 	memUsageHot   float64 //当前活跃内存量
 	memCapacity   float64 //内存总量
+
+	l sync.RWMutex
 }
 
 type containerStat struct {
@@ -104,6 +127,8 @@ type updateInfo struct { //服务器主动发送的机器信息
 		Mem   float64
 	}
 }
+
+var UpdateInfoChannel = make(chan updateInfo)
 
 func subSubstring(str string, start, end int) string { //截取字符串
 	if start < 0 {
@@ -416,49 +441,49 @@ func SetCurrentClusterStatus(newStat []curServerStatus) {
 	return
 }
 
-func findServerByHost(info updateInfo, curCluster []curServerStatus) (int, error) {
+func findServerByHost(info updateInfo) (int, error) {
 	// curCluster := GetCurrentClusterStatus()
-	for i, v := range curCluster {
-		if v.machineStatus.Host == info.Host {
+	// l.RLock()
+	// defer l.RUnlock()
+	for i, v := range curClusterCapacity {
+		v.l.RLock()
+		if v.host == info.Host {
 			return i, nil
 		}
+		v.l.RUnlock()
 	}
 	return -1, errors.New("没有对应的主机")
 }
 
-// func findContainerById(info updateInfo) (int,error){
-// 	curCluster:=GetCurrentClusterStatus()
-// 	for i,v:=
-// }
-
-func UpdateCurrentClusterStatus(newStat updateInfo) error {
-	// tempStat:=
-
-	log.Println("修改前集群状态是", curClusterStats)
-
-	tempStat := curClusterStats
-	hostIndex, err := findServerByHost(newStat, tempStat)
-	if err != nil { //找不到对应的主机
-		return errors.New("未找到对应的主机")
+func CalculateContainerCapacity(containersStat []containerStat) []ContainerCapacity {
+	tempContainerCapa := make([]ContainerCapacity, len(containersStat))
+	// fmt.Println("长度是", len(containersStat))
+	if len(containersStat) < 1 {
+		fmt.Println("没有容器")
+		return make([]ContainerCapacity, 0)
 	}
-	fmt.Println("...")
-	tempStat[hostIndex].machineStatus.cpuUsage = newStat.Cpu
-	tempStat[hostIndex].machineStatus.memUsageTotal = newStat.Mem
-	for i, v := range tempStat[hostIndex].containerStatus {
-		for _, vv := range newStat.Containers {
-			if vv.Id == v.id {
-				tempStat[hostIndex].containerStatus[i].cpuUsage = vv.Cpu
-				tempStat[hostIndex].containerStatus[i].memUsageTotal = vv.Mem
-			}
+	for i, v := range containersStat {
+		tempContainerCapa[i].imageName = v.name
+		tempContainerCapa[i].containerID = v.id
+		tempContainerCapa[i].host = v.serverIP
+		tempContainerCapa[i].port = v.port
+		if v.memUsageTotal > v.memCapacity { //只有系统应用才有可能超过20MB的限制
+			tempContainerCapa[i].capacityLeft = -1
+			continue
 		}
-	}
-	// curClusterStats = tempStat
-	l.Lock()
-	curClusterStats = tempStat
-	l.Unlock()
-	log.Println("修改后集群状态是", curClusterStats)
-
-	return nil
+		memUsage := v.memUsageTotal / v.memCapacity
+		if v.cpuUsage > memUsage {
+			tempContainerCapa[i].capacityLeft = int(math.Floor(float64(DefaultContainerCapacify) * (1 - v.cpuUsage)))
+		} else {
+			tempContainerCapa[i].capacityLeft = int(math.Floor(float64(DefaultContainerCapacify) * (1 - memUsage)))
+		}
+		if v.cpuUsage > 1 || memUsage > 1 {
+			log.Println("出错了,", v)
+			log.Println("CPU是", v.cpuUsage, "内存是", memUsage)
+			log.Println("内存用量", v.memUsageTotal, "内存容量", v.memCapacity)
+		}
+	} //循环结束
+	return tempContainerCapa
 }
 
 func StartDeamon() { // load the initial server info from ./metadata/config.json
@@ -478,7 +503,9 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 			// tempClusterStats := curClusterStats[0:0]
 			// tempClusterStats := GetCurrentClusterStatus()[0:0]
 			tempClusterStats := make([]curServerStatus, 0, 1)
+			tempClusterCapacity := make([]ServerCapacity, 0, 1)
 			for index := 0; index < len(serverSStats); index++ {
+				aa := time.Now()
 				var temp curServerStatus
 				tempClusterStats = append(tempClusterStats, temp)
 				if serverSStats[index].cpuCore == -1 { //由于getServerStats中已经有判断，这里没有必要
@@ -512,25 +539,43 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 				// log.Println("更新容器状态是", cs)
 				tempClusterStats[index].containerStatus = append(tempClusterStats[index].containerStatus, cs...)
 
+				//添加对服务器和容器处理能力的更新
+
+				/*var tempServerCapa ServerCapacity
+				tempServerCapa.host = tempServerConfig.Server[0].Host
+				memUsage := tempClusterStats[index].machineStatus.memUsageTotal / tempClusterStats[index].machineStatus.memCapacity
+				var serverCapa int
+				if memUsage > tempClusterStats[index].machineStatus.cpuUsage {
+					serverCapa = int(math.Floor(float64(DefaultServerCapacity) * (1 - memUsage)))
+				} else {
+					serverCapa = int(math.Floor(float64(DefaultServerCapacity) * (1 - tempClusterStats[index].machineStatus.cpuUsage)))
+				}
+				tempServerCapa.CapacityLeft = serverCapa
+				tempServerCapa.containers = append(tempServerCapa.containers, CalculateContainerCapacity(tempClusterStats[index].containerStatus)...)
+				tempClusterCapacity = append(tempClusterCapacity, tempServerCapa)
+				// tempServerCapa.containers*/
+				fmt.Println("服务器容器更新耗时", time.Now().Sub(aa))
+
 			}
-			// return
-			/*			curClusterStats = curClusterStats[0:0]
-						curClusterStats = append(curClusterStats, tempClusterStats...)*/
-			// log.Println("更新状态")
+			fmt.Println("耗时", time.Now().Sub(a))
 			SetCurrentClusterStatus(tempClusterStats) //加上了读写锁
+			l.Lock()
+			curClusterCapacity = tempClusterCapacity
+			log.Println("更新后集群容量", curClusterCapacity)
+			l.Unlock()
 			//记录集群状态
 			// log.Println("更新集群状态是", tempClusterStats)
 			log.Println("集群状态是", GetCurrentClusterStatus())
 			// fmt.Println("当前状态是 ", curClusterStats)
 			// timeSlot.Reset(time.Second * 2)
 			fmt.Println("更新状态耗时", time.Now().Sub(a))
-			timeSlot.Reset(time.Second * 100)
+			timeSlot.Reset(time.Second * 3)
 		}
 	}
 
 }
 
-func updateStat(w http.ResponseWriter, enc Encoder, r *http.Request) (int, string) {
+func getUpdateInfo(w http.ResponseWriter, enc Encoder, r *http.Request) (int, string) { //接收信息，放入channel
 	var receiveInfo updateInfo
 	if err := json.NewDecoder(r.Body).Decode(&receiveInfo); err != nil {
 		logger.Warnf("error decoding receiveInfo: %s", err)
@@ -545,19 +590,73 @@ func updateStat(w http.ResponseWriter, enc Encoder, r *http.Request) (int, strin
 			receiveInfo.Host = temp[0]
 		}
 	}
-	fmt.Println("开始更新")
-	fmt.Println("接收信息是", receiveInfo)
-	err := UpdateCurrentClusterStatus(receiveInfo)
-	if err != nil {
-		fmt.Println("更新失败", err)
-	} else {
-		fmt.Println("更新成功")
-	}
-	fmt.Println("host", receiveInfo.Host)
-	// fmt.Println(strings.Split(receiveInfo.Host, ":"))
-	// fmt.Println("主机是", receiveInfo.Host)
-	// fmt.Println("主机地址", receiveInfo.Host)
-	// fmt.Println("容器id", receiveInfo.Containers[0].Id)
-	// fmt.Println("解码信息是", receiveInfo)
+	fmt.Println("更新信息是", receiveInfo)
+	UpdateInfoChannel <- receiveInfo
 	return http.StatusOK, Must(enc.Encode(""))
+}
+
+func UpdateClusterCapacity() { //每次更新一个服务器中的信息
+	stat := <-UpdateInfoChannel //取出一个更新信息
+	hostIndex, err := findServerByHost(stat)
+	if err != nil {
+		log.Println("找不到主机,更新信息是", stat)
+		return
+	}
+	/*	memUsage := stat.Mem / ContainerMemCapacity
+		if stat.Cpu > memUsage {
+			Capacity := int(math.Floor(float64(DefaultContainerCapacify) * (1 - stat.Cpu)))
+		} else {
+			ServerCapacity := int(math.Floor(float64(DefaultContainerCapacify) * (1 - memUsage)))
+		}
+		curClusterCapacity[hostIndex].l.Lock()*/
+	for _, v := range stat.Containers {
+		memUsage := v.Mem / ContainerMemCapacity
+		var Capacity int
+		if v.Cpu > memUsage {
+			Capacity = int(math.Floor(float64(DefaultContainerCapacify) * (1 - v.Cpu)))
+		} else {
+			Capacity = int(math.Floor(float64(DefaultContainerCapacify) * (1 - v.Mem)))
+		}
+		for ii, vv := range curClusterCapacity[hostIndex].containers {
+			if v.Id == vv.containerID {
+				curClusterCapacity[hostIndex].l.Lock()
+				curClusterCapacity[hostIndex].containers[ii].capacityLeft = Capacity
+				curClusterCapacity[hostIndex].l.Unlock()
+			}
+		}
+	}
+
+}
+func UpdateCurrentClusterStatus(newStat updateInfo) error {
+	// tempStat:=
+
+	log.Println("修改前集群状态是", curClusterStats)
+
+	// tempStat := curClusterStats
+	hostIndex, err := findServerByHost(newStat)
+	if err != nil { //找不到对应的主机
+		return errors.New("未找到对应的主机")
+	}
+	l.Lock()
+	curClusterStats[hostIndex].machineStatus.l.Lock()
+	defer curClusterStats[hostIndex].machineStatus.l.Unlock()
+	l.Unlock()
+	fmt.Println("...")
+	curClusterStats[hostIndex].machineStatus.cpuUsage = newStat.Cpu
+	curClusterStats[hostIndex].machineStatus.memUsageTotal = newStat.Mem
+	for i, v := range curClusterStats[hostIndex].containerStatus {
+		for _, vv := range newStat.Containers {
+			if vv.Id == v.id {
+				curClusterStats[hostIndex].containerStatus[i].cpuUsage = vv.Cpu
+				curClusterStats[hostIndex].containerStatus[i].memUsageTotal = vv.Mem
+			}
+		}
+	}
+	// curClusterStats = tempStat
+	// l.Lock()
+	// // curClusterStats = tempStat
+	// l.Unlock()
+	log.Println("修改后集群状态是", curClusterStats)
+
+	return nil
 }
