@@ -216,7 +216,12 @@ func GetServerLoad(ss serverStat) float64 { //CPU和RAM使用率百分比的加�
 	if ss.cpuUsage > 0.9 || memUsage > 0.9 {
 		return 1.0
 	}
-	return (ss.cpuUsage + memUsage) / 2
+	if ss.cpuUsage > memUsage {
+		return ss.cpuUsage
+	} else {
+		return memUsage
+	}
+	// return (ss.cpuUsage + memUsage) / 2
 }
 
 func GetContainerLoad(cs containerStat) float64 { //CPU和RAM使用率百分比的加权平均，暂定为0.5、0.5
@@ -264,7 +269,7 @@ func findImagesInServer(currentServerCapacity ServerCapacity, imageName string) 
 	for i1 := 0; i1 < len(re)-1; i1++ { //对选出的容器，按使用率从小到大排序
 		for i2 := 0; i2 < len(re)-i1-1; i2++ {
 			// if GetContainerLoad(currentServerStatus.containerStatus[re[i1]]) > GetContainerLoad(currentServerStatus.containerStatus[re[i2]]) {
-			if currentServerCapacity.containers[re[i1]].capacityLeft < currentServerCapacity.containers[re[i2]].capacityLeft {
+			if currentServerCapacity.containers[re[i1]].capacityLeft > currentServerCapacity.containers[re[i2]].capacityLeft {
 				/*temp := i2
 				i2 = i1
 				i1 = temp*/
@@ -308,6 +313,10 @@ func sortServerByLoad() {
 	// 	v.l.Lock()
 	// }
 	curClusterCapacity = re
+	for _, v := range re {
+		log.Println("排序后的集群容量")
+		log.Println(v)
+	}
 	// for _, v := range curClusterCapacity {
 	// 	v.l.Unlock()
 	// }
@@ -321,16 +330,17 @@ func ServerAndContainer(imageName string) containerCreated { //优先选择已�
 	// sortedClusterCapacity := sortServerByLoad(currentClusterCapacity)
 	sortServerByLoad()
 	var re containerCreated
-	for _, v := range curClusterCapacity {
-		v.l.RLock()
+	for i, v := range curClusterCapacity {
+		curClusterCapacity[i].l.RLock()
 		// fmt.Println("执行")
 		//查找容器，找到且不过载则分配，找不到继续查找
 		//循环结束后仍没有找到，则选择第一个（负载最轻的服务器分配）
 		/*		if GetServerLoad(v.machineStatus) > 0.9 { //负载过高，不再分配
 				continue
 			}*/
-		if v.CapacityLeft < DefaultContainerCapacify/10 { //负载高于90%
-			v.l.RUnlock()
+		if v.CapacityLeft < DefaultServerCapacity/10 { //负载高于90%
+			log.Println("选定的服务器已经过载,信息是", v)
+			curClusterCapacity[i].l.RUnlock()
 			continue
 		}
 		imageList := findImagesInServer(v, imageName)
@@ -341,13 +351,18 @@ func ServerAndContainer(imageName string) containerCreated { //优先选择已�
 			log.Println("分配时没有找到容器", imageName)
 			continue
 		} else {
+			/*			for _, v11 := range imageList {
+						log.Println("排序后的容器容量")
+						log.Println(v.containers[v11])
+					}*/
 			//todo 选择第一个镜像进行分配,同时return
 			/*			if GetContainerLoad(v.containerStatus[imageList[0]]) > 0.9 {
 						log.Println("容器过载，不再分配此容器", v.containerStatus[imageList[0]].id)
 						continue
 					}*/
 			if v.containers[imageList[0]].capacityLeft < DefaultContainerCapacify/20 {
-				v.l.RUnlock()
+				curClusterCapacity[i].l.RUnlock()
+				log.Println("选定的容器过载，信息是", v.containers[imageList[0]])
 				continue
 			}
 
@@ -355,11 +370,12 @@ func ServerAndContainer(imageName string) containerCreated { //优先选择已�
 			re.Instance.ServerIP = v.containers[imageList[0]].host
 			re.Instance.ServerPort = v.containers[imageList[0]].port
 			re.Instance.containerID = v.containers[imageList[0]].containerID
-			v.l.RUnlock()
-			v.l.Lock()
-			v.CapacityLeft = v.CapacityLeft - 1
-			v.containers[imageList[0]].capacityLeft = v.containers[imageList[0]].capacityLeft - 1
-			v.l.Unlock()
+			curClusterCapacity[i].l.RUnlock()
+			curClusterCapacity[i].l.Lock()
+			curClusterCapacity[i].CapacityLeft = v.CapacityLeft - 1
+			curClusterCapacity[i].containers[imageList[0]].capacityLeft = v.containers[imageList[0]].capacityLeft - 1
+			log.Println("分配信息是", v.containers[imageList[0]])
+			curClusterCapacity[i].l.Unlock()
 			return re
 		}
 	}

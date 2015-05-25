@@ -54,7 +54,8 @@ func dispatchContainer(w http.ResponseWriter, enc Encoder, r *http.Request) (int
 		fmt.Println("接收数据错误", err)
 		return http.StatusBadRequest, ""
 	}
-	fmt.Println("请求的容器是:", in.ImageName)
+	log.Println("请求的容器是:", in.ImageName)
+	// a := time.Now()
 	// curClusterStat := GetCurrentClusterStatus()
 
 	ip := ServerAndContainer(in.ImageName)
@@ -89,40 +90,7 @@ func dispatchContainer(w http.ResponseWriter, enc Encoder, r *http.Request) (int
 	// fmt.Println("分配的IP是", ip.Instance.ServerIP)
 	// fmt.Println("当前id是", ip.Instance.containerID)
 	fmt.Println("分配信息是", ip)
-	// fmt.Println("集群状态", GetCurrentClusterStatus())
-	log.Println("分配成功！请求容器是", in.ImageName, "分配结果是", ip)
-	// RestrictContainer(curClusterStat)
-	/*	t := evictElement(ip)
-		if t != nil {
-			fmt.Println("删除初出错", t)
-		} else {
-			fmt.Println("删除成功")
-		}*/
-	// t, _ := CacheContainer.Get(ip.Instance.containerID)
-	// fmt.Println("当前缓存是", t)
-	// CacheContainer.Add(, ip)
-	// lruTest()
-	// fmt.Println("执行了")
-	/*	w.Header().Set("content-type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		if err := json.NewEncoder(w).Encode(ip); err != nil {
-			logger.Error(err)
-		}*/
-
-	/*	curClusterCapacity[0].l.RLock()
-		fmt.Print("当前状态是:")
-		fmt.Println("主机", curClusterCapacity[0].host)
-		fmt.Println("容量", curClusterCapacity[0].host)
-		// fmt.Println("容器", curClusterCapacity[0].containers)
-		for _, v := range curClusterCapacity[0].containers {
-			fmt.Println("容器主机", v.host)
-			fmt.Println("容器镜像", v.imageName)
-			fmt.Println("容器ID", v.containerID)
-			fmt.Println("容器容量", v.capacityLeft)
-		}
-		curClusterCapacity[0].l.RUnlock()*/
-	// fmt.Println("分配", ip)
-
+	// log.Println("分配信息是", ip, "耗时", time.Now().Sub(a))
 	return http.StatusOK, Must(enc.Encode(ip))
 }
 func MapEncoder(c martini.Context, w http.ResponseWriter, r *http.Request) {
@@ -154,6 +122,9 @@ func MapEncoder(c martini.Context, w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 	}
 }
+func NULLResponse(enc Encoder) (int, string) {
+	return http.StatusOK, Must(enc.Encode(""))
+}
 func main() {
 	fmt.Println("开始时间：", time.Now())
 	//set logfile Stdout
@@ -175,7 +146,8 @@ func main() {
 	m := martini.Classic()
 	m.Use(MapEncoder)
 	m.Post("/api/dispatcher/v1.0/container/create", dispatchContainer)
-	m.Post("/api/machine/stat", getUpdateInfo)
+	// m.Post("/api/machine/stat", getUpdateInfo)
+	m.Post("/api/machine/stat", NULLResponse)
 
 	m.Run()
 

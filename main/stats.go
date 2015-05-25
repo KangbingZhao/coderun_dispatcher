@@ -135,7 +135,12 @@ func subSubstring(str string, start, end int) string { //截取字符串
 		start = 0
 	}
 	if end > len(str) {
+
+		// log.Println("数组越界，字符串长度是", len(str), "结尾长度是", end)
 		end = len(str)
+	}
+	if start > len(str) {
+		log.Println("数组越界，字符串长度", len(str), "开头长度是", start)
 	}
 
 	return string(str[start:end])
@@ -181,12 +186,12 @@ func getServerStats(serverList serverConfig) []serverStat { // get current serve
 			continue
 		}
 		resq, errResq := client.Do(req)
-		defer resq.Body.Close()
 		if errResq != nil {
 			logger.Errorln("初始化错误", errResq)
 			su[index].cpuCore = -1
 			continue
 		}
+		defer resq.Body.Close()
 		data, errData := ioutil.ReadAll(resq.Body)
 		if errData != nil {
 			logger.Errorln("初始化错误", errData)
@@ -232,21 +237,56 @@ func getServerStats(serverList serverConfig) []serverStat { // get current serve
 
 		posturl2 := cadvisorUrl + "/api/v1.0/machine"
 		client2 := &http.Client{}
-		req2, _ := http.NewRequest("POST", posturl2, nil)
-		resq2, _ := client2.Do(req2)
+		req2, errReq2 := http.NewRequest("POST", posturl2, nil)
+		if errReq2 != nil {
+			su[index].cpuCore = -1
+			log.Println("req2出错，", errReq2)
+			continue
+		}
+		resq2, errResq2 := client2.Do(req2)
+		if errResq2 != nil {
+			su[index].cpuCore = -1
+			log.Println("resq2出错，", errResq2)
+			continue
+		}
 		defer resq2.Body.Close()
-		data2, _ := ioutil.ReadAll(resq2.Body)
-
-		tt2, _ := jason.NewObjectFromBytes(data2)
-		num_cores, _ := tt2.GetInt64("num_cores")
-		cpu_frequency_khz, _ := tt2.GetInt64("cpu_frequency_khz")
-		mem_capacity, _ := tt2.GetFloat64("memory_capacity")
+		data2, errData2 := ioutil.ReadAll(resq2.Body)
+		if errData2 != nil {
+			su[index].cpuCore = -1
+			log.Println("errData2出错", errData2)
+			continue
+		}
+		tt2, errTt2 := jason.NewObjectFromBytes(data2)
+		if errTt2 != nil {
+			su[index].cpuCore = -1
+			log.Println("errTT2出错", errTt2)
+			continue
+		}
+		num_cores, errNum_cores := tt2.GetInt64("num_cores")
+		if errNum_cores != nil {
+			su[index].cpuCore = -1
+			log.Println("errNum_cores出错", errNum_cores)
+			continue
+		}
+		cpu_frequency_khz, errCpu_frequency := tt2.GetInt64("cpu_frequency_khz")
+		if errCpu_frequency != nil {
+			su[index].cpuCore = -1
+			log.Println("errCpu_frequency出错", errCpu_frequency)
+			continue
+		}
+		mem_capacity, errMem_capacity := tt2.GetFloat64("memory_capacity")
+		if errMem_capacity != nil {
+			su[index].cpuCore = -1
+			log.Println("errMem_capacity出错", errMem_capacity)
+			continue
+		}
 		su[index].cpuCore = num_cores
 		su[index].cpuFrequencyKHz = cpu_frequency_khz
 		su[index].memCapacity = mem_capacity
 		su[index].Host = serverList.Server[index].Host
 		su[index].CAdvisorPort = serverList.Server[index].CAdvisorPort
 		su[index].DockerPort = serverList.Server[index].DockerPort
+		su[index].cpuUsage = su[index].cpuUsage / float64(su[index].cpuCore)
 
 	} // end of loop
 
@@ -294,6 +334,7 @@ func getImageNameByContainerName(serverUrl string, containerName string) map[str
 	id := subSubstring(containerName, 8, 100) //猜测不会超过100个字符，实际等同于从第8个字符开始截取
 	// fmt.Println("name is ", containerName)
 	// fmt.Println("id is ", id)
+	// log.Println("截取后的id是", id)
 	client, _ := docker.NewClient(serverUrl)
 	// imageName,_ := client.InspectContainer
 	containerInfo, err := client.InspectContainer(id)
@@ -330,30 +371,53 @@ func getImageNameByContainerName(serverUrl string, containerName string) map[str
 	// fmt.Println("怎么", temp[0].HostPort)
 	return re
 }
+func getIntervalInNs(tPrevious string, tNext string) (float64, error) { //t1示例2015-05-21T11:18:47.723768816Z
+	tPArray := strings.Split(tPrevious, ":")
+	tNArray := strings.Split(tNext, ":")
+	if len(tPArray) != 3 {
+		return 0, errors.New("第一个参数格式错误")
+	} else if len(tNArray) != 3 {
+		return 0, errors.New("第二个参数格式错误")
+	}
+	// re := float64(0)
+	tPMinute, errTPM := strconv.Atoi(tPArray[1])
+	tNMinute, errTNM := strconv.Atoi(tNArray[1])
+	tPSecond, errTPS := strconv.ParseFloat(strings.Replace(tPArray[2], "Z", "", -1), 64)
+	tNSecond, errTNS := strconv.ParseFloat(strings.Replace(tNArray[2], "Z", "", -1), 64)
+	if errTPM != nil || errTNM != nil || errTPS != nil || errTNS != nil {
+		return 0, errors.New("数据转换出错")
+	}
+	intervalMinute := tNMinute - tPMinute
+	if intervalMinute == 0 {
+		return 1000000000 * (tNSecond - tPSecond), nil
+	} else {
+		return (1000000000) * (float64(intervalMinute*60) + tNSecond - tPSecond), nil
+	}
+
+}
 func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, ContainerNameList []string) []containerStat {
 	//serverUrl format is: http://server_ip:port
 	cs := make([]containerStat, 0, 50)
 	serverUrl := "http://" + serverIP + ":" + strconv.Itoa(cadvisorPort)
 	for index := 0; index < len(ContainerNameList); index++ {
 		var temp containerStat
-		cs = append(cs, temp)
 		posturl := serverUrl + "/api/v1.0/containers" + ContainerNameList[index]
 		// fmt.Println("posturl is ", posturl)
 		// continue
-		reqContent := "{\"num_stats\":11,\"num_samples\":0}"
+		reqContent := "{\"num_stats\":2,\"num_samples\":0}"
 		body := ioutil.NopCloser(strings.NewReader(reqContent))
 		client := &http.Client{}
 		req, errReq := http.NewRequest("POST", posturl, body)
 		if errReq != nil {
 			logger.Errorln("初始化错误", errReq)
-			cs[index].cpuUsage = -1
+			temp.cpuUsage = -1
 			continue
 		}
 		resq, errResq := client.Do(req)
 		defer resq.Body.Close()
 		if errResq != nil {
 			logger.Errorln("请求错误错误", errResq)
-			cs[index].cpuUsage = -1
+			temp.cpuUsage = -1
 			continue
 		}
 		data, _ := ioutil.ReadAll(resq.Body)
@@ -363,61 +427,80 @@ func getContainerStat(serverIP string, cadvisorPort int, dockerPort int, Contain
 		// fmt.Println("t是神马", data)
 		stats, _ := t.GetObjectArray("stats") //从cAdvisor获取的最近两个stat,1是最新的
 		// fmt.Println("len is ", len(stats))
-		t1, _ := stats[10].GetString("timestamp")
+		if len(stats) < 2 {
+			log.Println("状态长度不够", len(stats))
+			index = index - 1
+			continue
+		}
+		t1, _ := stats[1].GetString("timestamp")
 		t2, _ := stats[0].GetString("timestamp")
 		// fmt.Println("test")
 		// fmt.Println("timestamp1 is ", t1, "the timestamp 2 is", t2)
-		t1Time, _ := strconv.ParseFloat(subSubstring(t1, 17, 29), 64) //从秒开始，舍弃最后一个字母Z，不知道Z什么意思
-		t2Time, _ := strconv.ParseFloat(subSubstring(t2, 17, 29), 64)
-		// t2Time, _ := strconv.ParseFloat(subSubstring(t1, 17, 50), 64)
-		// fmt.Println("t1 time is ", t1Time)
-		intervalInNs := (t1Time - t2Time) * 1000000000 //单位是纳秒
+		// t1Time, _ := strconv.ParseFloat(subSubstring(t1, 17, 29), 64) //从秒开始，舍弃最后一个字母Z，不知道Z什么意思
+		// t2Time, _ := strconv.ParseFloat(subSubstring(t2, 17, 29), 64)
+		// intervalInNs := (t1Time - t2Time) * 1000000000 //单位是纳秒
+		intervalInNs, errIIN := getIntervalInNs(t2, t1)
+		if errIIN != nil {
+			log.Println("时间间隔获取错误")
+		}
 		// fmt.Println("test")
 		// fmt.Println("interval is ", intervalInNs)
-		t1CPUUsage, _ := stats[10].GetFloat64("cpu", "usage", "total")
+		t1CPUUsage, _ := stats[1].GetFloat64("cpu", "usage", "total")
 		t2CPUUsage, _ := stats[0].GetFloat64("cpu", "usage", "total")
 		// fmt.Println("tiCPU is ", t1CPUUsage, t2CPUUsage)
-		cs[index].cpuUsage = (t1CPUUsage - t2CPUUsage) / intervalInNs
-		if cs[index].cpuUsage < 0 {
-			cs[index].cpuUsage = -cs[index].cpuUsage
+		temp.cpuUsage = (t1CPUUsage - t2CPUUsage) / intervalInNs
+		if temp.cpuUsage < 0 {
+			temp.cpuUsage = -temp.cpuUsage
 			// log.Println("CPU真复试", cs[index].cpuUsage)
 
 		}
 
 		// ppp := GetCurrentClusterStatus()
 		if intervalInNs < 1 && intervalInNs > -1 {
-			cs[index].cpuUsage = 0.01
+			temp.cpuUsage = 0.01
 
 			// cs[index].cpuUsage = ppp[0].machineStatus.cpuUsage
 		}
 		// log.Println("时间间隔是", intervalInNs)
 		// log.Println("第一个时间", t1Time, "第二个是", t2Time)
-		memoryUsageTotal, _ := stats[10].GetFloat64("memory", "usage")
-		memoryUsageWorking, _ := stats[10].GetFloat64("memory", "working_set")
+		memoryUsageTotal, _ := stats[1].GetFloat64("memory", "usage")
+		memoryUsageWorking, _ := stats[1].GetFloat64("memory", "working_set")
 
-		cs[index].memUsageTotal = memoryUsageTotal
-		cs[index].memeUsageHot = memoryUsageWorking
-		cs[index].memCapacity = ContainerMemCapacity
-		cs[index].serverIP = serverIP
-		cs[index].id = subSubstring(ContainerNameList[index], 8, 20)
+		temp.memUsageTotal = memoryUsageTotal
+		temp.memeUsageHot = memoryUsageWorking
+		temp.memCapacity = ContainerMemCapacity
+		temp.serverIP = serverIP
+		temp.id = subSubstring(ContainerNameList[index], 8, 20)
+		// if len(ContainerNameList) < index {
+		// 	log.Println("ContainerNameList长度是", len(ContainerNameList), "index是", index)
+		// 	log.Println("容器id是", temp.id)
+		// }
+		// log.Println("名字是", ContainerNameList[index])
 		// cs[index].name = getImageNameByContainerName(cs[index].serverAddr, ContainerNameList[index])
-		iif := getImageNameByContainerName("http://"+cs[index].serverIP+":"+"4243", ContainerNameList[index])
+		iif := getImageNameByContainerName("http://"+temp.serverIP+":"+"4243", ContainerNameList[index])
 		// cs[index].name = iif["ImageName"]
 		tttt := strings.Split(iif["ImageName"], "/")
 		if len(tttt) > 1 {
-			cs[index].name = tttt[1]
+			temp.name = tttt[1]
 		} else {
-			cs[index].name = iif["ImageName"]
+			temp.name = iif["ImageName"]
 		}
 		// cs[index].name = strings.Split(iif["ImageName"], "/")
 		tempPort, _ := (strconv.Atoi(iif["ExpostdPort"]))
-		cs[index].port = int(tempPort)
+		temp.port = int(tempPort)
 		/*		fmt.Println("serverip is ", cs[index].serverIP)
 				fmt.Println("image name is ", iif["ImageName"])
 				fmt.Println("container id is ", cs[index].id)
 				fmt.Println("container port is ", cs[index].port)*/
 		// cs[index].serverAddr = serverUrl
 		// fmt.Println("container cpu is ", cs[index].cpuUsage)
+		if temp.cpuUsage > 0.99 {
+			log.Println("CPU出错,id是", temp.id, "用量是", temp.cpuUsage, "t1是", t1CPUUsage, "t2是", t2CPUUsage, "时间是", intervalInNs)
+			log.Println("t1是", t1, "t2是", t2)
+			log.Println("状态0是", stats[0])
+			log.Println("状态1是", stats[1])
+		}
+		cs = append(cs, temp)
 
 	} // end of loop
 	// fmt.Println("containerstat is gotten")
@@ -541,7 +624,7 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 
 				//添加对服务器和容器处理能力的更新
 
-				/*var tempServerCapa ServerCapacity
+				var tempServerCapa ServerCapacity
 				tempServerCapa.host = tempServerConfig.Server[0].Host
 				memUsage := tempClusterStats[index].machineStatus.memUsageTotal / tempClusterStats[index].machineStatus.memCapacity
 				var serverCapa int
@@ -553,7 +636,7 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 				tempServerCapa.CapacityLeft = serverCapa
 				tempServerCapa.containers = append(tempServerCapa.containers, CalculateContainerCapacity(tempClusterStats[index].containerStatus)...)
 				tempClusterCapacity = append(tempClusterCapacity, tempServerCapa)
-				// tempServerCapa.containers*/
+				// tempServerCapa.containers
 				fmt.Println("服务器容器更新耗时", time.Now().Sub(aa))
 
 			}
@@ -569,12 +652,11 @@ func StartDeamon() { // load the initial server info from ./metadata/config.json
 			// fmt.Println("当前状态是 ", curClusterStats)
 			// timeSlot.Reset(time.Second * 2)
 			fmt.Println("更新状态耗时", time.Now().Sub(a))
-			timeSlot.Reset(time.Second * 3)
+			timeSlot.Reset(time.Second * 5)
 		}
 	}
 
 }
-
 func getUpdateInfo(w http.ResponseWriter, enc Encoder, r *http.Request) (int, string) { //接收信息，放入channel
 	var receiveInfo updateInfo
 	if err := json.NewDecoder(r.Body).Decode(&receiveInfo); err != nil {
@@ -602,13 +684,6 @@ func UpdateClusterCapacity() { //每次更新一个服务器中的信息
 		log.Println("找不到主机,更新信息是", stat)
 		return
 	}
-	/*	memUsage := stat.Mem / ContainerMemCapacity
-		if stat.Cpu > memUsage {
-			Capacity := int(math.Floor(float64(DefaultContainerCapacify) * (1 - stat.Cpu)))
-		} else {
-			ServerCapacity := int(math.Floor(float64(DefaultContainerCapacify) * (1 - memUsage)))
-		}
-		curClusterCapacity[hostIndex].l.Lock()*/
 	for _, v := range stat.Containers {
 		memUsage := v.Mem / ContainerMemCapacity
 		var Capacity int

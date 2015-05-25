@@ -67,7 +67,7 @@ func loadCurrentContainer() { //初始化时，将现有容器放入缓存区中
 	t := CacheContainer.Keys()
 	for _, v := range t {
 		tt, _ := CacheContainer.Get(v)
-		fmt.Println("装入缓存内容是", tt)
+		log.Println("装入缓存内容是", tt)
 	}
 	// return nil
 }
@@ -118,68 +118,68 @@ func evictElement(cc containerCreated) error { //从缓存中清除一个容器�
 	return errR
 }
 
-func RestrictContainer(currentServerStatus []curServerStatus) { //若集群负载高于90%，调用此函数清除最久未被使用的容器，直到集群负载低于85%
+func RestrictContainer(currentServerStatus []curServerStatus) { //若集群负载高于90%，调用此函数清除最久未被使用的容器，清理五个容器
 	// delaySecond(10)
 	// fmt.Println("集群状态", currentServerStatus)
 	// fmt.Println("执行了")
-	for i := 0; i == i; i++ {
-		l, errL := GetClusterLoad(currentServerStatus)
-		if errL != nil {
-			log.Fatalln("集群释放容器时，无法获取就集群负载")
-			fmt.Println(errL)
-			return
-		}
-		// fmt.Println("执行了2")
-		if l < 0.9 && CacheContainer.Len() < 150 { //不需要清楚容器
-			return
-		}
-		// fmt.Println("执行了3")
-		for j := 0; j <= i; j++ {
-			id, err := CacheContainer.GetOldestKey()
-			if err != nil {
-				log.Fatalln("集群释放容器时，无法获取最后一个元素的值")
-				fmt.Println("集群释放容器时，无法获取最后一个元素的值")
-				return
-			}
-			// fmt.Println("执行了4")
-			targetContainer, ok := CacheContainer.Get(id)
-			if !ok {
-				// fmt.Println("执行了5")
-				log.Fatalln("无法获取对应的容器")
-			} else {
-				// fmt.Println("执行了6")
-				tar, ok := targetContainer.(containerCreated)
-				if ok {
-					// fmt.Println("转换成功")
-					removeResult := evictElement(tar)
-					if removeResult != nil {
-						log.Fatalln("清理容器时出错", removeResult)
-						fmt.Println(removeResult)
-					} else {
-						log.Println("清理容器成功", tar.Instance.containerID)
-					}
-				} else {
-					log.Fatalln("无法转换类型")
-					// fmt.Println("转换不成功")
-				}
-
-			}
-
-			// CacheContainer.Remove(id)
-			if CacheContainer.Len() < 5 { //容器太少时也不再清理
-				return
-			}
-			l2, errL2 := GetClusterLoad(currentServerStatus)
-			if errL2 != nil {
-				log.Fatalln("集群释放容器时，无法获取集群负载")
-			}
-			if l2 < 0.85 { //服务器负载已经足够低
-				return
-			}
-
-		}
-		break
+	load, errL := GetClusterLoad(currentServerStatus)
+	if errL != nil {
+		log.Fatalln("集群释放容器时，无法获取就集群负载")
+		fmt.Println(errL)
+		return
 	}
+	// fmt.Println("执行了2")
+	cacheLength := CacheContainer.Len()
+	if load < 0.9 && cacheLength < 150 { //不需要清楚容器
+		log.Println("集群负载是", load, "缓存长度是", cacheLength, "不需要释放容器")
+		return
+	}
+	// fmt.Println("执行了3")
+	for j := 0; j < 5; j++ {
+		id, err := CacheContainer.GetOldestKey()
+		if err != nil {
+			log.Fatalln("集群释放容器时，无法获取最后一个元素的值")
+			fmt.Println("集群释放容器时，无法获取最后一个元素的值")
+			return
+		}
+		// fmt.Println("执行了4")
+		targetContainer, ok := CacheContainer.Get(id)
+		if !ok {
+			// fmt.Println("执行了5")
+			log.Fatalln("无法获取对应的容器,ID是", id)
+		} else {
+			// fmt.Println("执行了6")
+			tar, ok := targetContainer.(containerCreated)
+			if ok {
+				// fmt.Println("转换成功")
+				removeResult := evictElement(tar)
+				if removeResult != nil {
+					log.Fatalln("清理容器时出错", removeResult)
+					fmt.Println(removeResult)
+				} else {
+					log.Println("清理容器成功", tar.Instance.containerID)
+				}
+			} else {
+				log.Fatalln("无法转换类型")
+				// fmt.Println("转换不成功")
+			}
+
+		}
+
+		// CacheContainer.Remove(id)
+		if CacheContainer.Len() < 5 { //容器太少时也不再清理
+			return
+		}
+		// l2, errL2 := GetClusterLoad(currentServerStatus)
+		// if errL2 != nil {
+		// 	log.Fatalln("集群释放容器时，无法获取集群负载")
+		// }
+		// if l2 < 0.7 { //服务器负载已经足够低
+		// 	return
+		// }
+
+	}
+
 }
 
 func StartCacheDeamon() {
@@ -215,7 +215,7 @@ func StartCacheDeamon() {
 				log.Println("开启了RestrictContainer,Load是", CurCLoad)
 			}
 			// fmt.Println("执行到deamon了")
-			timeSlot.Reset(time.Second * 2)
+			timeSlot.Reset(time.Second * 10)
 		}
 	}
 }
