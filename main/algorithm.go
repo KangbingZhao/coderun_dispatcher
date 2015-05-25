@@ -37,9 +37,21 @@ func isOverload(CpuUsage, MemUsage float64) bool {
 
 func delaySecond(n time.Duration) {
 	// func delaySecond(n int) {
-	time.Sleep(n * time.Second)
+	time.Sleep(n * time.Microsecond * 100)
 }
 
+func createNewContainerWithQuene(serverIP string, imageName string) (containerAddr, reError) {
+	data := createContainerData{
+		serverIP:  serverIP,
+		imageName: imageName,
+		addr:      make(chan *containerAddr),
+		err:       make(chan *reError),
+	}
+	createBuf <- data
+	addr := <-data.addr
+	err := <-data.err
+	return *addr, *err
+}
 func createNewContainer(serverIP string, imageName string) (containerAddr, reError) { //创建新的容器
 	createURL := "http://" + serverIP + ":9090/createrunner/" + imageName
 
@@ -93,7 +105,7 @@ func createNewContainer(serverIP string, imageName string) (containerAddr, reErr
 
 		} else if createStatus == 1 { //延迟后重新请求
 			log.Println("延迟后重新请求")
-			delaySecond(1)
+			delaySecond(10)
 			continue
 
 		} else if createStatus == 2 { //重新调用创建api
@@ -385,7 +397,7 @@ func ServerAndContainer(imageName string) containerCreated { //优先选择已�
 	curClusterCapacity[0].l.RLock()
 	ServerIP := curClusterCapacity[0].host
 	curClusterCapacity[0].l.RUnlock()
-	temp, err := createNewContainer(ServerIP, imageName)
+	temp, err := createNewContainerWithQuene(ServerIP, imageName)
 
 	var newContainer ContainerCapacity //添加新容器
 	newContainer.capacityLeft = DefaultContainerCapacify - 1
