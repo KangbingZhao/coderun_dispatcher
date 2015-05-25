@@ -137,6 +137,7 @@ func main() {
 	// 默认会有log.Ldate | log.Ltime（日期 时间），这里重写为 日 时 文件名
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile) //2015/04/22 11:28:41 test.go:29: content
 
+	go CreateContainerMain()
 	go StartDeamon()
 	go StartCacheDeamon()
 
