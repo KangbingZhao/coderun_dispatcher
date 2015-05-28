@@ -35,7 +35,7 @@ func CreateContainerMain() {
 			} else {
 				now := time.Now()
 				dur := now.Sub(last.t)
-				if dur < 1000*1000*2 {
+				if dur < 1000*1000*50 {
 					//if <2 ms return redirct
 					one.addr <- &last.addr
 					one.err <- &last.err

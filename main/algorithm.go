@@ -37,7 +37,7 @@ func isOverload(CpuUsage, MemUsage float64) bool {
 
 func delaySecond(n time.Duration) {
 	// func delaySecond(n int) {
-	time.Sleep(n * time.Microsecond * 100)
+	time.Sleep(n * time.Microsecond * 1000000)
 }
 
 func createNewContainerWithQuene(serverIP string, imageName string) (containerAddr, reError) {
@@ -60,48 +60,52 @@ func createNewContainer(serverIP string, imageName string) (containerAddr, reErr
 		req, reqError := http.NewRequest("POST", createURL, nil)
 		log.Println("创建URL是", createURL)
 		if reqError != nil {
-			return containerAddr{"", 0, ""}, reError{"req初始化失败", reqError}
+			return containerAddr{"", 0, "", ""}, reError{"req初始化失败", reqError}
 		}
+		// log.Println("checkpoint")
 		resq, req1Err := client.Do(req)
 		if req1Err != nil {
 			//发送失败,直接退出
-			return containerAddr{"", 0, ""}, reError{"发送创建请求失败", req1Err}
+			log.Println("发送请求失败", req1Err)
+			return containerAddr{"", 0, "", ""}, reError{"发送创建请求失败", req1Err}
 		}
+		log.Println("checkpoint")
 		data, err := ioutil.ReadAll(resq.Body)
 		if err != nil {
 			//数据读取失败，直接退出
-			return containerAddr{"", 0, ""}, reError{"创建请求结果无法读取", err}
+			return containerAddr{"", 0, "", ""}, reError{"创建请求结果无法读取", err}
 		}
 		defer resq.Body.Close()
+		log.Println("checkpoint")
 		createResult, errR := jason.NewObjectFromBytes(data)
 		if errR != nil {
-			return containerAddr{"", 0, ""}, reError{"创建请求结果解析出错", errR}
+			return containerAddr{"", 0, "", ""}, reError{"创建请求结果解析出错", errR}
 		}
 		log.Println("返回结果是", createResult)
 		createStatus, errS := createResult.GetInt64("status")
 		if errS != nil {
-			return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析", errS}
+			return containerAddr{"", 0, "", ""}, reError{"创建请求结果无法解析", errS}
 		}
 		if createStatus == 3 { //创建成功
 			log.Println("创建成功!")
 			containerHost, errCH := createResult.GetString("hosts")
 			if errCH != nil {
-				return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析出主机地址", errCH}
+				return containerAddr{"", 0, "", ""}, reError{"创建请求结果无法解析出主机地址", errCH}
 			}
 			containerInfo, errCI := createResult.GetObject("instances")
 			if errCI != nil {
-				return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析出容器信息", errCI}
+				return containerAddr{"", 0, "", ""}, reError{"创建请求结果无法解析出容器信息", errCI}
 			}
 			containerPort, errCP := containerInfo.GetInt64("port")
 			if errCP != nil {
-				return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析出容器端口", errCP}
+				return containerAddr{"", 0, "", ""}, reError{"创建请求结果无法解析出容器端口", errCP}
 			}
 			containerId, errCID := containerInfo.GetString("container_id")
 			if errCID != nil {
-				return containerAddr{"", 0, ""}, reError{"创建请求结果无法解析出容器ID", errCID}
+				return containerAddr{"", 0, "", ""}, reError{"创建请求结果无法解析出容器ID", errCID}
 			}
 
-			return containerAddr{containerHost, int(containerPort), containerId}, reError{"", nil}
+			return containerAddr{containerHost, int(containerPort), containerId, imageName}, reError{"", nil}
 
 		} else if createStatus == 1 { //延迟后重新请求
 			log.Println("延迟后重新请求")
@@ -114,75 +118,14 @@ func createNewContainer(serverIP string, imageName string) (containerAddr, reErr
 			continue
 		} else if createStatus == 6 { //pull失败
 			log.Println("Pull失败，id是", imageName)
-			return containerAddr{"", 0, ""}, reError{"无法获取镜像", errors.New("无法获取镜像")}
+			return containerAddr{"", 0, "", ""}, reError{"无法获取镜像", errors.New("无法获取镜像")}
 		}
 
 	}
 
 	//timeout
 
-	return containerAddr{"", 0, ""}, reError{"创建镜像超时", errors.New("创建镜像超时")}
-
-}
-
-func AbandonedCreateNewContainer(serverIP string, imageName string) containerAddr { //创建新的人容器
-	// fmt.Println("我是新建的函数")
-	createURL := "http://" + serverIP + ":9090/createrunner/" + imageName
-	// reqContent := ""
-	client := &http.Client{}
-	req, _ := http.NewRequest("POST", createURL, nil)
-	resq, req1Err := client.Do(req)
-	// fmt.Println("daowolw")
-	if req1Err != nil {
-		fmt.Println("发送创建请求失败")
-		fmt.Println(createURL)
-		return containerAddr{"", 0, ""}
-	}
-	data, _ := ioutil.ReadAll(resq.Body)
-	// fmt.Println("daowolwsdfdsf")
-	if data == nil {
-		return containerAddr{"", 0, ""}
-	}
-	defer resq.Body.Close()
-	/*	dataDecode,_ := jason.NewObjectFromBytes(data)
-		createResult,_ := dataDecode.GetString("message")
-		if createResult!= ""*/
-	for i := 0; i < 10; i++ { //循环直到请求成功,否则超时
-
-		findURL := "http://" + serverIP + ":9090/findrunner/" + imageName
-		resq2, err := http.Get(findURL)
-		if err != nil {
-			//错误处理
-		}
-
-		data2, _ := ioutil.ReadAll(resq2.Body)
-		defer resq2.Body.Close()
-		findResult, _ := jason.NewObjectFromBytes(data2)
-
-		containerHost, err1 := findResult.GetString("hosts")
-		containerArray, err2 := findResult.GetObjectArray("instances")
-		fmt.Println("地址是", findURL)
-		fmt.Println("返回内容是", findResult)
-		containerId, err3 := containerArray[len(containerArray)-1].GetString("container_id")
-		containerPort, err4 := containerArray[len(containerArray)-1].GetInt64("port")
-		// containerPort, err5 := strconv.Atoi(containerPort)
-
-		if err1 == nil && err2 == nil && err3 == nil && err4 == nil {
-			// fmt.Println("都是空啊")
-			/*		fmt.Println("我是主机", containerHost)
-					fmt.Println("我是ID", containerId)
-					fmt.Println("我是信息", containerPort)*/
-			// fmt.Println(err1, err2, err3, err4)
-			fmt.Println("获取的id是", containerId)
-			return containerAddr{containerHost, int(containerPort), containerId}
-			break
-
-		}
-		delaySecond(1)
-
-	}
-	//超时了
-	return containerAddr{"", 0, ""}
+	return containerAddr{"", 0, "", ""}, reError{"创建镜像超时", errors.New("创建镜像超时")}
 
 }
 
@@ -192,7 +135,7 @@ func RR(currentServerStatus []curServerStatus) containerAddr { // a Round-Robin
 	temp := callCount % len(currentServerStatus)
 	callCount = temp + 1
 	ip := currentServerStatus[temp].machineStatus.Host
-	tc := containerAddr{ip, 0, ""}
+	tc := containerAddr{ip, 0, "", ""}
 	return tc
 
 	// return currentServerStatus[temp].machineStatus.Host
@@ -204,9 +147,9 @@ func LCS(currentServerStatus []curServerStatus) containerAddr { // Lease-Connect
 	// var minIP string
 	serverNum := len(currentServerStatus) //当前在线的服务器数量
 	if serverNum == 0 {                   //没有正常工作的服务器
-		return containerAddr{"", 0, ""}
+		return containerAddr{"", 0, "", ""}
 	} else if serverNum == 1 { //只有一台服务器
-		return containerAddr{currentServerStatus[0].machineStatus.Host, 0, ""}
+		return containerAddr{currentServerStatus[0].machineStatus.Host, 0, "", ""}
 	} else {
 		for i, v := range currentServerStatus {
 			if len(v.containerStatus) > len(currentServerStatus[i+1].containerStatus) {
@@ -217,7 +160,7 @@ func LCS(currentServerStatus []curServerStatus) containerAddr { // Lease-Connect
 			}
 		}
 	}
-	return containerAddr{currentServerStatus[min].machineStatus.Host, 0, ""}
+	return containerAddr{currentServerStatus[min].machineStatus.Host, 0, "", ""}
 }
 
 func GetServerLoad(ss serverStat) float64 { //CPU和RAM使用率百分比的加权平均，暂定为0.5、0.5
@@ -249,9 +192,9 @@ func GetContainerLoad(cs containerStat) float64 { //CPU和RAM使用率百分比�
 func ServerPriority(currentServerStatus []curServerStatus) containerAddr { //选择负载最低的服务器，新建容器,直接返回服务器IP
 	serverNum := len(currentServerStatus)
 	if serverNum == 0 {
-		return containerAddr{"", 0, ""}
+		return containerAddr{"", 0, "", ""}
 	} else if serverNum == 1 {
-		return containerAddr{currentServerStatus[0].machineStatus.Host, 0, ""}
+		return containerAddr{currentServerStatus[0].machineStatus.Host, 0, "", ""}
 	} else { // 两台以上服务器在线
 		var temp int = 0
 		for i, v := range currentServerStatus {
@@ -259,11 +202,11 @@ func ServerPriority(currentServerStatus []curServerStatus) containerAddr { //选
 				temp = i
 			}
 		}
-		return containerAddr{currentServerStatus[temp].machineStatus.Host, 0, ""}
+		return containerAddr{currentServerStatus[temp].machineStatus.Host, 0, "", ""}
 	}
 }
 
-func findImagesInServer(currentServerCapacity ServerCapacity, imageName string) []int {
+func FindImagesInServer(currentServerCapacity ServerCapacity, imageName string) []int {
 	// fmt.Println("当前容器", currentServerStatus.containerStatus)
 	// 从一台服务器选出所有符合条件的容器，，按使用率从小到大排序后返回Slice
 	re := make([]int, 0, 5)
@@ -339,8 +282,14 @@ func ServerAndContainer(imageName string) containerCreated { //优先选择已�
 	/*上述方案并不好，容器导致任务重的服务器负载越来越重，修改如下:
 	*	先选择负载轻的服务器，在上面查找容器，选择负载最轻的容器分配(需要能够查出多个容器的函数)
 	 */
-	// sortedClusterCapacity := sortServerByLoad(currentClusterCapacity)
 	sortServerByLoad()
+	if len(curClusterCapacity) < 1 {
+		var re containerCreated
+		re.Status = 6
+		log.Println("请求镜像名", imageName, "无可用服务器")
+		return re
+	}
+	log.Println("排序结果", curClusterCapacity)
 	var re containerCreated
 	for i, v := range curClusterCapacity {
 		curClusterCapacity[i].l.RLock()
@@ -350,16 +299,18 @@ func ServerAndContainer(imageName string) containerCreated { //优先选择已�
 		/*		if GetServerLoad(v.machineStatus) > 0.9 { //负载过高，不再分配
 				continue
 			}*/
-		if v.CapacityLeft < DefaultServerCapacity/10 { //负载高于90%
+		if v.CapacityLeft < DefaultServerCapacity/10 {
+			//负载高于90%
 			log.Println("选定的服务器已经过载,信息是", v)
 			curClusterCapacity[i].l.RUnlock()
 			continue
 		}
-		imageList := findImagesInServer(v, imageName)
-		// fmt.Println("镜像名", imageName)
-		// fmt.Println("列表", imageList)
+		imageList := FindImagesInServer(v, imageName)
+		log.Println("镜像名", imageName)
+		log.Println("列表", imageList)
 		if len(imageList) == 0 { //不存在对应的容器
 			// fmt.Println("执行22")
+			curClusterCapacity[i].l.RUnlock()
 			log.Println("分配时没有找到容器", imageName)
 			continue
 		} else {
@@ -382,6 +333,7 @@ func ServerAndContainer(imageName string) containerCreated { //优先选择已�
 			re.Instance.ServerIP = v.containers[imageList[0]].host
 			re.Instance.ServerPort = v.containers[imageList[0]].port
 			re.Instance.containerID = v.containers[imageList[0]].containerID
+			re.Instance.imageName = imageName
 			curClusterCapacity[i].l.RUnlock()
 			curClusterCapacity[i].l.Lock()
 			curClusterCapacity[i].CapacityLeft = v.CapacityLeft - 1
@@ -405,6 +357,7 @@ func ServerAndContainer(imageName string) containerCreated { //优先选择已�
 	newContainer.host = ServerIP
 	newContainer.imageName = imageName
 	newContainer.port = temp.ServerPort
+	newContainer.updateTime = time.Now()
 
 	curClusterCapacity[0].l.Lock()
 	curClusterCapacity[0].CapacityLeft = curClusterCapacity[0].CapacityLeft - 1
@@ -421,6 +374,8 @@ func ServerAndContainer(imageName string) containerCreated { //优先选择已�
 		re.Status = 2
 		re.Instance = temp
 		log.Println("创建容器成功", re.Instance)
+		log.Println("创建镜像名是", re.Instance.imageName, "请求镜像名是", imageName)
+		log.Println("当前集群状态是", curClusterCapacity)
 		return re
 	}
 

@@ -23,11 +23,9 @@ import (
 )
 
 // var logger = logrus.New()
-var ContainerMemCapacity = float64(20971520) //default container memory capacity is 20MB
+
 var l sync.RWMutex
 var curClusterStats = make([]curServerStatus, 0, 5) //the global variable is current server stats and container stats
-var DefaultContainerCapacify int = 100              //一个完全空闲容器能承担的用户数
-var DefaultServerCapacity int = 1500                //一个完全空闲容器能承担的用户数
 
 var curClusterLoad float64
 
@@ -41,37 +39,12 @@ type curServerStatus struct {
 	ServerIP   string
 	ServerPost int
 }*/
-type serverConfig struct { // store data of ./metadata/config.json
-	Server []struct {
-		Host         string
-		DockerPort   int
-		CAdvisorPort int
-	}
-}
 
 type serverAddress struct {
 	Host         string
 	DockerPort   int
 	CAdvisorPort int
 }
-
-//对服务器状态和处理能力分离之后添加的数据结构
-var UpdateStatChannel = make(chan updateInfo, 100) //缓冲区大小100，存放更新的服务器状态
-type ContainerCapacity struct {
-	host         string
-	port         int
-	containerID  string
-	imageName    string
-	capacityLeft int
-}
-type ServerCapacity struct {
-	l            sync.RWMutex
-	host         string
-	CapacityLeft int
-	containers   []ContainerCapacity
-}
-
-var curClusterCapacity = make([]ServerCapacity, 0, 5)
 
 func getInitialServerAddr() serverConfig { // get default server info from ./metadata/config.json
 	r, err := os.Open("../metadata/config.json")
@@ -116,19 +89,7 @@ type containerStat struct {
 	memCapacity   float64
 }
 
-type updateInfo struct { //服务器主动发送的机器信息
-	Host       string
-	Cpu        float64
-	Mem        float64
-	Containers []struct {
-		Image string
-		Id    string
-		Cpu   float64
-		Mem   float64
-	}
-}
-
-var UpdateInfoChannel = make(chan updateInfo)
+// var UpdateInfoChannel = make(chan updateInfo)
 
 func subSubstring(str string, start, end int) string { //截取字符串
 	if start < 0 {

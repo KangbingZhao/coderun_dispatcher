@@ -35,6 +35,7 @@ type containerAddr struct { // function dispatcherContainer will return this
 	ServerIP    string
 	ServerPort  int
 	containerID string //小写开头，并没有返回给用户
+	imageName   string //小写开头，没有返回给用户
 }
 
 type containerCreated struct {
@@ -64,33 +65,36 @@ func dispatchContainer(w http.ResponseWriter, enc Encoder, r *http.Request) (int
 
 	} else if ip.Status == 3 { //使用了现有的容器
 		fmt.Println("现有容器")
-		name := getImageNameByContainerName("http://"+ip.Instance.ServerIP+":4243", ip.Instance.containerID)
-		if !isServiceContainer(name["ImageName"]) {
+		// name := getImageNameByContainerName("http://"+ip.Instance.ServerIP+":4243", ip.Instance.containerID)
+		name := ip.Instance.imageName
+		if !isServiceContainer(name) {
 			_, ok := CacheContainer.Get(ip.Instance.containerID)
 			if ok == true { //成功放到最前面
 				// logger.Debug("成功")
-				log.Println("更新缓存成功")
+				log.Println("更新缓存成功,镜像是", name, "id是", ip.Instance.containerID)
 			} else { //出错了
 				// logger.Errorln("未成功更新容器调用记录！")
-				log.Println("未成功更新容器调用记录")
+				log.Println("未成功更新容器调用记录,镜像是", name, "id是", ip.Instance.containerID)
 			}
 		}
 
 	} else if ip.Status == 2 { //新创建的容器
 		fmt.Println("新建容器")
 		ip.Status = 3 //因为只接受3作为正确结果
-		name := getImageNameByContainerName("http://"+ip.Instance.ServerIP+":4243", ip.Instance.containerID)
-		if !isServiceContainer(name["ImageName"]) {
+		name := ip.Instance.imageName
+		if !isServiceContainer(name) {
 			CacheContainer.Add(ip.Instance.containerID, ip)
+			log.Println("添加缓存成功", ip)
 		}
 	} else { //错误的数据
-		logger.Errorln("无法解析的容器状态")
+		log.Println("无法解析的容器状态")
 	}
 	// CacheContainer.Add(ip.Instance.containerID, ip)
 	// fmt.Println("分配的IP是", ip.Instance.ServerIP)
 	// fmt.Println("当前id是", ip.Instance.containerID)
 	fmt.Println("分配信息是", ip)
 	// log.Println("分配信息是", ip, "耗时", time.Now().Sub(a))
+	log.Println("分配完成后的集群状态", curClusterCapacity)
 	return http.StatusOK, Must(enc.Encode(ip))
 }
 func MapEncoder(c martini.Context, w http.ResponseWriter, r *http.Request) {
@@ -138,8 +142,10 @@ func main() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile) //2015/04/22 11:28:41 test.go:29: content
 
 	go CreateContainerMain()
-	go StartDeamon()
+	// go StartDeamon()
 	go StartCacheDeamon()
+	go updateDeamon()
+	go PurgeClusterCapacity()
 
 	// go UpdateClusterCapacity()
 
@@ -147,8 +153,8 @@ func main() {
 	m := martini.Classic()
 	m.Use(MapEncoder)
 	m.Post("/api/dispatcher/v1.0/container/create", dispatchContainer)
-	// m.Post("/api/machine/stat", getUpdateInfo)
-	m.Post("/api/machine/stat", NULLResponse)
+	m.Post("/api/machine/stat", GetUpdateInfoInupdate)
+	// m.Post("/api/machine/stat", NULLResponse)
 
 	m.Run()
 

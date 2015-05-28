@@ -46,21 +46,19 @@ func getInitialServiceContainers() (serviceContainers, error) { //从serviceCont
 
 func loadCurrentContainer() { //初始化时，将现有容器放入缓存区中,排除ServiceContainer
 	// delaySecond(5)
-	TcurClusterStats := GetCurrentClusterStatus()
-	for _, v := range TcurClusterStats {
-		if v.machineStatus.cpuCore == -1 {
-			continue
-		}
-		for _, vv := range v.containerStatus {
-			if isServiceContainer(vv.name) {
+	// TcurClusterStats := GetCurrentClusterStatus()
+	TcurCluster := curClusterCapacity
+	for _, v := range TcurCluster {
+		for _, vv := range v.containers {
+			if isServiceContainer(vv.imageName) {
 				continue
 			}
 			var temp containerCreated
 			temp.Status = 100 //开始时就装入的
-			temp.Instance.ServerIP = vv.serverIP
+			temp.Instance.ServerIP = vv.host
 			temp.Instance.ServerPort = vv.port
-			temp.Instance.containerID = vv.id
-			CacheContainer.Add(vv.id, temp)
+			temp.Instance.containerID = vv.containerID
+			CacheContainer.Add(vv.containerID, temp)
 		}
 	}
 	// fmt.Println("状态是", GetCurrentClusterStatus())
@@ -84,19 +82,6 @@ func isServiceContainer(imageName string) bool { //检验一个容器是否是�
 	return false
 }
 
-func GetClusterLoad(currentServerStatus []curServerStatus) (float64, error) { // ServerLoad的算术平均，因为每台服务器都是等价的
-	totalLoad := float64(0)
-	if len(currentServerStatus) < 1 {
-		return 0, errors.New("没有可用的服务器,无法获取集群负载")
-	}
-	for _, v := range currentServerStatus {
-		totalLoad = totalLoad + GetServerLoad(v.machineStatus)
-		// log.Println("机器", i, "的负载时", GetServerLoad(v.machineStatus))
-	}
-	// log.Println("长度", len(currentServerStatus), "总负载", totalLoad)
-	return totalLoad / float64(len(currentServerStatus)), nil
-}
-
 func evictElement(cc containerCreated) error { //从缓存中清除一个容器时，向Docker发请求删除容器
 	if cc.Status != 2 && cc.Status != 3 && cc.Status != 100 {
 		return errors.New("该容器不存在")
@@ -115,31 +100,41 @@ func evictElement(cc containerCreated) error { //从缓存中清除一个容器�
 	// fmt.Println(client)
 	fmt.Println("删除函数的错误是", errR)
 	log.Println("删除容器,ID是", cc.Instance.containerID, "错误信息是", errR)
+
+	//接下来从集群状态中删除此容器
+	for i, v := range curClusterCapacity {
+		for ii, vv := range v.containers {
+			if vv.containerID == cc.Instance.containerID {
+				err := DeleteContainerInUpdate(i, ii)
+				if err != nil {
+					log.Println("删除容器时，删除容量信息出错")
+					return err
+				} else {
+					log.Println("删除容器时，删除容量信息成功")
+				}
+			}
+		}
+	}
 	return errR
 }
 
-func RestrictContainer(currentServerStatus []curServerStatus) { //若集群负载高于90%，调用此函数清除最久未被使用的容器，清理五个容器
-	// delaySecond(10)
-	// fmt.Println("集群状态", currentServerStatus)
-	// fmt.Println("执行了")
-	load, errL := GetClusterLoad(currentServerStatus)
-	if errL != nil {
-		log.Fatalln("集群释放容器时，无法获取就集群负载")
-		fmt.Println(errL)
-		return
+func getClusterCapacityLeft() int {
+	var totalCapacityLeft int = 0
+	for i, v := range curClusterCapacity {
+		curClusterCapacity[i].l.RLock()
+		totalCapacityLeft = totalCapacityLeft + v.CapacityLeft
+		curClusterCapacity[i].l.RUnlock()
 	}
-	// fmt.Println("执行了2")
-	cacheLength := CacheContainer.Len()
-	if load < 0.9 && cacheLength < 150 { //不需要清楚容器
-		log.Println("集群负载是", load, "缓存长度是", cacheLength, "不需要释放容器")
-		return
-	}
-	// fmt.Println("执行了3")
+	return totalCapacityLeft
+}
+
+func RestrictContainer() { //若集群负载高于90%，调用此函数清除最久未被使用的容器，清理五个容器
+
 	for j := 0; j < 5; j++ {
 		id, err := CacheContainer.GetOldestKey()
 		if err != nil {
 			log.Fatalln("集群释放容器时，无法获取最后一个元素的值")
-			fmt.Println("集群释放容器时，无法获取最后一个元素的值")
+			// fmt.Println("集群释放容器时，无法获取最后一个元素的值")
 			return
 		}
 		// fmt.Println("执行了4")
@@ -170,25 +165,18 @@ func RestrictContainer(currentServerStatus []curServerStatus) { //若集群负�
 		if CacheContainer.Len() < 5 { //容器太少时也不再清理
 			return
 		}
-		// l2, errL2 := GetClusterLoad(currentServerStatus)
-		// if errL2 != nil {
-		// 	log.Fatalln("集群释放容器时，无法获取集群负载")
-		// }
-		// if l2 < 0.7 { //服务器负载已经足够低
-		// 	return
-		// }
 
 	}
 
 }
-
 func StartCacheDeamon() {
 	delaySecond(5)
+	// log.Println("Cache启动了")
 	timeSlot := time.NewTimer(time.Second * 1) // update status every second
 	//读取持久化服务列表，供载入现有容器时过滤
 	InitialServiceContainers, err := getInitialServiceContainers()
 	if err != nil {
-		logger.Errorln(err)
+		log.Println("获取持久容器列表错误", err)
 		return
 	}
 	CurrentServiceContainers = InitialServiceContainers.ServiceContainer
@@ -198,24 +186,28 @@ func StartCacheDeamon() {
 		case <-timeSlot.C:
 			tempServiceContainers, err := getInitialServiceContainers()
 			if err != nil {
-				logger.Errorln(err)
+				log.Println("获取持久容器列表错误", err)
 				return
 			}
 			CurrentServiceContainers = tempServiceContainers.ServiceContainer
 			// fmt.Println("初始化守护容器时", CurrentServiceContainers)
 
 			// CurCLoad, errCCL := GetClusterLoad(curClusterStats)
-			CurCLoad, errCCL := GetClusterLoad(GetCurrentClusterStatus())
-			if errCCL != nil {
-				log.Println("CacheDeamon中无法获取集群负载")
-				log.Println("错误是", errCCL)
-				log.Println("集群状态是", GetCurrentClusterStatus())
-			} else if CurCLoad > 0.9 {
-				RestrictContainer(GetCurrentClusterStatus()) //定期清理容器
-				log.Println("开启了RestrictContainer,Load是", CurCLoad)
-			}
+			/*			CurCLoad, errCCL := GetClusterLoad(GetCurrentClusterStatus())
+						if errCCL != nil {
+							log.Println("CacheDeamon中无法获取集群负载")
+							log.Println("错误是", errCCL)
+							log.Println("集群状态是", GetCurrentClusterStatus())
+						} else if CurCLoad > 0.9 {
+							RestrictContainer(GetCurrentClusterStatus()) //定期清理容器
+							log.Println("开启了RestrictContainer,Load是", CurCLoad)
+						}*/
 			// fmt.Println("执行到deamon了")
-			timeSlot.Reset(time.Second * 10)
+			if getClusterCapacityLeft()*10 < len(curClusterCapacity)*DefaultServerCapacity { //剩余容量小于十分之一
+				RestrictContainer()
+				log.Println("启动清理程序，剩余容量是", getClusterCapacityLeft())
+			}
+			timeSlot.Reset(time.Second * 5)
 		}
 	}
 }
