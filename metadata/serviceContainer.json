@@ -1,0 +1,9 @@
+{
+	"ServiceContainer":[
+		{"ImageName":"docker-browser"},
+		{"ImageName":"docker-proxy"},
+		{"ImageName":"cadvisor"}
+
+	]
+
+}

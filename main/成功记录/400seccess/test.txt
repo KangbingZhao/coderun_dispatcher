@@ -1,0 +1,2237 @@
+开始时间： 2015-05-25 10:34:25.6856589 +0800 CST
+[martini] listening on :3000 (development)
+服务器容器更新耗时 166.0095ms
+服务器容器更新耗时 102.0058ms
+服务器容器更新耗时 83.0047ms
+耗时 408.0233ms
+更新状态耗时 408.0233ms
+服务器容器更新耗时 181.0103ms
+服务器容器更新耗时 127.0073ms
+服务器容器更新耗时 72.0041ms
+耗时 463.0265ms
+更新状态耗时 464.0266ms
+服务器容器更新耗时 179.0102ms
+服务器容器更新耗时 84.0048ms
+服务器容器更新耗时 43.0024ms
+耗时 354.0202ms
+更新状态耗时 355.0203ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59239
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59228
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59229
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59230
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59231
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59232
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59233
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59234
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59235
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59236
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59237
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59238
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59240
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59322
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59323
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59264
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59265
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59266
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59267
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59268
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59269
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59270
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59271
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59209
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59210
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59211
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59212
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59213
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59216
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59227
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59279
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59249
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59278
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 23.0014ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59277
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59240
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 31.0017ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59276
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 33.0019ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59275
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 34.002ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 36.0021ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 34.0019ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 36.002ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59274
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 28.0016ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59273
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 38.0021ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 37.0021ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59238
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 28.0016ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 28.0016ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 29.0017ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59272
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 41.0023ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59235
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 42.0024ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 23.0013ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59234
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 42.0024ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59321
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59233
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59237
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59229
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59230
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59213
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59216
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59227
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59236
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59210
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59232
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59263
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 29.0017ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 24.0014ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 23.0013ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 21.0012ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 20.0011ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 18.001ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 16.0009ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 16.0009ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59279
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59231
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59228
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59262
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59274
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59277
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59240
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59249
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59261
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59238
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59272
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59276
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59275
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 60.0034ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 71.0041ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59323
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 71.004ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 71.004ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 69.0039ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 70.004ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 70.004ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 71.0041ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 71.0041ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 72.0041ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 73.0041ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59260
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59271
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59265
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59264
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59322
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59259
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 42.0024ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 48.0027ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 75.0043ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 30.0017ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59266
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59267
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59268
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59269
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59209
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59270
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 77.0044ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59258
+现有容器
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 47.0027ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59279
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59273
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59211
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59321
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 45.0026ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 45.0025ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 45.0025ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 46.0026ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 46.0026ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 45.0026ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 46.0026ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 44.0025ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59212
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59216
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59230
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59229
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 56.0032ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59213
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59247
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59257
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59232
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59236
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59227
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59210
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59237
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59263
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59256
+现有容器
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 64.0037ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59255
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59254
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59253
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59234
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59252
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59457
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59251
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 55.0031ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 13.0008ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 12.0007ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 58.0033ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 13.0007ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59458
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59459
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59274
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59460
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 13.0007ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59461
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59236
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59227
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59228
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59210
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 55.0031ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 55.0031ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59250
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59256
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59291
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59276
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59238
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59290
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 67.0038ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 69.004ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 103.0059ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59289
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59453
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59454
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59249
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59261
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 66.0037ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59455
+现有容器
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 51.0029ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59278
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59482
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 91.0052ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59275
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 58.0033ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59481
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 55.0032ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59233
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59271
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 62.0035ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 61.0034ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 59.0033ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59480
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59264
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59323
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 19.0011ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 62.0035ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 62.0035ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 61.0035ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 61.0035ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 62.0036ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 62.0036ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 58.0033ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 52.003ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 56.0032ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59479
+现有容器
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 93.0053ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 69.004ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59454
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59268
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59267
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59259
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59266
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59322
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59478
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 58.0033ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59265
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59321
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59262
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59212
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59279
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59258
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59209
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59269
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59270
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 60.0034ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 63.0036ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59471
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59216
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59247
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59230
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 51.0029ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 51.0029ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 57.0033ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 52.003ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 50.0029ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 59.0034ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 55.0032ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 57.0033ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 111.0063ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 61.0035ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 68.0039ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 61.0035ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 67.0039ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59477
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 111.0064ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 114.0065ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 70.004ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59458
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59460
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59459
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59470
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 56.0032ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59277
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59457
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59251
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59234
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59461
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59252
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59476
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 61.0035ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59231
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59240
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59213
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59237
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59254
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59232
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59253
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 62.0036ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59469
+现有容器
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 65.0037ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59475
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59274
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59236
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 97.0056ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 97.0056ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59228
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59250
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 64.0036ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 62.0035ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 66.0038ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 69.004ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 67.0039ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 71.004ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 127.0072ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 73.0041ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59468
+现有容器
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 48.0027ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59208
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 97.0055ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 63.0036ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 65.0038ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 66.0038ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59474
+现有容器
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 63.0036ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 97.0056ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 158.0091ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 65.0037ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 70.004ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59248
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59211
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59273
+现有容器
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 50.0028ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 49.0028ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 50.0029ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 50.0029ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 84.0048ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 51.003ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59467
+现有容器
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 97.0056ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 100.0058ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 47.0027ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59241
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59242
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59243
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59244
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59245
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59246
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59210
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59272
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59256
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59276
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59291
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59289
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59238
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59290
+现有容器
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 64.0036ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 58.0033ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 75.0043ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 75.0043ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59473
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 75.0043ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 66.0037ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 64.0037ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 51.0029ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59263
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59255
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59259
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59454
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59214
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59215
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59265
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59266
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59227
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59267
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59268
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59217
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59218
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59219
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59220
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59221
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59222
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59223
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59224
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59225
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59226
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59453
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59482
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59257
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59235
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59275
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59455
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59261
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59278
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59229
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 61.0035ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 54.0031ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 53.003ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 56.0032ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 56.0032ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 58.0033ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 57.0033ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 78.0045ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59466
+现有容器
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 83.0047ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 71.004ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 87.005ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 84.0049ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59277
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59459
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59470
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59460
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59457
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59458
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59230
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59324
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59437
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59438
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59440
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59441
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59442
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59443
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59444
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59445
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59446
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59447
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59439
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59448
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59449
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59450
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59451
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59456
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59452
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59247
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59479
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59323
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59271
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59481
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59233
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59322
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59264
+现有容器
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 69.004ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59262
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59325
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59258
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59478
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59477
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59321
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59472
+现有容器
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 82.0047ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 123.0071ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 122.0069ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 120.0069ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 126.0073ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 80.0046ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 85.0049ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 81.0047ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 110.0063ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 97.0055ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 83.0047ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 96.0055ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 94.0054ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 93.0054ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 66.0038ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 207.0119ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 128.0074ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 112.0064ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 129.0074ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 130.0074ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59474
+现有容器
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 120.0068ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 120.0068ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 121.0069ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59465
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59279
+现有容器
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59251
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59270
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59212
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59208
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59260
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59220
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59250
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59468
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59467
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59228
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59476
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59242
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59273
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59209
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59246
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59216
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59471
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59269
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59248
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59487
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 69.004ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59252
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59461
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59234
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 72.0041ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 72.0041ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 73.0042ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 73.0041ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 55.0031ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 96.0055ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 96.0055ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 98.0056ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 97.0056ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 98.0056ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 79.0045ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 94.0054ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 97.0056ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 95.0055ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 95.0055ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 95.0055ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 97.0055ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 98.0056ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 98.0056ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 78.0045ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 60.0034ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 61.0035ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59464
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 99.0056ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 101.0058ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 75.0042ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 76.0043ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 77.0044ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 78.0045ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 78.0045ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 80.0046ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59463
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 80.0046ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 82.0047ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 81.0046ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 82.0047ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59457
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59324
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 58.0033ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 57.0032ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 59.0034ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 60.0035ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 61.0035ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 73.0042ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 73.0042ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59462
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 74.0042ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 75.0043ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 75.0043ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 76.0043ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 75.0043ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 77.0044ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 77.0044ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 44.0025ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59275
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59223
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59222
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59460
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59271
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59225
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59470
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59459
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 45.0026ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 71.0041ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 79.0045ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 81.0046ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59326
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 146.0083ms
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 70.004ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59448
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59456
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59451
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59458
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59437
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59230
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59438
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59235
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59277
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59453
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59323
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59479
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59224
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59221
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59466
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59482
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59229
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 57.0033ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59483
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 98.0056ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59439
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59447
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59474
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59262
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59465
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59211
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59233
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59472
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59322
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59446
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59450
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59449
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 185.0106ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59481
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59279
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59274
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 290.0166ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59249
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 264.0151ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59475
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 272.0156ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59480
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59469
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 285.0163ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59253
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 291.0167ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59232
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 301.0173ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59254
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 313.018ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59237
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 324.0186ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59213
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 339.0194ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59240
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 260.0149ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59247
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 347.0198ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59231
+分配信息是 {3 {192.168.0.33 51989 586b74b61668}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.33","ServerPort":51989}}
+[martini] Completed 200 OK in 275.0157ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59264
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 357.0205ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59236
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 356.0204ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59238
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 369.0211ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 375.0215ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 375.0215ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59473
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59291
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59289
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59321
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 386.0221ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59276
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 396.0227ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59257
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59256
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59478
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59261
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59440
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59258
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59444
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59443
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59455
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59452
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59477
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59442
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59441
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59325
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59278
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 552.0316ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 552.0316ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 553.0316ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 554.0317ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 554.0317ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59272
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59243
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59244
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59245
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59210
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 554.0317ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 557.0319ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 573.0328ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59218
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59226
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59241
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59219
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 577.033ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 577.033ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 576.033ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 577.033ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59445
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 802.0459ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 590.0338ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 583.0334ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 584.0334ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 583.0333ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 582.0333ms
+分配信息是 {3 {192.168.0.30 38946 3d30d09b68d7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38946}}
+[martini] Completed 200 OK in 582.0333ms
+分配信息是 {3 {192.168.0.30 57851 630ab9279ae8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57851}}
+[martini] Completed 200 OK in 582.0333ms
+分配信息是 {3 {192.168.0.30 42205 179c7dc7d447}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42205}}
+[martini] Completed 200 OK in 582.0333ms
+分配信息是 {3 {192.168.0.30 42500 0ca41ad475ed}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42500}}
+[martini] Completed 200 OK in 582.0333ms
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59239
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59268
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59217
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59267
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59227
+[martini] Started POST /api/dispatcher/v1.0/container/create for 192.168.0.33:59290
+服务器容器更新耗时 1.870107s
+服务器容器更新耗时 96.0055ms
+服务器容器更新耗时 41.0023ms
+耗时 2.2181268s
+更新状态耗时 2.2191269s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 57014 ec1d0021e377}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57014}}
+[martini] Completed 200 OK in 3.4661982s
+新建容器
+分配信息是 {3 {192.168.0.30 44756 c93f88b956ee}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":44756}}
+[martini] Completed 200 OK in 3.4671983s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 38380 b0a7c1c0c657}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38380}}
+[martini] Completed 200 OK in 3.7272132s
+分配信息是 {3 {192.168.0.30 56722 eeebc6920511}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":56722}}
+[martini] Completed 200 OK in 3.7292133s
+分配信息是 {3 {192.168.0.30 35568 1c1c6180466b}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":35568}}
+[martini] Completed 200 OK in 3.7262131s
+新建容器
+新建容器
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 56649 d934915e980b}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":56649}}
+[martini] Completed 200 OK in 5.0922912s
+分配信息是 {3 {192.168.0.30 45255 710e6811a03b}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":45255}}
+[martini] Completed 200 OK in 5.053289s
+分配信息是 {3 {192.168.0.30 41845 bd7fc291a605}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":41845}}
+[martini] Completed 200 OK in 5.0502889s
+新建容器
+分配信息是 {3 {192.168.0.30 57434 ce6333e4d228}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57434}}
+[martini] Completed 200 OK in 5.0812906s
+分配信息是 {3 {192.168.0.30 38896 aefdde67e72d}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38896}}
+[martini] Completed 200 OK in 5.3483059s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 41966 fc098fd99285}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":41966}}
+[martini] Completed 200 OK in 5.5703186s
+分配信息是 {3 {192.168.0.30 35745 0b7bd128e4b7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":35745}}
+[martini] Completed 200 OK in 5.5713187s
+新建容器
+分配信息是 {3 {192.168.0.30 46672 234e1be705ef}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":46672}}
+[martini] Completed 200 OK in 5.7773305s
+新建容器
+分配信息是 {3 {192.168.0.30 52332 7ca9df4fb9d4}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":52332}}
+[martini] Completed 200 OK in 6.8313908s
+新建容器
+分配信息是 {3 {192.168.0.30 37642 e2e752116397}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":37642}}
+[martini] Completed 200 OK in 7.3734218s
+新建容器
+分配信息是 {3 {192.168.0.30 55037 de2f28cd1c1f}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":55037}}
+[martini] Completed 200 OK in 7.9264533s
+新建容器
+分配信息是 {3 {192.168.0.30 58251 7cdeab5ac175}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":58251}}
+[martini] Completed 200 OK in 7.6834394s
+新建容器
+分配信息是 {3 {192.168.0.30 51174 aaf7a7b171b9}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":51174}}
+[martini] Completed 200 OK in 8.5434887s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 47655 20958a24baf2}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":47655}}
+[martini] Completed 200 OK in 9.4565409s
+分配信息是 {3 {192.168.0.30 47311 1219cec9f17e}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":47311}}
+[martini] Completed 200 OK in 9.4685416s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 58320 5b91b57bd654}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":58320}}
+[martini] Completed 200 OK in 9.6955545s
+分配信息是 {3 {192.168.0.30 46410 b63291977d59}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":46410}}
+[martini] Completed 200 OK in 10.1565809s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 60704 6300caa56fe2}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":60704}}
+[martini] Completed 200 OK in 10.6256078s
+分配信息是 {3 {192.168.0.30 35719 e4eb796788a2}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":35719}}
+[martini] Completed 200 OK in 10.6036065s
+新建容器
+分配信息是 {3 {192.168.0.30 36245 e89aca838e27}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":36245}}
+[martini] Completed 200 OK in 10.8106183s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 60429 3ea31d51444c}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":60429}}
+[martini] Completed 200 OK in 11.4986576s
+分配信息是 {3 {192.168.0.30 45996 2e378c8242bf}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":45996}}
+[martini] Completed 200 OK in 11.469656s
+新建容器
+分配信息是 {3 {192.168.0.30 55721 fac378c0bb39}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":55721}}
+[martini] Completed 200 OK in 12.0206876s
+新建容器
+分配信息是 {3 {192.168.0.30 59121 689c1d250d35}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":59121}}
+[martini] Completed 200 OK in 12.4717134s
+服务器容器更新耗时 5.5053149s
+服务器容器更新耗时 96.0055ms
+服务器容器更新耗时 44.0025ms
+耗时 5.700326s
+更新状态耗时 5.700326s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 58317 f91d44f2cafa}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":58317}}
+[martini] Completed 200 OK in 13.0167445s
+分配信息是 {3 {192.168.0.30 45216 1239557489ca}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":45216}}
+[martini] Completed 200 OK in 13.0167445s
+新建容器
+分配信息是 {3 {192.168.0.30 34401 bd695be28acc}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":34401}}
+[martini] Completed 200 OK in 13.5707762s
+新建容器
+分配信息是 {3 {192.168.0.30 55241 1cca534676a9}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":55241}}
+[martini] Completed 200 OK in 14.7028409s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 53200 fba2b8fe90d2}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":53200}}
+[martini] Completed 200 OK in 14.9568555s
+分配信息是 {3 {192.168.0.30 49614 c2ae240bc2c3}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":49614}}
+[martini] Completed 200 OK in 14.9578556s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 48285 79fa8af6edfa}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":48285}}
+[martini] Completed 200 OK in 15.5648903s
+分配信息是 {3 {192.168.0.30 41770 5c46db8a4204}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":41770}}
+[martini] Completed 200 OK in 15.5588899s
+新建容器
+分配信息是 {3 {192.168.0.30 40562 9098c8757c4b}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":40562}}
+[martini] Completed 200 OK in 16.1179219s
+新建容器
+分配信息是 {3 {192.168.0.30 49783 d0b79d5431eb}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":49783}}
+[martini] Completed 200 OK in 16.644952s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 40107 69f87a61453b}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":40107}}
+[martini] Completed 200 OK in 17.5080014s
+分配信息是 {3 {192.168.0.30 58597 a77458b0a249}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":58597}}
+[martini] Completed 200 OK in 17.5040012s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 34009 843a03f57129}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":34009}}
+[martini] Completed 200 OK in 17.7130131s
+分配信息是 {3 {192.168.0.30 57920 fad2a8598893}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57920}}
+[martini] Completed 200 OK in 17.6950121s
+新建容器
+分配信息是 {3 {192.168.0.30 44910 b18a4490a7f6}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":44910}}
+[martini] Completed 200 OK in 18.5590615s
+新建容器
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 59191 a3e5d60ddea0}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":59191}}
+[martini] Completed 200 OK in 19.5751196s
+分配信息是 {3 {192.168.0.30 43099 e6d25afee2f7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":43099}}
+[martini] Completed 200 OK in 19.58112s
+分配信息是 {3 {192.168.0.30 55692 c6b2fa9c2455}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":55692}}
+[martini] Completed 200 OK in 19.8801371s
+新建容器
+分配信息是 {3 {192.168.0.30 45187 710f124ec059}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":45187}}
+[martini] Completed 200 OK in 20.6861832s
+新建容器
+分配信息是 {3 {192.168.0.30 53884 71a5d4cb6845}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":53884}}
+[martini] Completed 200 OK in 20.9011955s
+新建容器
+分配信息是 {3 {192.168.0.30 51026 4f6624d608b0}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":51026}}
+[martini] Completed 200 OK in 21.2232139s
+新建容器
+分配信息是 {3 {192.168.0.30 55425 95e6f6ea6be8}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":55425}}
+[martini] Completed 200 OK in 21.4932293s
+新建容器
+新建容器
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 44125 ae84f4deeb14}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":44125}}
+[martini] Completed 200 OK in 21.9622562s
+分配信息是 {3 {192.168.0.30 59661 09fe4b985f30}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":59661}}
+[martini] Completed 200 OK in 21.9622562s
+分配信息是 {3 {192.168.0.30 43581 450eceabbe10}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":43581}}
+[martini] Completed 200 OK in 21.9262541s
+分配信息是 {3 {192.168.0.30 46412 a10645c8290e}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":46412}}
+[martini] Completed 200 OK in 21.9382548s
+新建容器
+分配信息是 {3 {192.168.0.30 48211 7295b28430eb}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":48211}}
+[martini] Completed 200 OK in 23.5003442s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 52357 bd98cfe86048}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":52357}}
+[martini] Completed 200 OK in 24.6714111s
+新建容器
+分配信息是 {3 {192.168.0.30 52546 1af7b96c5548}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":52546}}
+[martini] Completed 200 OK in 24.9604276s
+分配信息是 {3 {192.168.0.30 43789 c75d577b0ff6}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":43789}}
+[martini] Completed 200 OK in 24.8524215s
+新建容器
+分配信息是 {3 {192.168.0.30 51574 059da549a279}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":51574}}
+[martini] Completed 200 OK in 25.0274314s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 35476 3d5284f3cc0f}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":35476}}
+[martini] Completed 200 OK in 25.4434553s
+分配信息是 {3 {192.168.0.30 55259 1b2c67cdfa83}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":55259}}
+[martini] Completed 200 OK in 25.7034701s
+新建容器
+分配信息是 {3 {192.168.0.30 50522 89fb921dac20}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":50522}}
+[martini] Completed 200 OK in 26.0214883s
+新建容器
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 43411 a09ab768be9b}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":43411}}
+[martini] Completed 200 OK in 26.610522s
+分配信息是 {3 {192.168.0.30 33109 c4d54bbc11e7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":33109}}
+[martini] Completed 200 OK in 26.7925324s
+分配信息是 {3 {192.168.0.30 33354 440569b42772}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":33354}}
+[martini] Completed 200 OK in 26.3535074s
+新建容器
+分配信息是 {3 {192.168.0.30 41933 0800ce79eb92}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":41933}}
+[martini] Completed 200 OK in 26.8885379s
+新建容器
+分配信息是 {3 {192.168.0.30 60749 311faa07dda9}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":60749}}
+[martini] Completed 200 OK in 27.6435811s
+新建容器
+分配信息是 {3 {192.168.0.30 46487 ae8a63cc7415}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":46487}}
+[martini] Completed 200 OK in 28.0046018s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 39780 b5163a41f77c}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":39780}}
+[martini] Completed 200 OK in 28.5246315s
+分配信息是 {3 {192.168.0.30 53483 bb60aad73e59}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":53483}}
+[martini] Completed 200 OK in 28.0486043s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 58830 8717542c6616}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":58830}}
+[martini] Completed 200 OK in 29.0586621s
+分配信息是 {3 {192.168.0.30 48543 fc75bb96899f}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":48543}}
+[martini] Completed 200 OK in 29.54769s
+新建容器
+分配信息是 {3 {192.168.0.30 39542 d06d355132b4}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":39542}}
+[martini] Completed 200 OK in 29.2266717s
+服务器容器更新耗时 12.1086926s
+新建容器
+分配信息是 {3 {192.168.0.30 54157 30ee9bd599f5}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":54157}}
+[martini] Completed 200 OK in 29.6126937s
+服务器容器更新耗时 86.0049ms
+服务器容器更新耗时 44.0025ms
+耗时 12.2867028s
+更新状态耗时 12.2877029s
+新建容器
+分配信息是 {3 {192.168.0.30 40647 f3f4fc13c1d1}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":40647}}
+[martini] Completed 200 OK in 29.8637081s
+新建容器
+分配信息是 {3 {192.168.0.30 44590 7e408ddff5cb}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":44590}}
+[martini] Completed 200 OK in 30.3397353s
+新建容器
+分配信息是 {3 {192.168.0.30 39476 bf8cdcf4c921}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":39476}}
+[martini] Completed 200 OK in 30.9827721s
+新建容器
+分配信息是 {3 {192.168.0.30 54342 89d5dc8f5970}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":54342}}
+[martini] Completed 200 OK in 31.1167798s
+新建容器
+分配信息是 {3 {192.168.0.30 38680 27f6bd3513ac}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38680}}
+[martini] Completed 200 OK in 31.6308092s
+新建容器
+分配信息是 {3 {192.168.0.30 52593 4cbd1ac4e566}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":52593}}
+[martini] Completed 200 OK in 31.9748289s
+新建容器
+分配信息是 {3 {192.168.0.30 51154 e768a9cf9ad5}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":51154}}
+[martini] Completed 200 OK in 31.9208258s
+新建容器
+分配信息是 {3 {192.168.0.30 59888 c7488a798a67}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":59888}}
+[martini] Completed 200 OK in 32.3148483s
+新建容器
+分配信息是 {3 {192.168.0.30 47327 605edc37a5b1}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":47327}}
+[martini] Completed 200 OK in 32.5838637s
+新建容器
+分配信息是 {3 {192.168.0.30 47408 5498849ee95b}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":47408}}
+[martini] Completed 200 OK in 32.6188657s
+新建容器
+分配信息是 {3 {192.168.0.30 37737 cf58b387c82e}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":37737}}
+[martini] Completed 200 OK in 33.2629025s
+新建容器
+分配信息是 {3 {192.168.0.30 59469 7bd35eb203aa}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":59469}}
+[martini] Completed 200 OK in 33.6699258s
+新建容器
+分配信息是 {3 {192.168.0.30 47261 8511ceab1406}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":47261}}
+[martini] Completed 200 OK in 34.1199516s
+新建容器
+分配信息是 {3 {192.168.0.30 57742 8ddbc0fadd27}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57742}}
+[martini] Completed 200 OK in 34.2309579s
+新建容器
+分配信息是 {3 {192.168.0.30 38294 54944c7ef46b}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38294}}
+[martini] Completed 200 OK in 35.0820066s
+新建容器
+分配信息是 {3 {192.168.0.30 50776 023b1334ffc9}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":50776}}
+[martini] Completed 200 OK in 35.1550108s
+新建容器
+分配信息是 {3 {192.168.0.30 53218 db5cf7674323}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":53218}}
+[martini] Completed 200 OK in 35.9320552s
+新建容器
+分配信息是 {3 {192.168.0.30 53306 da4ad04bd6f2}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":53306}}
+[martini] Completed 200 OK in 35.823049s
+新建容器
+分配信息是 {3 {192.168.0.30 53252 819592b92fb7}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":53252}}
+[martini] Completed 200 OK in 35.9770578s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 52884 e33c735b7971}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":52884}}
+[martini] Completed 200 OK in 36.8661086s
+分配信息是 {3 {192.168.0.30 47533 9ceb73ce29e5}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":47533}}
+[martini] Completed 200 OK in 37.1221232s
+新建容器
+分配信息是 {3 {192.168.0.30 36812 280a48cd2202}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":36812}}
+[martini] Completed 200 OK in 37.5561481s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 37733 cf71a9faaf7f}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":37733}}
+[martini] Completed 200 OK in 37.9681716s
+分配信息是 {3 {192.168.0.30 44323 d565bfb42251}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":44323}}
+[martini] Completed 200 OK in 38.3011907s
+新建容器
+分配信息是 {3 {192.168.0.30 40278 f7ce67641a35}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":40278}}
+[martini] Completed 200 OK in 38.3981963s
+新建容器
+分配信息是 {3 {192.168.0.30 38143 cbf32ba9b9ad}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":38143}}
+[martini] Completed 200 OK in 38.8012193s
+新建容器
+分配信息是 {3 {192.168.0.30 59982 e99a684a10c2}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":59982}}
+[martini] Completed 200 OK in 39.1992421s
+新建容器
+分配信息是 {3 {192.168.0.30 57784 e98af7f57136}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57784}}
+[martini] Completed 200 OK in 38.9262264s
+新建容器
+分配信息是 {3 {192.168.0.30 57385 b0106fb1d542}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57385}}
+[martini] Completed 200 OK in 39.2112428s
+新建容器
+分配信息是 {3 {192.168.0.30 37305 993d016b0597}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":37305}}
+[martini] Completed 200 OK in 39.3262493s
+新建容器
+分配信息是 {3 {192.168.0.30 47139 5f3a307a658f}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":47139}}
+[martini] Completed 200 OK in 40.0292896s
+新建容器
+新建容器
+分配信息是 {3 {192.168.0.30 56780 61b42cc89b96}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":56780}}
+[martini] Completed 200 OK in 39.9702862s
+分配信息是 {3 {192.168.0.30 32867 1895c8adeaac}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":32867}}
+[martini] Completed 200 OK in 39.8312782s
+新建容器
+分配信息是 {3 {192.168.0.30 60998 b0a2f0b68931}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":60998}}
+[martini] Completed 200 OK in 40.8953391s
+新建容器
+分配信息是 {3 {192.168.0.30 42455 3db8f85bb33f}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":42455}}
+[martini] Completed 200 OK in 41.0583484s
+新建容器
+分配信息是 {3 {192.168.0.30 54942 146ec71f4461}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":54942}}
+[martini] Completed 200 OK in 41.4123686s
+新建容器
+分配信息是 {3 {192.168.0.30 53524 7d42566bcd88}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":53524}}
+[martini] Completed 200 OK in 41.4103686s
+新建容器
+分配信息是 {3 {192.168.0.30 46476 e75d33255e43}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":46476}}
+[martini] Completed 200 OK in 41.9453992s
+新建容器
+分配信息是 {3 {192.168.0.30 33116 a394aefd80b6}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":33116}}
+[martini] Completed 200 OK in 42.2734179s
+新建容器
+分配信息是 {3 {192.168.0.30 60718 aaa20f477e53}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":60718}}
+[martini] Completed 200 OK in 42.4474279s
+新建容器
+分配信息是 {3 {192.168.0.30 52898 447ff8fcdef6}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":52898}}
+[martini] Completed 200 OK in 42.4464278s
+新建容器
+分配信息是 {3 {192.168.0.30 46740 d10b77c89bbc}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":46740}}
+[martini] Completed 200 OK in 43.0734637s
+服务器容器更新耗时 8.5364883s
+新建容器
+分配信息是 {3 {192.168.0.30 54353 57a8bc7ebbdb}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":54353}}
+[martini] Completed 200 OK in 43.6774982s
+服务器容器更新耗时 83.0047ms
+服务器容器更新耗时 46.0027ms
+耗时 8.7174986s
+更新状态耗时 8.7214988s
+新建容器
+分配信息是 {3 {192.168.0.30 57987 1c130d5fec8f}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":57987}}
+[martini] Completed 200 OK in 43.5504909s
+新建容器
+分配信息是 {3 {192.168.0.30 39283 ecfd5f00ddd3}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":39283}}
+[martini] Completed 200 OK in 43.7004995s
+新建容器
+分配信息是 {3 {192.168.0.30 54795 d5ac58109138}}
+{"Status":3,"Instance":{"ServerIP":"192.168.0.30","ServerPort":54795}}
+[martini] Completed 200 OK in 43.639496s
+服务器容器更新耗时 1.8411053s
+服务器容器更新耗时 79.0045ms
+服务器容器更新耗时 49.0028ms
+耗时 2.0141152s
+更新状态耗时 2.0151153s
+服务器容器更新耗时 1.9341106s
+服务器容器更新耗时 86.0049ms
+服务器容器更新耗时 46.0026ms
+耗时 2.1101206s
+更新状态耗时 2.1111207s
+服务器容器更新耗时 2.2611294s
+服务器容器更新耗时 118.0067ms
+服务器容器更新耗时 82.0047ms
+耗时 2.5211442s
+更新状态耗时 2.5221443s
+服务器容器更新耗时 2.3771359s
+服务器容器更新耗时 119.0069ms
+服务器容器更新耗时 77.0044ms
+耗时 2.6241501s
+更新状态耗时 2.6251501s
+服务器容器更新耗时 2.2951313s
+服务器容器更新耗时 81.0047ms
+服务器容器更新耗时 51.0029ms
+耗时 2.4881423s
+更新状态耗时 2.4891424s
+服务器容器更新耗时 2.569147s
+服务器容器更新耗时 126.0072ms
+服务器容器更新耗时 48.0027ms
+耗时 2.8001601s
+更新状态耗时 2.8011602s
+服务器容器更新耗时 1.8071033s
+服务器容器更新耗时 102.0059ms
+服务器容器更新耗时 45.0025ms
+耗时 1.9971142s
+更新状态耗时 1.9981143s
+服务器容器更新耗时 1.905109s
+服务器容器更新耗时 72.0041ms
+服务器容器更新耗时 38.0021ms
+耗时 2.0571176s
+更新状态耗时 2.0581177s
+服务器容器更新耗时 2.360135s
+服务器容器更新耗时 170.0097ms
+服务器容器更新耗时 46.0026ms
+耗时 2.6211499s
+更新状态耗时 2.6211499s
+服务器容器更新耗时 2.308132s
+服务器容器更新耗时 107.0061ms
+服务器容器更新耗时 49.0028ms
+耗时 2.517144s
+更新状态耗时 2.5191441s
+服务器容器更新耗时 2.2061262s
+服务器容器更新耗时 119.0068ms
+服务器容器更新耗时 60.0035ms
+耗时 2.4451399s
+更新状态耗时 2.44714s
+服务器容器更新耗时 2.2731301s
+服务器容器更新耗时 164.0093ms
+服务器容器更新耗时 95.0055ms
+耗时 2.5891481s
+更新状态耗时 2.5921482s
+服务器容器更新耗时 1.8581063s
+服务器容器更新耗时 76.0044ms
+服务器容器更新耗时 38.0022ms
+耗时 2.0161154s
+更新状态耗时 2.0181155s
+服务器容器更新耗时 1.8101035s
+服务器容器更新耗时 80.0045ms
+服务器容器更新耗时 43.0025ms
+耗时 1.976113s
+更新状态耗时 1.9781131s
+服务器容器更新耗时 2.6251501s
+服务器容器更新耗时 140.008ms
+服务器容器更新耗时 74.0043ms
+耗时 2.884165s
+更新状态耗时 2.885165s
+服务器容器更新耗时 2.046117s
+服务器容器更新耗时 117.0067ms
+服务器容器更新耗时 61.0035ms
+耗时 2.2711299s
+更新状态耗时 2.2731301s
+服务器容器更新耗时 2.5681469s
+服务器容器更新耗时 90.0052ms
+服务器容器更新耗时 49.0028ms
+耗时 2.7521574s
+更新状态耗时 2.7541575s
+服务器容器更新耗时 1.8591064s
+服务器容器更新耗时 77.0044ms
+服务器容器更新耗时 35.002ms
+耗时 2.0141152s
+更新状态耗时 2.0161153s
+服务器容器更新耗时 2.4101379s
+服务器容器更新耗时 86.0049ms
+服务器容器更新耗时 48.0028ms
+耗时 2.6111494s
+更新状态耗时 2.6131495s
+服务器容器更新耗时 2.1211213s
+服务器容器更新耗时 137.0079ms
+服务器容器更新耗时 49.0028ms
+耗时 2.3671354s
+更新状态耗时 2.3691355s
+服务器容器更新耗时 2.1581234s
+服务器容器更新耗时 136.0078ms
+服务器容器更新耗时 67.0038ms
+耗时 2.4021374s
+更新状态耗时 2.4041375s
+服务器容器更新耗时 2.1321219s
+服务器容器更新耗时 146.0084ms
+服务器容器更新耗时 60.0034ms
+耗时 2.3861365s
+更新状态耗时 2.3881366s
+服务器容器更新耗时 2.3921369s
+服务器容器更新耗时 145.0082ms
+服务器容器更新耗时 54.0031ms
+耗时 2.6451513s
+更新状态耗时 2.6471515s
+服务器容器更新耗时 1.9481114s
+服务器容器更新耗时 126.0072ms
+服务器容器更新耗时 80.0046ms
+耗时 2.1961256s
+更新状态耗时 2.1981257s
+服务器容器更新耗时 2.255129s
+服务器容器更新耗时 100.0057ms
+服务器容器更新耗时 47.0027ms
+耗时 2.4531403s
+更新状态耗时 2.4551404s
+服务器容器更新耗时 2.2411282s
+服务器容器更新耗时 96.0055ms
+服务器容器更新耗时 46.0026ms
+耗时 2.4361393s
+更新状态耗时 2.4381395s
+服务器容器更新耗时 2.2521288s
+服务器容器更新耗时 132.0075ms
+服务器容器更新耗时 58.0033ms
+耗时 2.5331448s
+更新状态耗时 2.5341449s
+服务器容器更新耗时 2.2981314s
+服务器容器更新耗时 119.0069ms
+服务器容器更新耗时 53.003ms
+耗时 2.5261445s
+更新状态耗时 2.5271445s
+服务器容器更新耗时 1.8391052s
+服务器容器更新耗时 85.0049ms
+服务器容器更新耗时 44.0025ms
+耗时 2.0081149s
+更新状态耗时 2.0091149s
+服务器容器更新耗时 2.2011259s
+服务器容器更新耗时 91.0052ms
+服务器容器更新耗时 52.003ms
+耗时 2.4001373s
+更新状态耗时 2.4021374s
+服务器容器更新耗时 1.9861136s
+服务器容器更新耗时 98.0056ms
+服务器容器更新耗时 49.0028ms
+耗时 2.1821248s
+更新状态耗时 2.184125s
+服务器容器更新耗时 1.8111036s
+服务器容器更新耗时 78.0044ms
+服务器容器更新耗时 40.0023ms
+耗时 1.9731128s
+更新状态耗时 1.9751129s
+服务器容器更新耗时 2.081119s
+服务器容器更新耗时 112.0064ms
+服务器容器更新耗时 68.0039ms
+耗时 2.3221328s
+更新状态耗时 2.3231329s
+服务器容器更新耗时 2.2091263s
+服务器容器更新耗时 121.0069ms
+服务器容器更新耗时 50.0029ms
+耗时 2.430139s
+更新状态耗时 2.431139s
+服务器容器更新耗时 2.5621466s
+服务器容器更新耗时 125.0071ms
+服务器容器更新耗时 58.0033ms
+耗时 2.8011602s
+更新状态耗时 2.8031603s
+服务器容器更新耗时 2.5091435s
+服务器容器更新耗时 178.0102ms
+服务器容器更新耗时 49.0028ms
+耗时 2.7761588s
+更新状态耗时 2.7781589s
+服务器容器更新耗时 1.818104s
+服务器容器更新耗时 81.0047ms
+服务器容器更新耗时 39.0022ms
+耗时 1.9791132s
+更新状态耗时 1.9811133s
+服务器容器更新耗时 2.0661182s
+服务器容器更新耗时 104.006ms
+服务器容器更新耗时 55.0031ms
+耗时 2.2701298s
+更新状态耗时 2.2721299s
+服务器容器更新耗时 2.1961256s
+服务器容器更新耗时 131.0075ms
+服务器容器更新耗时 74.0042ms
+耗时 2.4441398s
+更新状态耗时 2.4461399s
+服务器容器更新耗时 2.2631295s
+服务器容器更新耗时 104.0059ms
+服务器容器更新耗时 48.0028ms
+耗时 2.4681412s
+更新状态耗时 2.4691412s
