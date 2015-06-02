@@ -19,7 +19,7 @@ import (
 )
 
 var DefaultContainerCapacify int = 50       //一个完全空闲容器能承担的用户数
-var DefaultServerCapacity int = 1500        //一个完全空闲容器能承担的用户数
+var DefaultServerCapacity int = 800         //一个完全空闲容器能承担的用户数
 var ServerMemCapacity = float64(2147483648) //2*1024*1024*1024 byte
 type updateInfo struct {                    //服务器主动发送的机器信息
 	Host       string
@@ -61,6 +61,7 @@ type ServerCapacity struct {
 
 var ContainerMemCapacity = float64(20971520) //default container memory capacity is 20MB
 var curClusterCapacity = make([]ServerCapacity, 0, 5)
+var ClusterCapacityLock sync.RWMutex
 
 func getInitialServerAddrInUpdate() serverConfig { // get default server info from ./metadata/config.json
 	r, err := os.Open("../metadata/config.json")
@@ -78,13 +79,13 @@ func getInitialServerAddrInUpdate() serverConfig { // get default server info fr
 
 }
 
-func FindServerByHostInUpdate(info updateInfo) (int, error) {
+func FindServerByHostInUpdate(hostip string) (int, error) {
 	// curCluster := GetCurrentClusterStatus()
 	// l.RLock()
 	// defer l.RUnlock()
 	for i, v := range curClusterCapacity {
 		curClusterCapacity[i].l.RLock()
-		if v.host == info.Host {
+		if v.host == hostip {
 			curClusterCapacity[i].l.RUnlock()
 			return i, nil
 		}
@@ -121,18 +122,22 @@ func DeleteServerInUpdate(index int) error { //delete element in curClusterCapac
 	} else if index > len(curClusterCapacity)-1 {
 		return errors.New("index超出最大范围")
 	}
+	ClusterCapacityLock.RLock()
 	temp := curClusterCapacity
+	ClusterCapacityLock.RUnlock()
 	var re []ServerCapacity
 	if index == 0 {
 		re = temp[1:]
 	} else if index == len(curClusterCapacity)-1 {
-		re = temp[:index-1]
+		re = temp[:index]
 	} else {
-		p1 := temp[:index-1]
+		p1 := temp[:index]
 		p2 := temp[index+1:]
 		re = append(p1, p2...)
 	}
+	ClusterCapacityLock.Lock()
 	curClusterCapacity = re
+	ClusterCapacityLock.Unlock()
 	return nil
 }
 func DeleteContainerInUpdate(sindex int, cindex int) error { //delete element in ServerCapacity.containers
@@ -171,8 +176,9 @@ func PurgeClusterCapacity() { //根据时间，清理curClusterCapacity中超时
 				}
 				if time.Now().Sub(curClusterCapacity[i].updateTime) > 5*1000*1000*1000 { //超过5s未更新,删除此服务器
 					// log.Println("删除服务器,时长", curClusterCapacity[i].updateTime)
-					log.Println("删除内容是", curClusterCapacity[i])
+					log.Println("删除内容是", curClusterCapacity[i], "序号是", i)
 					DeleteServerInUpdate(i)
+					log.Println("删除后的集群是", curClusterCapacity)
 					continue
 				}
 				//服务端已经做了容器生存检验，这里不再需要
@@ -192,7 +198,7 @@ func PurgeClusterCapacity() { //根据时间，清理curClusterCapacity中超时
 func UpdateClusterCapacityInUpdate() { //每次更新一个服务器中的信息
 	stat := <-UpdateInfoChannel //取出一个更新信息
 	log.Println("取出一个状态")
-	hostIndex, err := FindServerByHostInUpdate(stat)
+	hostIndex, err := FindServerByHostInUpdate(stat.Host)
 	if err != nil {
 		// log.Println("找不到主机,更新信息是", stat)
 		// return
@@ -200,7 +206,9 @@ func UpdateClusterCapacityInUpdate() { //每次更新一个服务器中的信息
 		log.Println("新建主机", stat.Host)
 		var temp ServerCapacity
 		temp.host = stat.Host
+		ClusterCapacityLock.Lock()
 		curClusterCapacity = append(curClusterCapacity, temp)
+		ClusterCapacityLock.Unlock()
 		hostIndex = len(curClusterCapacity) - 1
 	}
 	stat.Cpu = stat.Cpu / 100
@@ -226,6 +234,9 @@ func UpdateClusterCapacityInUpdate() { //每次更新一个服务器中的信息
 	for _, v := range stat.Containers { //更新容器信息
 		if v.Id == "" {
 			continue
+		}
+		if v.Mem < 0.0001 { //此时信息获取不完整
+			log.Println("信息不完整未添加", v)
 		}
 		memUsage := v.Mem / ContainerMemCapacity
 		v.Cpu = v.Cpu / 100
@@ -254,7 +265,8 @@ func UpdateClusterCapacityInUpdate() { //每次更新一个服务器中的信息
 		Port, errPort := strconv.Atoi(v.Port)
 		if errPort != nil {
 			temp.port = 0
-			log.Println("端口转换出错,", v.Port)
+			log.Println("端口信息不完整未添加,", v)
+			continue
 		} else {
 			temp.port = Port
 		}
@@ -272,7 +284,7 @@ func UpdateClusterCapacityInUpdate() { //每次更新一个服务器中的信息
 	curClusterCapacity[hostIndex].containers = append(curClusterCapacity[hostIndex].containers, tempContainers...)
 	curClusterCapacity[hostIndex].l.Unlock()
 	for i, v := range curClusterCapacity {
-		log.Print("第", i, "个服务器容器", v.CapacityLeft)
+		log.Print("第", i, "个服务器容器", v.CapacityLeft, "内存最大", ServerMemCapacity)
 		log.Print("地址", v.host)
 		log.Print("更新时间", v.updateTime)
 		log.Print("服务器容器", v.containers)

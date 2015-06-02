@@ -39,17 +39,29 @@ func delaySecond(n time.Duration) {
 	// func delaySecond(n int) {
 	time.Sleep(n * time.Microsecond * 1000000)
 }
-
-func createNewContainerWithQuene(serverIP string, imageName string) (containerAddr, reError) {
+func FindContainerInServer(ss ServerCapacity, containerID string) bool {
+	for _, v := range ss.containers {
+		if v.containerID == containerID {
+			return true
+		}
+	}
+	return false
+}
+func createNewContainerWithQuene(serverIP string, imageName string) (containerCreated, reError) {
 	data := createContainerData{
 		serverIP:  serverIP,
 		imageName: imageName,
-		addr:      make(chan *containerAddr),
+		addr:      make(chan *containerCreated),
 		err:       make(chan *reError),
 	}
+	log.Println("哈哈锁住了")
 	createBuf <- data
-	addr := <-data.addr
+	log.Println("哈哈锁住了1")
 	err := <-data.err
+	addr := <-data.addr
+	log.Println("哈哈锁住了2")
+	log.Println("哈哈从创建队列中获取的信息是", *addr)
+
 	return *addr, *err
 }
 func createNewContainer(serverIP string, imageName string) (containerAddr, reError) { //创建新的容器
@@ -105,7 +117,7 @@ func createNewContainer(serverIP string, imageName string) (containerAddr, reErr
 				return containerAddr{"", 0, "", ""}, reError{"创建请求结果无法解析出容器ID", errCID}
 			}
 
-			return containerAddr{containerHost, int(containerPort), containerId, imageName}, reError{"", nil}
+			return containerAddr{containerHost, int(containerPort), containerId, imageName}, reError{"ok", nil}
 
 		} else if createStatus == 1 { //延迟后重新请求
 			log.Println("延迟后重新请求")
@@ -277,21 +289,23 @@ func sortServerByLoad() {
 	// }
 }
 
-func ServerAndContainer(imageName string) containerCreated { //优先选择已有的容器，容器及服务器都不过载则分配此容器，容器过载则重新分配容器；服务器过载则查找下一个服务器
-	//status2表示容器创建成功，3表示分配现有的容器，6表示失败
-	/*上述方案并不好，容器导致任务重的服务器负载越来越重，修改如下:
-	*	先选择负载轻的服务器，在上面查找容器，选择负载最轻的容器分配(需要能够查出多个容器的函数)
-	 */
+func SearchAvailableContainerInCluster(imageName string) *containerCreated {
 	sortServerByLoad()
+	overload75 := bool(false)
+	overload90 := bool(false)
 	if len(curClusterCapacity) < 1 {
 		var re containerCreated
 		re.Status = 6
 		log.Println("请求镜像名", imageName, "无可用服务器")
-		return re
+		return &re
 	}
 	log.Println("排序结果", curClusterCapacity)
 	var re containerCreated
+	log.Println("大锁是", ClusterCapacityLock)
+	ClusterCapacityLock.RLock()
+	defer ClusterCapacityLock.RUnlock()
 	for i, v := range curClusterCapacity {
+		log.Println("第", i, "个小锁是", curClusterCapacity[i].l)
 		curClusterCapacity[i].l.RLock()
 		// fmt.Println("执行")
 		//查找容器，找到且不过载则分配，找不到继续查找
@@ -299,11 +313,18 @@ func ServerAndContainer(imageName string) containerCreated { //优先选择已�
 		/*		if GetServerLoad(v.machineStatus) > 0.9 { //负载过高，不再分配
 				continue
 			}*/
-		if v.CapacityLeft < DefaultServerCapacity/10 {
-			//负载高于90%
+		if v.CapacityLeft < DefaultServerCapacity/4 {
+			//负载高于75%
 			log.Println("选定的服务器已经过载,信息是", v)
 			curClusterCapacity[i].l.RUnlock()
-			continue
+			if i == 0 {
+				overload75 = true
+				if v.CapacityLeft < DefaultServerCapacity/10 {
+					overload90 = true
+				}
+			}
+
+			break
 		}
 		imageList := FindImagesInServer(v, imageName)
 		log.Println("镜像名", imageName)
@@ -335,51 +356,116 @@ func ServerAndContainer(imageName string) containerCreated { //优先选择已�
 			re.Instance.containerID = v.containers[imageList[0]].containerID
 			re.Instance.imageName = imageName
 			curClusterCapacity[i].l.RUnlock()
+			log.Println("后面的小锁是", curClusterCapacity[i].l)
 			curClusterCapacity[i].l.Lock()
 			curClusterCapacity[i].CapacityLeft = v.CapacityLeft - 1
 			curClusterCapacity[i].containers[imageList[0]].capacityLeft = v.containers[imageList[0]].capacityLeft - 1
 			log.Println("分配信息是", v.containers[imageList[0]])
 			curClusterCapacity[i].l.Unlock()
-			return re
+			return &re
 		}
 	}
+	if !overload75 { //小于75%，新建
+		return nil
+	} else if overload75 && !overload90 { //75~90，分配
+		for i, v := range curClusterCapacity {
+			curClusterCapacity[i].l.RLock()
+			// fmt.Println("执行")
+			//查找容器，找到且不过载则分配，找不到继续查找
+			//循环结束后仍没有找到，则选择第一个（负载最轻的服务器分配）
+			/*		if GetServerLoad(v.machineStatus) > 0.9 { //负载过高，不再分配
+					continue
+				}*/
+
+			imageList := FindImagesInServer(v, imageName)
+			log.Println("镜像名", imageName)
+			log.Println("列表", imageList)
+			if len(imageList) == 0 { //不存在对应的容器
+				// fmt.Println("执行22")
+				curClusterCapacity[i].l.RUnlock()
+				log.Println("分配时没有找到容器", imageName)
+				continue
+			} else {
+				/*			for _, v11 := range imageList {
+							log.Println("排序后的容器容量")
+							log.Println(v.containers[v11])
+						}*/
+				//todo 选择第一个镜像进行分配,同时return
+				/*			if GetContainerLoad(v.containerStatus[imageList[0]]) > 0.9 {
+							log.Println("容器过载，不再分配此容器", v.containerStatus[imageList[0]].id)
+							continue
+						}*/
+
+				re.Status = 3
+				re.Instance.ServerIP = v.containers[imageList[0]].host
+				re.Instance.ServerPort = v.containers[imageList[0]].port
+				re.Instance.containerID = v.containers[imageList[0]].containerID
+				re.Instance.imageName = imageName
+				curClusterCapacity[i].l.RUnlock()
+				log.Println("后面的小锁是", curClusterCapacity[i].l)
+				curClusterCapacity[i].l.Lock()
+				curClusterCapacity[i].CapacityLeft = v.CapacityLeft - 1
+				curClusterCapacity[i].containers[imageList[0]].capacityLeft = v.containers[imageList[0]].capacityLeft - 1
+				log.Println("分配信息是", v.containers[imageList[0]])
+				curClusterCapacity[i].l.Unlock()
+				return &re
+			}
+		}
+		return nil //都超过了75，不存在所选容器，强行新建一个
+	} else if overload75 && overload90 { //90~，拒绝服务
+		var re containerCreated
+		re.Status = 9
+		return &re
+	} else { //出错
+		var re containerCreated
+		re.Status = 9
+		return &re
+	}
+
+}
+
+func ServerAndContainer(imageName string) containerCreated { //优先选择已有的容器，容器及服务器都不过载则分配此容器，容器过载则重新分配容器；服务器过载则查找下一个服务器
+	//status2表示容器创建成功，3表示分配现有的容器，6表示失败
+	/*上述方案并不好，容器导致任务重的服务器负载越来越重，修改如下:
+	*	先选择负载轻的服务器，在上面查找容器，选择负载最轻的容器分配(需要能够查出多个容器的函数)
+	 */
+	AvailableContainerPointer := SearchAvailableContainerInCluster(imageName) //75%
+	if AvailableContainerPointer != nil {
+		return *AvailableContainerPointer
+	}
+	// var re containerCreated
 	//执行到这里说明没有找到镜像，返回第一台服务器的ip即可,也就是当前负载最低的服务器
-	log.Println("没有合适的容器需要创建")
+	log.Println("没有合适的容器需要创建,服务器是", curClusterCapacity[0].host)
 	// log.Println("sort长度是", len(sortedServerStatus))
+	if curClusterCapacity[0].CapacityLeft < DefaultServerCapacity/10 {
+		re := containerCreated{Status: 6}
+		return re
+	}
 	curClusterCapacity[0].l.RLock()
 	ServerIP := curClusterCapacity[0].host
 	curClusterCapacity[0].l.RUnlock()
-	temp, err := createNewContainerWithQuene(ServerIP, imageName)
+	temp, _ := createNewContainerWithQuene(ServerIP, imageName)
 
-	var newContainer ContainerCapacity //添加新容器
-	newContainer.capacityLeft = DefaultContainerCapacify - 1
-	newContainer.containerID = temp.containerID
-	newContainer.host = ServerIP
-	newContainer.imageName = imageName
-	newContainer.port = temp.ServerPort
-	newContainer.updateTime = time.Now()
+	// if err.err != nil { //出错
+	// 	// re := containerCreated{6, {"", temp, 0}}
+	// 	re.Status = 6
+	// 	re.Instance = temp
+	// 	log.Println("错误是", err.err)
+	// 	return re
+	// } else { //正确
+	// 	// re := containerCreated{3, {temp.ServerIP, temp.ServerPort}}
+	// 	re.Status = 2
+	// 	re.Instance = temp
 
-	curClusterCapacity[0].l.Lock()
-	curClusterCapacity[0].CapacityLeft = curClusterCapacity[0].CapacityLeft - 1
-	curClusterCapacity[0].containers = append(curClusterCapacity[0].containers, newContainer)
-	curClusterCapacity[0].l.Unlock()
-	if err.err != nil { //出错
-		// re := containerCreated{6, {"", temp, 0}}
-		re.Status = 6
-		re.Instance = temp
-		log.Println("错误是", err.err)
-		return re
-	} else { //正确
-		// re := containerCreated{3, {temp.ServerIP, temp.ServerPort}}
-		re.Status = 2
-		re.Instance = temp
-		log.Println("创建容器成功", re.Instance)
-		log.Println("创建镜像名是", re.Instance.imageName, "请求镜像名是", imageName)
-		log.Println("当前集群状态是", curClusterCapacity)
-		return re
+	// 	log.Println("创建容器成功", re.Instance)
+	// 	log.Println("创建镜像名是", re.Instance.imageName, "请求镜像名是", imageName)
+	// 	log.Println("当前集群状态是", curClusterCapacity)
+	// 	return re
+	// }
+	if temp.Status == 2 {
+		log.Println("创建容器成功", temp.Instance)
 	}
-
-	// return temp
+	return temp
 	// return createNewContainer(sortedServerStatus[0].machineStatus.Host, imageName)
 
 	// return containerAddr{sortedServerStatus[0].machineStatus.Host, 0, ""}

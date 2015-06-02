@@ -62,7 +62,7 @@ func dispatchContainer(w http.ResponseWriter, enc Encoder, r *http.Request) (int
 	ip := ServerAndContainer(in.ImageName)
 	// ip := RR(curClusterStat)
 	if ip.Status == 6 { //分配容器出错了
-
+		log.Println("错误状态", ip)
 	} else if ip.Status == 3 { //使用了现有的容器
 		fmt.Println("现有容器")
 		// name := getImageNameByContainerName("http://"+ip.Instance.ServerIP+":4243", ip.Instance.containerID)

@@ -1,6 +1,8 @@
 {
 	"ServiceContainer":[
-		{"ImageName":"royzhao/sso"}
+		{"ImageName":"docker-browser"},
+		{"ImageName":"docker-proxy"},
+		{"ImageName":"cadvisor"}
 
 	]
 

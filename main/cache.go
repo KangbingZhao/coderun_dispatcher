@@ -47,6 +47,7 @@ func getInitialServiceContainers() (serviceContainers, error) { //从serviceCont
 func loadCurrentContainer() { //初始化时，将现有容器放入缓存区中,排除ServiceContainer
 	// delaySecond(5)
 	// TcurClusterStats := GetCurrentClusterStatus()
+	log.Println("装入当前容器")
 	TcurCluster := curClusterCapacity
 	for _, v := range TcurCluster {
 		for _, vv := range v.containers {
@@ -79,6 +80,7 @@ func isServiceContainer(imageName string) bool { //检验一个容器是否是�
 			return true
 		}
 	}
+	log.Println("...")
 	return false
 }
 
@@ -190,6 +192,7 @@ func StartCacheDeamon() {
 				return
 			}
 			CurrentServiceContainers = tempServiceContainers.ServiceContainer
+			// loadCurrentContainer()
 			// fmt.Println("初始化守护容器时", CurrentServiceContainers)
 
 			// CurCLoad, errCCL := GetClusterLoad(curClusterStats)
