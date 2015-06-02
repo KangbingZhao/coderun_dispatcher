@@ -111,7 +111,7 @@ func GetUpdateInfoInupdate(w http.ResponseWriter, enc Encoder, r *http.Request) 
 	}
 	// fmt.Println("更新信息是", receiveInfo)
 	UpdateInfoChannel <- receiveInfo
-	log.Println("写入一个状态", receiveInfo)
+	// log.Println("写入一个状态", receiveInfo)
 	// log.Println("ID是", receiveInfo.Containers[0].Id, "第一个端口号", receiveInfo.Containers[1].Port)
 	return http.StatusOK, Must(enc.Encode(""))
 }
@@ -276,7 +276,7 @@ func UpdateClusterCapacityInUpdate() { //每次更新一个服务器中的信息
 		// curClusterCapacity[hostIndex].containers = append(curClusterCapacity[hostIndex].containers, temp)
 		// curClusterCapacity[hostIndex].l.Unlock()
 		tempContainers = append(tempContainers, temp)
-		log.Println("添加容器", temp)
+		// log.Println("添加容器", temp)
 
 	}
 	curClusterCapacity[hostIndex].l.Lock()
